@@ -14,17 +14,22 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import com.cyl.musiclake.BuildConfig
 import com.cyl.musiclake.R
-import com.cyl.musiclake.api.MusicUtils
+import com.cyl.musiclake.api.music.MusicUtils
+import com.cyl.musiclake.bean.Album
+import com.cyl.musiclake.bean.Artist
 import com.cyl.musiclake.bean.Music
 import com.cyl.musiclake.common.Constants
 import com.cyl.musiclake.common.Extras
 import com.cyl.musiclake.common.NavigationHelper
 import com.cyl.musiclake.player.PlayManager
-import com.cyl.musiclake.ui.OnlinePlaylistUtils
-import com.cyl.musiclake.ui.downloadMusic
+import com.cyl.musiclake.ui.deleteSingleMusic
 import com.cyl.musiclake.ui.music.edit.EditMusicActivity
+import com.cyl.musiclake.ui.music.edit.PlaylistManagerUtils
+import com.cyl.musiclake.ui.music.mv.BaiduMvDetailActivity
 import com.cyl.musiclake.utils.ConvertUtils
+import com.cyl.musiclake.utils.Tools
 import org.jetbrains.anko.support.v4.startActivity
 
 class BottomDialogFragment : BottomSheetDialogFragment() {
@@ -35,14 +40,13 @@ class BottomDialogFragment : BottomSheetDialogFragment() {
     private val subTitleTv by lazy { mRootView.findViewById<TextView>(R.id.subTitleTv) }
 
     var mAdapter: ItemAdapter? = null
-    var type: Int = 0
+    var type: String = Constants.PLAYLIST_LOCAL_ID
+    /**
+     * 歌单id
+     */
+    var pid: String = Constants.PLAYLIST_LOCAL_ID
 
-    var removeMusicListener: RemoveMusicListener? = null
-    var position: Int = 0
-
-    interface RemoveMusicListener {
-        fun remove(position: Int, music: Music?)
-    }
+    var removeSuccessListener: ((music: Music?) -> Unit)? = null
 
     companion object {
         var music: Music? = null
@@ -55,20 +59,21 @@ class BottomDialogFragment : BottomSheetDialogFragment() {
             return fragment
         }
 
-        fun newInstance(music: Music?, type: Int): BottomDialogFragment {
+        fun newInstance(music: Music?, type: String?): BottomDialogFragment {
             val args = Bundle()
             this.music = music
             val fragment = BottomDialogFragment()
             fragment.arguments = args
-            args.putInt(Extras.PLAYLIST_TYPE, type)
+            args.putString(Extras.PLAYLIST_TYPE, type)
             return fragment
         }
     }
 
     fun show(context: AppCompatActivity) {
         mContext = context
-        val ft = context.supportFragmentManager
-        show(ft, javaClass.simpleName)
+        val ft = context.supportFragmentManager.beginTransaction()
+        ft.add(this, tag)
+        ft.commitAllowingStateLoss()
     }
 
     private var mBehavior: BottomSheetBehavior<*>? = null
@@ -81,10 +86,13 @@ class BottomDialogFragment : BottomSheetDialogFragment() {
         return dialog
     }
 
+    /**
+     * 初始化items
+     */
     private fun initItems() {
         titleTv.text = music?.title
         subTitleTv.text = ConvertUtils.getArtistAndAlbum(music?.artist, music?.album)
-        arguments?.getInt(Extras.PLAYLIST_TYPE, 0)?.let {
+        arguments?.getString(Extras.PLAYLIST_TYPE, Constants.PLAYLIST_LOCAL_ID)?.let {
             type = it
         }
         mAdapter = ItemAdapter(type)
@@ -92,28 +100,33 @@ class BottomDialogFragment : BottomSheetDialogFragment() {
         recyclerView.adapter = mAdapter
     }
 
+    /**
+     * 跳转到专辑
+     */
     private fun turnToAlbum() {
-        activity?.let { it1 ->
-            if (music != null && music?.albumId != null && music?.album != null) {
-                NavigationHelper.navigateToAlbum(it1,
-                        music?.albumId!!,
-                        music?.album!!, null)
-            }
-        }
+        val album = Album()
+        album.albumId = music?.albumId
+        album.name = music?.album
+        album.type = music?.type
+        NavigationHelper.navigateToPlaylist(mContext, album, null)
     }
 
-
+    /**
+     * 打开歌手列表
+     */
     private fun turnToArtist() {
         activity?.let { it1 ->
             if (music != null && music?.artistId != null && music?.artist != null) {
                 if (music!!.type == Constants.LOCAL) {
-                    NavigationHelper.navigateToArtist(it1,
-                            music?.artistId!!,
-                            music?.artist!!, null)
+                    val artist = Artist()
+                    artist.artistId = music?.artistId
+                    artist.name = music?.artist
+                    artist.type = music?.type
+                    NavigationHelper.navigateToArtist(it1, artist, null)
                 } else {
                     val artist = music?.let { it1 -> MusicUtils.getArtistInfo(it1) }
                     artist?.let {
-                        NavigationHelper.navigateToPlaylist(mContext, it, null)
+                        NavigationHelper.navigateToArtist(mContext, it, null)
                     }
                 }
             }
@@ -124,7 +137,22 @@ class BottomDialogFragment : BottomSheetDialogFragment() {
         startActivity<EditMusicActivity>(Extras.SONG to music)
     }
 
-    inner class ItemAdapter(type: Int = 0) : RecyclerView.Adapter<ItemAdapter.ItemViewHolder>() {
+    private fun turnToDelete(music: Music?) {
+        if (music?.type == Constants.LOCAL || music?.isOnline == false) {
+            (activity as AppCompatActivity?)?.deleteSingleMusic(music) {
+                removeSuccessListener?.invoke(music)
+            }
+        } else {
+            PlaylistManagerUtils.disCollectMusic(pid, music) {
+                removeSuccessListener?.invoke(music)
+            }
+        }
+    }
+
+    /**
+     * 下拉列表适配器
+     */
+    inner class ItemAdapter(type: String = Constants.PLAYLIST_LOCAL_ID) : RecyclerView.Adapter<ItemAdapter.ItemViewHolder>() {
         private var itemData = mutableMapOf(
                 R.string.popup_play_next to R.drawable.ic_queue_play_next,
                 R.string.popup_add_to_playlist to R.drawable.ic_playlist_add,
@@ -132,21 +160,37 @@ class BottomDialogFragment : BottomSheetDialogFragment() {
                 R.string.popup_artist to R.drawable.ic_art_track,
                 R.string.popup_detail_edit to R.drawable.ic_mode_edit,
                 R.string.popup_download to R.drawable.item_download,
+                R.string.popup_mv to R.drawable.ic_video_label,
                 R.string.popup_delete to R.drawable.ic_delete,
                 R.string.popup_share to R.drawable.ic_share_black)
         val data = mutableListOf<PopupItemBean>()
 
         init {
+            //是否是本地视频
+            if (music?.type == Constants.VIDEO) {
+                itemData.clear()
+            }
+            //是否显示下载歌曲Item
+            if (!BuildConfig.HAS_DOWNLOAD) {
+                itemData.remove(R.string.popup_download)
+            }
+            //是否有mv
+            if (music?.hasMv == 0) {
+                itemData.remove(R.string.popup_mv)
+            }
+
             if (music?.type == Constants.LOCAL) {
                 itemData.remove(R.string.popup_download)
                 itemData.remove(R.string.popup_add_to_playlist)
-                itemData.remove(R.string.popup_delete)
             } else {
                 itemData.remove(R.string.popup_detail_edit)
-            }
+                if (music?.isDl == false || music?.isOnline == false) {
+                    itemData.remove(R.string.popup_download)
+                }
 
-            if (type == Constants.OP_ONLINE) {
-                itemData.remove(R.string.popup_delete)
+                if (type != Constants.PLAYLIST_CUSTOM_ID && type != Constants.PLAYLIST_IMPORT_ID && music?.isOnline == true) {
+                    itemData.remove(R.string.popup_delete)
+                }
             }
 
             itemData.forEach {
@@ -163,13 +207,12 @@ class BottomDialogFragment : BottomSheetDialogFragment() {
             holder.textView.text = data[position].title
             holder.icon.setImageResource(data[position].icon)
             holder.icon.setColorFilter(Color.parseColor("#0091EA"))
-
             holder.itemView.setOnClickListener {
                 when (data[position].icon) {
                     R.drawable.ic_queue_play_next -> PlayManager.nextPlay(music)
                     R.drawable.ic_playlist_add -> {
                         if (music?.type != Constants.LOCAL) {
-                            OnlinePlaylistUtils.addToPlaylist(mContext, music)
+                            PlaylistManagerUtils.addToPlaylist(mContext, music)
                         }
                     }
                     R.drawable.ic_art_track -> {
@@ -182,15 +225,24 @@ class BottomDialogFragment : BottomSheetDialogFragment() {
                         turnToEdit()
                     }
                     R.drawable.ic_delete -> {
-                        removeMusicListener?.remove(this@BottomDialogFragment.position, music)
+                        turnToDelete(music)
+                    }
+                    R.drawable.ic_video_label -> {
+                        if (music?.type == Constants.BAIDU || music?.type == Constants.VIDEO) {
+                            startActivity<BaiduMvDetailActivity>(Extras.MV_ID to music?.mid)
+                        } else {
+
+                        }
                     }
                     R.drawable.item_download -> {
                         if (music?.type != Constants.LOCAL) {
-                            mContext.downloadMusic(music)
+                            QualitySelectDialog.newInstance(music).apply {
+                                isDownload = true
+                            }.show(mContext)
                         }
                     }
                     R.drawable.ic_share_black -> {
-                        MusicUtils.qqShare(mContext, PlayManager.getPlayingMusic())
+                        Tools.qqShare(mContext, PlayManager.getPlayingMusic())
                     }
                 }
                 mBehavior?.state = BottomSheetBehavior.STATE_HIDDEN

@@ -18,7 +18,8 @@ import com.chad.library.adapter.base.callback.ItemDragAndSwipeCallback;
 import com.chad.library.adapter.base.listener.OnItemDragListener;
 import com.chad.library.adapter.base.listener.OnItemSwipeListener;
 import com.cyl.musiclake.R;
-import com.cyl.musiclake.base.BaseFragment;
+import com.cyl.musiclake.ui.base.BaseFragment;
+import com.cyl.musiclake.common.Constants;
 import com.cyl.musiclake.common.NavigationHelper;
 import com.cyl.musiclake.bean.Music;
 import com.cyl.musiclake.player.PlayManager;
@@ -56,7 +57,7 @@ public class PlayQueueFragment extends BaseFragment<PlayQueuePresenter> implemen
 
     @Override
     public void initViews() {
-        mToolbar.setTitle("播放队列");
+        mToolbar.setTitle(getString(R.string.playlist_queue));
 
         setHasOptionsMenu(true);
         if (getActivity() != null) {
@@ -65,7 +66,7 @@ public class PlayQueueFragment extends BaseFragment<PlayQueuePresenter> implemen
             appCompatActivity.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
 
-        mAdapter = new PlayQueueAdapter(musicInfos, false);
+        mAdapter = new PlayQueueAdapter(musicInfos);
         mAdapter.openLoadAnimation(BaseQuickAdapter.SLIDEIN_LEFT);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         mRecyclerView.setAdapter(mAdapter);
@@ -94,7 +95,9 @@ public class PlayQueueFragment extends BaseFragment<PlayQueuePresenter> implemen
 
     @Override
     protected void loadData() {
-        mPresenter.loadSongs();
+        if (mPresenter != null) {
+            mPresenter.loadSongs();
+        }
     }
 
     @Override
@@ -111,6 +114,9 @@ public class PlayQueueFragment extends BaseFragment<PlayQueuePresenter> implemen
     public void showSongs(List<Music> songs) {
         musicInfos = songs;
         mAdapter.setNewData(songs);
+        if (songs.size() == 0) {
+            mAdapter.setEmptyView(R.layout.view_song_empty);
+        }
     }
 
     @Override
@@ -119,20 +125,14 @@ public class PlayQueueFragment extends BaseFragment<PlayQueuePresenter> implemen
             if (view.getId() != R.id.iv_more) {
                 PlayManager.play(position);
                 mAdapter.notifyDataSetChanged();
-                NavigationHelper.INSTANCE.navigateToPlaying(mFragmentComponent.getActivity(),view.findViewById(R.id.iv_cover));
+                NavigationHelper.INSTANCE.navigateToPlaying(mFragmentComponent.getActivity(), view.findViewById(R.id.iv_cover));
             }
         });
         mAdapter.setOnItemChildClickListener((adapter, view, position) -> {
             Music music = musicInfos.get(position);
-            BottomDialogFragment.Companion.newInstance(music)
+            BottomDialogFragment.Companion.newInstance(music, Constants.PLAYLIST_QUEUE_ID)
                     .show((AppCompatActivity) mFragmentComponent.getActivity());
         });
-    }
-
-
-    @Override
-    public void showEmptyView() {
-        mAdapter.setEmptyView(R.layout.view_song_empty);
     }
 
 
@@ -141,18 +141,16 @@ public class PlayQueueFragment extends BaseFragment<PlayQueuePresenter> implemen
         int id = item.getItemId();
         switch (id) {
             case R.id.action_delete_playlist:
-                new MaterialDialog.Builder(getActivity())
-                        .title("清空播放队列?")
+                new MaterialDialog.Builder(mFragmentComponent.getActivityContext())
+                        .title(R.string.playlist_queue_clear)
                         .positiveText(R.string.sure)
                         .negativeText(R.string.cancel)
                         .onPositive((dialog, which) -> {
-                            mPresenter.clearQueue();
-                            mPresenter.loadSongs();
-                            dialog.dismiss();
+                            if (mPresenter != null) {
+                                mPresenter.clearQueue();
+                                mPresenter.loadSongs();
+                            }
                         })
-                        .positiveText("确定")
-                        .negativeText("取消")
-                        .onNegative((dialog, which) -> dialog.dismiss())
                         .show();
                 break;
         }

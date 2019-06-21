@@ -16,9 +16,9 @@ import android.widget.TextView
 import com.cyl.musicapi.kugou.Candidates
 import com.cyl.musicapi.kugou.KugouLyric
 import com.cyl.musiclake.R
-import com.cyl.musiclake.api.kugou.KuGouApiServiceImpl
-import com.cyl.musiclake.net.ApiManager
-import com.cyl.musiclake.net.RequestCallBack
+import com.cyl.musiclake.api.music.kugou.KuGouApiServiceImpl
+import com.cyl.musiclake.api.net.ApiManager
+import com.cyl.musiclake.api.net.RequestCallBack
 import com.cyl.musiclake.player.FloatLyricViewManager
 import com.cyl.musiclake.utils.SPUtils
 import com.cyl.musiclake.utils.ToastUtils

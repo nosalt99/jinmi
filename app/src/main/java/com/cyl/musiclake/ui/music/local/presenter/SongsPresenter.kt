@@ -1,7 +1,7 @@
 package com.cyl.musiclake.ui.music.local.presenter
 
-import com.cyl.musiclake.base.BasePresenter
-import com.cyl.musiclake.data.SongLoader
+import com.cyl.musiclake.ui.base.BasePresenter
+import com.cyl.musiclake.bean.data.SongLoader
 import com.cyl.musiclake.ui.music.local.contract.SongsContract
 import org.jetbrains.anko.doAsync
 import org.jetbrains.anko.uiThread
@@ -20,7 +20,12 @@ constructor() : BasePresenter<SongsContract.View>(), SongsContract.Presenter {
         doAsync {
             val data = SongLoader.getLocalMusic(mView.context, isReload)
             uiThread {
-                mView?.showSongs(data)
+                mView?.hideLoading()
+                if (data.size > 0) {
+                    mView?.showSongs(data)
+                } else {
+                    mView?.setEmptyView()
+                }
             }
         }
     }

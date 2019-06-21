@@ -1,12 +1,11 @@
 package com.cyl.musiclake.common
 
-import android.annotation.TargetApi
 import android.app.Activity
 import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
+import android.media.audiofx.AudioEffect
 import android.net.Uri
-import android.os.Build
 import android.support.v4.app.ActivityCompat
 import android.support.v4.app.ActivityOptionsCompat
 import android.support.v4.app.Fragment
@@ -18,16 +17,18 @@ import com.cyl.musiclake.bean.Album
 import com.cyl.musiclake.bean.Artist
 import com.cyl.musiclake.bean.Playlist
 import com.cyl.musiclake.player.MusicPlayerService
-import com.cyl.musiclake.download.ui.DownloadFragment
+import com.cyl.musiclake.player.PlayManager
+import com.cyl.musiclake.ui.download.ui.DownloadFragment
 import com.cyl.musiclake.ui.main.MainActivity
-import com.cyl.musiclake.ui.music.local.fragment.FolderSongsFragment
+import com.cyl.musiclake.ui.music.artist.detail.ArtistDetailActivity
 import com.cyl.musiclake.ui.music.local.fragment.LocalMusicFragment
-import com.cyl.musiclake.ui.music.player.PlayerActivity
-import com.cyl.musiclake.ui.music.playlist.LoveFragment
-import com.cyl.musiclake.ui.music.playlist.PlaylistDetailActivity
-import com.cyl.musiclake.ui.music.playlist.PlaylistDetailFragment
-import com.cyl.musiclake.ui.music.playlist.RecentlyFragment
+import com.cyl.musiclake.ui.music.local.fragment.LocalVideoFragment
+import com.cyl.musiclake.ui.music.playlist.detail.PlaylistDetailActivity
+import com.cyl.musiclake.ui.music.playlist.history.RecentlyFragment
+import com.cyl.musiclake.ui.music.playlist.love.LoveFragment
+import com.cyl.musiclake.ui.music.playpage.PlayerActivity
 import com.cyl.musiclake.ui.music.playqueue.PlayQueueFragment
+import com.cyl.musiclake.utils.ToastUtils
 import java.io.File
 
 /**
@@ -36,65 +37,6 @@ import java.io.File
  */
 
 object NavigationHelper {
-
-    /**
-     * 跳转到专辑
-     */
-    @TargetApi(Build.VERSION_CODES.KITKAT)
-    fun navigateToAlbum(context: Activity, albumID: String, title: String, transitionViews: Pair<View, String>?) {
-
-//        val transaction = (context as AppCompatActivity).supportFragmentManager.beginTransaction()
-//        val fragment: Fragment
-//
-//        if (transitionViews != null) {
-//            val changeImage = TransitionInflater.from(context).inflateTransition(R.transition.image_transform)
-//            transaction.addSharedElement(transitionViews.first, transitionViews.second)
-//            fragment = AlbumDetailFragment.newInstance(albumID, title, transitionViews.second)
-//            fragment.setSharedElementEnterTransition(changeImage)
-//        } else {
-//            transaction.setCustomAnimations(R.anim.activity_fade_in,
-//                    R.anim.activity_fade_out, R.anim.activity_fade_in, R.anim.activity_fade_out)
-//            fragment = AlbumDetailFragment.newInstance(albumID, title, null)
-//        }
-//        transaction.hide(context.supportFragmentManager.findFragmentById(R.id.fragment_container))
-//        transaction.add(R.id.fragment_container, fragment)
-//        transaction.addToBackStack(title).commit()
-        val album = Album()
-        album.albumId = albumID
-        album.name = title
-        val intent = Intent(context, PlaylistDetailActivity::class.java)
-        intent.putExtra(Extras.ALBUM, album)
-        context.startActivity(intent)
-
-    }
-
-    @TargetApi(Build.VERSION_CODES.KITKAT)
-    fun navigateToArtist(context: Activity, artistID: String, title: String, transitionViews: Pair<View, String>?) {
-//        val transaction = (context as AppCompatActivity).supportFragmentManager.beginTransaction()
-//        val fragment: Fragment
-//
-//        if (transitionViews != null) {
-//            val changeImage = TransitionInflater.from(context).inflateTransition(R.transition.image_transform)
-//            transaction.addSharedElement(transitionViews.first, transitionViews.second)
-//            fragment = ArtistSongsFragment.newInstance(artistID, title, transitionViews.second)
-//            fragment.setSharedElementEnterTransition(changeImage)
-//        } else {
-//            transaction.setCustomAnimations(R.anim.activity_fade_in,
-//                    R.anim.activity_fade_out, R.anim.activity_fade_in, R.anim.activity_fade_out)
-//            fragment = ArtistSongsFragment.newInstance(artistID, title, null)
-//        }
-//        transaction.hide(context.supportFragmentManager.findFragmentById(R.id.fragment_container))
-//        transaction.add(R.id.fragment_container, fragment)
-//        transaction.addToBackStack(title).commit()
-        val artist = Artist()
-        artist.artistId = artistID.toLong()
-        artist.name = title
-        val intent = Intent(context, PlaylistDetailActivity::class.java)
-        intent.putExtra(Extras.ARTIST, artist)
-        context.startActivity(intent)
-    }
-
-
     fun navigateToLocalMusic(context: Activity, transitionViews: Pair<View, String>?) {
         val transaction = (context as AppCompatActivity).supportFragmentManager.beginTransaction()
         val fragment: Fragment
@@ -107,17 +49,45 @@ object NavigationHelper {
             //                    R.anim.activity_fade_out, R.anim.activity_fade_in, R.anim.activity_fade_out);
             fragment = LocalMusicFragment.newInstance("local")
         }
-        transaction.hide(context.supportFragmentManager.findFragmentById(R.id.fragment_container))
+        context.supportFragmentManager.findFragmentById(R.id.fragment_container)?.let { transaction.hide(it) }
         transaction.add(R.id.fragment_container, fragment)
         transaction.addToBackStack(fragment.getTag()).commit()
     }
+
+    fun navigateToVideo(context: Activity, transitionViews: Pair<View, String>?) {
+        val transaction = (context as AppCompatActivity).supportFragmentManager.beginTransaction()
+        val fragment: Fragment
+
+        if (transitionViews != null) {
+            transaction.addSharedElement(transitionViews.first, transitionViews.second)
+            fragment = LocalVideoFragment.newInstance("")
+        } else {
+            //            transaction.setCustomAnimations(R.anim.activity_fade_in,
+            //                    R.anim.activity_fade_out, R.anim.activity_fade_in, R.anim.activity_fade_out);
+            fragment = LocalVideoFragment.newInstance("")
+        }
+        context.supportFragmentManager.findFragmentById(R.id.fragment_container)?.let { transaction.hide(it) }
+        transaction.add(R.id.fragment_container, fragment)
+        transaction.addToBackStack(fragment.getTag()).commit()
+    }
+
+    fun navigateToSoundEffect(context: Activity) {
+        try {
+            val effects = Intent(AudioEffect.ACTION_DISPLAY_AUDIO_EFFECT_CONTROL_PANEL)
+            effects.putExtra(AudioEffect.EXTRA_AUDIO_SESSION, PlayManager.getAudioSessionId())
+            context.startActivityForResult(effects, 666)
+        } catch (e: Exception) {
+            ToastUtils.show("设备不支持均衡！")
+        }
+    }
+
 
     fun navigateToFolderSongs(context: Activity, path: String) {
         val transaction = (context as AppCompatActivity).supportFragmentManager.beginTransaction()
         val fragment: Fragment
 
-        fragment = FolderSongsFragment.newInstance(path)
-        transaction.hide(context.supportFragmentManager.findFragmentById(R.id.fragment_container))
+        fragment = LocalVideoFragment.newInstance(path)
+        context.supportFragmentManager.findFragmentById(R.id.fragment_container)?.let { transaction.hide(it) }
         transaction.add(R.id.fragment_container, fragment)
         transaction.addToBackStack(fragment.getTag()).commit()
     }
@@ -126,7 +96,7 @@ object NavigationHelper {
         val transaction = (context as AppCompatActivity).supportFragmentManager.beginTransaction()
         val fragment: Fragment
         fragment = RecentlyFragment.newInstance()
-        transaction.hide(context.supportFragmentManager.findFragmentById(R.id.fragment_container))
+        transaction.hide(context.supportFragmentManager.findFragmentById(R.id.fragment_container)!!)
         transaction.add(R.id.fragment_container, fragment)
         transaction.addToBackStack(fragment.getTag()).commit()
     }
@@ -134,7 +104,7 @@ object NavigationHelper {
     fun navigatePlayQueue(context: Activity) {
         val transaction = (context as AppCompatActivity).supportFragmentManager.beginTransaction()
         val fragment = PlayQueueFragment.newInstance()
-        transaction.hide(context.supportFragmentManager.findFragmentById(R.id.fragment_container))
+        transaction.hide(context.supportFragmentManager.findFragmentById(R.id.fragment_container)!!)
         transaction.add(R.id.fragment_container, fragment)
         transaction.addToBackStack(fragment.tag).commit()
     }
@@ -144,24 +114,24 @@ object NavigationHelper {
         val fragment: Fragment
 
         fragment = LoveFragment.newInstance()
-        transaction.hide(context.supportFragmentManager.findFragmentById(R.id.fragment_container))
+        transaction.hide(context.supportFragmentManager.findFragmentById(R.id.fragment_container)!!)
         transaction.add(R.id.fragment_container, fragment)
         transaction.addToBackStack(fragment.getTag()).commit()
     }
 
-    fun navigateToDownload(context: Activity, transitionViews: Pair<View, String>?) {
+    fun navigateToDownload(context: Activity, isCache: Boolean = false, transitionViews: Pair<View, String>? = null) {
         val transaction = (context as AppCompatActivity).supportFragmentManager.beginTransaction()
         val fragment: Fragment
 
         if (transitionViews != null) {
             transaction.addSharedElement(transitionViews.first, transitionViews.second)
-            fragment = DownloadFragment.newInstance()
+            fragment = DownloadFragment.newInstance(isCache)
         } else {
             //            transaction.setCustomAnimations(R.anim.activity_fade_in,
             //                    R.anim.activity_fade_out, R.anim.activity_fade_in, R.anim.activity_fade_out);
-            fragment = DownloadFragment.newInstance()
+            fragment = DownloadFragment.newInstance(isCache)
         }
-        transaction.hide((context.supportFragmentManager.findFragmentById(R.id.fragment_container)))
+        transaction.hide((context.supportFragmentManager.findFragmentById(R.id.fragment_container)!!))
         transaction.add(R.id.fragment_container, fragment)
         transaction.addToBackStack(fragment.getTag()).commit()
     }
@@ -169,6 +139,18 @@ object NavigationHelper {
     fun navigateToPlaylist(context: Activity, playlist: Playlist, transitionViews: Pair<View, String>?) {
         val intent = Intent(context, PlaylistDetailActivity::class.java)
         intent.putExtra(Extras.PLAYLIST, playlist)
+        if (transitionViews != null) {
+            val compat = ActivityOptionsCompat.makeSceneTransitionAnimation(context,
+                    transitionViews.first, transitionViews.second)
+            ActivityCompat.startActivity(context, intent, compat.toBundle())
+        } else {
+            context.startActivity(intent)
+        }
+    }
+
+    fun navigateToArtist(context: Activity, artist: Artist, transitionViews: Pair<View, String>?) {
+        val intent = Intent(context, ArtistDetailActivity::class.java)
+        intent.putExtra(Extras.ARTIST, artist)
         if (transitionViews != null) {
             val compat = ActivityOptionsCompat.makeSceneTransitionAnimation(context,
                     transitionViews.first, transitionViews.second)
@@ -205,7 +187,7 @@ object NavigationHelper {
 
     fun navigateFragment(context: Activity, fragment: Fragment) {
         val transaction = (context as AppCompatActivity).supportFragmentManager.beginTransaction()
-        transaction.hide(context.supportFragmentManager.findFragmentById(R.id.fragment_container))
+        transaction.hide(context.supportFragmentManager.findFragmentById(R.id.fragment_container)!!)
         transaction.add(R.id.fragment_container, fragment)
         transaction.addToBackStack(fragment.tag).commit()
     }

@@ -19,6 +19,8 @@ import android.renderscript.Element;
 import android.renderscript.RenderScript;
 import android.renderscript.ScriptIntrinsicBlur;
 
+import com.cyl.musiclake.MusicApp;
+
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -373,10 +375,12 @@ public class ImageUtils {
         return bitmap;
     }
 
+    /**
+     * @param inSampleSize 图片像素的 1/n*n
+     */
+    public static Drawable createBlurredImageFromBitmap(Bitmap bitmap, int inSampleSize) {
 
-    public static Drawable createBlurredImageFromBitmap(Bitmap bitmap, Context context, int inSampleSize) {
-
-        RenderScript rs = RenderScript.create(context);
+        RenderScript rs = RenderScript.create(MusicApp.getAppContext());
         final BitmapFactory.Options options = new BitmapFactory.Options();
         options.inSampleSize = inSampleSize;
 
@@ -394,7 +398,7 @@ public class ImageUtils {
         script.forEach(output);
         output.copyTo(blurTemplate);
 
-        return new BitmapDrawable(context.getResources(), blurTemplate);
+        return new BitmapDrawable(MusicApp.getAppContext().getResources(), blurTemplate);
     }
 
 }

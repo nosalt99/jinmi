@@ -6,26 +6,29 @@ import android.content.Context;
 import com.cyl.musiclake.di.module.FragmentModule;
 import com.cyl.musiclake.di.scope.ContextLife;
 import com.cyl.musiclake.di.scope.PerFragment;
+import com.cyl.musiclake.ui.music.discover.artist.QQArtistListFragment;
 import com.cyl.musiclake.ui.music.discover.DiscoverFragment;
-import com.cyl.musiclake.download.ui.DownloadManagerFragment;
+import com.cyl.musiclake.ui.download.ui.DownloadManagerFragment;
 import com.cyl.musiclake.ui.music.local.fragment.AlbumDetailFragment;
 import com.cyl.musiclake.ui.music.local.fragment.AlbumFragment;
 import com.cyl.musiclake.ui.music.local.fragment.ArtistFragment;
 import com.cyl.musiclake.ui.music.local.fragment.ArtistSongsFragment;
-import com.cyl.musiclake.ui.music.local.fragment.FolderSongsFragment;
+import com.cyl.musiclake.ui.music.local.fragment.LocalVideoFragment;
 import com.cyl.musiclake.ui.music.local.fragment.FoldersFragment;
 import com.cyl.musiclake.ui.music.mv.MvListFragment;
-import com.cyl.musiclake.ui.music.online.fragment.NeteasePlaylistFragment;
-import com.cyl.musiclake.ui.music.player.CoverFragment;
-import com.cyl.musiclake.ui.music.playlist.LoveFragment;
-import com.cyl.musiclake.ui.music.local.fragment.MyMusicFragment;
-import com.cyl.musiclake.ui.music.player.PlayControlFragment;
-import com.cyl.musiclake.ui.music.playlist.PlaylistDetailFragment;
-import com.cyl.musiclake.ui.music.playlist.RecentlyFragment;
+import com.cyl.musiclake.ui.music.charts.fragment.ChartsDetailFragment;
+import com.cyl.musiclake.ui.music.mv.MvSearchListFragment;
+import com.cyl.musiclake.ui.music.playlist.love.LoveFragment;
+import com.cyl.musiclake.ui.music.my.MyMusicFragment;
+import com.cyl.musiclake.ui.music.bottom.PlayControlFragment;
+import com.cyl.musiclake.ui.music.playlist.detail.PlaylistDetailFragment;
+import com.cyl.musiclake.ui.music.playlist.PlaylistFragment;
+import com.cyl.musiclake.ui.music.playlist.history.RecentlyFragment;
 import com.cyl.musiclake.ui.music.local.fragment.SongsFragment;
-import com.cyl.musiclake.ui.music.online.fragment.BaiduPlaylistFragment;
-import com.cyl.musiclake.download.ui.DownloadedFragment;
+import com.cyl.musiclake.ui.download.ui.DownloadedFragment;
+import com.cyl.musiclake.ui.music.playlist.square.TopPlaylistFragment;
 import com.cyl.musiclake.ui.music.playqueue.PlayQueueFragment;
+import com.cyl.musiclake.ui.my.BindLoginActivity;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -55,8 +58,6 @@ public interface FragmentComponent {
 
     void inject(FoldersFragment foldersFragment);
 
-    void inject(BaiduPlaylistFragment baiduPlaylistFragment);
-
     void inject(RecentlyFragment recentlyFragment);
 
     void inject(PlaylistDetailFragment playlistDetailFragment);
@@ -69,7 +70,7 @@ public interface FragmentComponent {
 
     void inject(LoveFragment loveFragment);
 
-    void inject(FolderSongsFragment folderSongsFragment);
+    void inject(LocalVideoFragment localVideoFragment);
 
     void inject(DownloadedFragment downloadedFragment);
 
@@ -81,7 +82,15 @@ public interface FragmentComponent {
 
     void inject(MvListFragment mvListFragment);
 
-    void inject(@NotNull CoverFragment coverFragment);
+    void inject(@NotNull ChartsDetailFragment chartsDetailFragment);
 
-    void inject(@NotNull NeteasePlaylistFragment neteasePlaylistFragment);
+    void inject(@NotNull QQArtistListFragment QQArtistListFragment);
+
+    void inject(MvSearchListFragment mvSearchListFragment);
+
+    void inject(@NotNull BindLoginActivity bindLoginActivity);
+
+    void inject(@NotNull PlaylistFragment playlistFragment);
+
+    void inject(@NotNull TopPlaylistFragment topPlaylistFragment);
 }

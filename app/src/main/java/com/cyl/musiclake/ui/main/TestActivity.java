@@ -4,7 +4,7 @@ import android.widget.TextView;
 
 import com.cyl.musicapi.BaseApiImpl;
 import com.cyl.musiclake.R;
-import com.cyl.musiclake.base.BaseActivity;
+import com.cyl.musiclake.ui.base.BaseActivity;
 import com.cyl.musiclake.bean.Music;
 import com.cyl.musiclake.player.PlayManager;
 
@@ -33,7 +33,7 @@ public class TestActivity extends BaseActivity {
             statusTv.setText("searchSong");
             resultTv.setText(result.toString());
             return null;
-        });
+        }, null);
     }
 
     @OnClick(R.id.btn_test3)
@@ -74,7 +74,7 @@ public class TestActivity extends BaseActivity {
         if (music != null) {
             String type = music.getType();
             String mid = music.getMid();
-            searchApi.getSongUrl(type, mid, result -> {
+            searchApi.getSongUrl(type, mid, 128000, result -> {
                 statusTv.setText("getSongUrl");
                 resultTv.setText(result.toString());
                 return null;
@@ -112,7 +112,6 @@ public class TestActivity extends BaseActivity {
 
     @Override
     protected void initData() {
-        searchApi = BaseApiImpl.INSTANCE.getInstance(this);
     }
 
     @Override

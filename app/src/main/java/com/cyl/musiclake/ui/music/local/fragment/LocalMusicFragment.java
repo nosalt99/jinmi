@@ -7,7 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 
 import com.cyl.musiclake.R;
-import com.cyl.musiclake.base.BaseLazyFragment;
+import com.cyl.musiclake.ui.base.BaseLazyFragment;
 import com.cyl.musiclake.common.Extras;
 import com.cyl.musiclake.ui.main.PageAdapter;
 
@@ -54,10 +54,10 @@ public class LocalMusicFragment extends BaseLazyFragment {
 
     private void setupViewPager(ViewPager viewPager) {
         PageAdapter adapter = new PageAdapter(getChildFragmentManager());
-        adapter.addFragment(SongsFragment.Companion.newInstance(), "本地");
-        adapter.addFragment(AlbumFragment.newInstance(), "专辑");
-        adapter.addFragment(ArtistFragment.newInstance(), "艺术家");
-        adapter.addFragment(FoldersFragment.Companion.newInstance(), "文件夹");
+        adapter.addFragment(SongsFragment.Companion.newInstance(), getString(R.string.local_title));
+        adapter.addFragment(AlbumFragment.newInstance(), getString(R.string.album_title));
+        adapter.addFragment(ArtistFragment.newInstance(), getString(R.string.artist_title));
+        adapter.addFragment(FoldersFragment.Companion.newInstance(), getString(R.string.folder_title));
         viewPager.setAdapter(adapter);
     }
 

@@ -1,5 +1,6 @@
 package com.cyl.musiclake.player;
 
+import android.annotation.SuppressLint;
 import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
@@ -15,7 +16,6 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.media.AudioManager;
 import android.media.audiofx.AudioEffect;
-import android.net.Uri;
 import android.os.Build;
 import android.os.Handler;
 import android.os.HandlerThread;
@@ -23,7 +23,6 @@ import android.os.IBinder;
 import android.os.Looper;
 import android.os.Message;
 import android.os.PowerManager;
-import android.provider.Settings;
 import android.support.annotation.Nullable;
 import android.support.annotation.RequiresApi;
 import android.support.v4.media.app.NotificationCompat;
@@ -33,35 +32,36 @@ import android.telephony.PhoneStateListener;
 import android.telephony.TelephonyManager;
 import android.text.TextUtils;
 
-import com.cyl.musiclake.MusicApp;
 import com.cyl.musiclake.R;
-import com.cyl.musiclake.RxBus;
-import com.cyl.musiclake.api.MusicApi;
+import com.cyl.musiclake.api.music.MusicApi;
 import com.cyl.musiclake.bean.Music;
 import com.cyl.musiclake.common.Constants;
 import com.cyl.musiclake.common.Extras;
-import com.cyl.musiclake.data.PlayHistoryLoader;
-import com.cyl.musiclake.data.PlayQueueLoader;
+import com.cyl.musiclake.bean.data.PlayHistoryLoader;
+import com.cyl.musiclake.bean.data.PlayQueueLoader;
 import com.cyl.musiclake.event.MetaChangedEvent;
 import com.cyl.musiclake.event.PlaylistEvent;
-import com.cyl.musiclake.event.ScheduleTaskEvent;
 import com.cyl.musiclake.event.StatusChangedEvent;
-import com.cyl.musiclake.net.ApiManager;
-import com.cyl.musiclake.net.RequestCallBack;
+import com.cyl.musiclake.api.net.ApiManager;
+import com.cyl.musiclake.api.net.RequestCallBack;
 import com.cyl.musiclake.player.playback.PlayProgressListener;
 import com.cyl.musiclake.player.playqueue.PlayQueueManager;
-import com.cyl.musiclake.ui.music.player.PlayerActivity;
+import com.cyl.musiclake.ui.music.playpage.PlayerActivity;
 import com.cyl.musiclake.utils.CoverLoader;
+import com.cyl.musiclake.utils.FileUtils;
 import com.cyl.musiclake.utils.LogUtil;
+import com.cyl.musiclake.utils.NetworkUtils;
 import com.cyl.musiclake.utils.SPUtils;
 import com.cyl.musiclake.utils.SystemUtils;
 import com.cyl.musiclake.utils.ToastUtils;
+import com.cyl.musiclake.ui.widget.appwidgets.StandardWidget;
 
 import org.greenrobot.eventbus.EventBus;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Random;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -88,6 +88,7 @@ public class MusicPlayerService extends Service {
     public static final String ACTION_PREV = "com.cyl.music_lake.notify.prev";// 上一首广播标志
     public static final String ACTION_PLAY_PAUSE = "com.cyl.music_lake.notify.play_state";// 播放暂停广播
     public static final String ACTION_CLOSE = "com.cyl.music_lake.notify.close";// 播放暂停广播
+    public static final String ACTION_IS_WIDGET = "ACTION_IS_WIDGET";// 播放暂停广播
 
     public static final String ACTION_LYRIC = "com.cyl.music_lake.notify.lyric";// 播放暂停广播
 
@@ -118,6 +119,8 @@ public class MusicPlayerService extends Service {
     public static final String SERVICE_CMD = "cmd_service";//状态改变
     public static final String FROM_MEDIA_BUTTON = "media";//状态改变
     public static final String CMD_NAME = "name";//状态改变
+    public static final String UNLOCK_DESKTOP_LYRIC = "unlock_lyric"; //音量改变增加
+
 
     public static final int TRACK_WENT_TO_NEXT = 2; //下一首
     public static final int RELEASE_WAKELOCK = 3; //播放完成
@@ -128,21 +131,25 @@ public class MusicPlayerService extends Service {
     public static final int PLAYER_PREPARED = 8; //mediaplayer准备完成
 
     public static final int AUDIO_FOCUS_CHANGE = 12; //音频焦点改变
-    public static final int VOLUME_FADE_DOWN = 13; //音频焦点改变
-    public static final int VOLUME_FADE_UP = 14; //音频焦点改变
+    public static final int VOLUME_FADE_DOWN = 13; //音量改变减少
+    public static final int VOLUME_FADE_UP = 14; //音量改变增加
 
-    public static final int SCHEDULE_TASK = 15; //定时关闭改变
 
     private final int NOTIFICATION_ID = 0x123;
     private long mNotificationPostTime = 0;
     private int mServiceStartId = -1;
+
+    /**
+     * 错误次数，超过最大错误次数，自动停止播放
+     */
+    private int playErrorTimes = 0;
+    private int MAX_ERROR_TIMES = 1;
 
     private static final boolean DEBUG = true;
 
     private MusicPlayerEngine mPlayer = null;
     public PowerManager.WakeLock mWakeLock;
     private PowerManager powerManager;
-
 
     public Music mPlayingMusic = null;
     private List<Music> mPlayQueue = new ArrayList<>();
@@ -154,7 +161,9 @@ public class MusicPlayerService extends Service {
     //广播接收者
     ServiceReceiver mServiceReceiver;
     HeadsetReceiver mHeadsetReceiver;
+    StandardWidget mStandardWidget;
     HeadsetPlugInReceiver mHeadsetPlugInReceiver;
+    IntentFilter intentFilter;
 
     private FloatLyricViewManager mFloatLyricViewManager;
 
@@ -171,7 +180,6 @@ public class MusicPlayerService extends Service {
     //暂时失去焦点，会再次回去音频焦点
     private boolean mPausedByTransientLossOfFocus = false;
 
-    public static boolean mShutdownScheduled = false;
     public static int totalTime = 0;
 
     boolean mServiceInUse = false;
@@ -184,6 +192,9 @@ public class MusicPlayerService extends Service {
     private boolean showLyric;
 
     private static MusicPlayerService instance;
+
+    //歌词定时器
+    private Timer lyricTimer;
 
     public static MusicPlayerService getInstance() {
         return instance;
@@ -244,32 +255,41 @@ public class MusicPlayerService extends Service {
                         break;
                     case TRACK_WENT_TO_NEXT: //mplayer播放完毕切换到下一首
 //                        service.setAndRecordPlayPos(service.mNextPlayPos);
-                        mMainHandler.post(service::next);
+                        mMainHandler.post(() -> service.next(true));
 //                        service.updateCursor(service.mPlayQueue.get(service.mPlayPos).mId);
 //                        service.bumpSongCount(); //更新歌曲的播放次数
                         break;
                     case TRACK_PLAY_ENDED://mPlayer播放完毕且暂时没有下一首
                         if (PlayQueueManager.INSTANCE.getPlayModeId() == PlayQueueManager.PLAY_MODE_REPEAT) {
-                            service.seekTo(0);
+                            service.seekTo(0, false);
                             mMainHandler.post(service::play);
                         } else {
-                            mMainHandler.post(service::next);
+                            mMainHandler.post(() -> service.next(true));
                         }
                         break;
                     case TRACK_PLAY_ERROR://mPlayer播放错误
-                        LogUtil.e(TAG, msg.obj + "---");
-                        mMainHandler.post(service::next);
+                        LogUtil.e(TAG, "TRACK_PLAY_ERROR " + msg.obj + "---");
+                        playErrorTimes++;
+                        if (playErrorTimes < MAX_ERROR_TIMES) {
+                            mMainHandler.post(() -> service.next(true));
+                        } else {
+                            mMainHandler.post(service::pause);
+                        }
                         break;
                     case RELEASE_WAKELOCK://释放电源锁
                         service.mWakeLock.release();
                         break;
                     case PREPARE_ASYNC_UPDATE:
                         int percent = (int) msg.obj;
-                        LogUtil.e(TAG, "Loading ... " + percent);
+                        LogUtil.e(TAG, "PREPARE_ASYNC_UPDATE Loading ... " + percent);
                         notifyChange(PLAY_STATE_LOADING_CHANGED);
                         break;
                     case PLAYER_PREPARED:
                         //执行prepared之后 准备完成，更新总时长
+                        //准备完成，可以播放
+                        LogUtil.e(TAG, "PLAYER_PREPARED");
+                        isMusicPlaying = true;
+                        updateNotification(false);
                         notifyChange(PLAY_STATE_CHANGED);
                         break;
                     case AUDIO_FOCUS_CHANGE:
@@ -302,20 +322,6 @@ public class MusicPlayerService extends Service {
                             default:
                         }
                         break;
-                    case SCHEDULE_TASK:
-                        LogUtil.e(TAG, "定时任务：" + time);
-                        if (time == 0) {
-                            service.stopSelf();
-                            releaseServiceUiAndStop();
-                            System.exit(0);
-                        } else if (time == 10000) {
-                            time = time - 1000;
-                            ToastUtils.show("10秒后将自动关闭应用");
-                        } else {
-                            time = time - 1000;
-                            RxBus.getInstance().post(new ScheduleTaskEvent());
-                        }
-                        break;
                 }
             }
         }
@@ -342,6 +348,7 @@ public class MusicPlayerService extends Service {
     /**
      * 参数配置，AudioManager、锁屏
      */
+    @SuppressLint("InvalidWakeLockTag")
     private void initConfig() {
 
         //初始化主线程Handler
@@ -396,7 +403,8 @@ public class MusicPlayerService extends Service {
         mPlayingPos = SPUtils.getPlayPosition();
         if (mPlayingPos >= 0 && mPlayingPos < mPlayQueue.size()) {
             mPlayingMusic = mPlayQueue.get(mPlayingPos);
-            updateNotification(false);
+            updateNotification(true);
+            seekTo(SPUtils.getPosition(), true);
             notifyChange(META_CHANGED);
         }
         notifyChange(PLAY_QUEUE_CHANGE);
@@ -426,18 +434,21 @@ public class MusicPlayerService extends Service {
      */
     private void initReceiver() {
         //实例化过滤器，设置广播
+        intentFilter = new IntentFilter(ACTION_SERVICE);
         mServiceReceiver = new ServiceReceiver();
         mHeadsetReceiver = new HeadsetReceiver();
+        mStandardWidget = new StandardWidget();
         mHeadsetPlugInReceiver = new HeadsetPlugInReceiver();
-        IntentFilter intentFilter = new IntentFilter(ACTION_SERVICE);
         intentFilter.addAction(ACTION_NEXT);
         intentFilter.addAction(ACTION_PREV);
+        intentFilter.addAction(META_CHANGED);
         intentFilter.addAction(SHUTDOWN);
         intentFilter.addAction(ACTION_PLAY_PAUSE);
         //注册广播
         registerReceiver(mServiceReceiver, intentFilter);
         registerReceiver(mHeadsetReceiver, intentFilter);
         registerReceiver(mHeadsetPlugInReceiver, intentFilter);
+        registerReceiver(mStandardWidget, intentFilter);
     }
 
     /**
@@ -466,40 +477,6 @@ public class MusicPlayerService extends Service {
         return START_NOT_STICKY;
     }
 
-    private Timer timer;
-    private TimerTask task;
-    public static long time;
-
-    /**
-     * 开启定时
-     *
-     * @param totalTime 总时间 分钟单位
-     */
-    private void startRemind(int totalTime) {
-        time = totalTime * 1000 * 60;
-        if (timer == null) {
-            timer = new Timer();
-        }
-        if (task != null) {
-            task.cancel();
-        }
-        if (time == 0) return;
-        mShutdownScheduled = true;
-        task = new TimerTask() {
-            @Override
-            public void run() {
-                // TODO Auto-generated method stub
-                if (mShutdownScheduled) {
-                    Message message = Message.obtain();
-                    message.what = SCHEDULE_TASK;
-                    mHandler.sendMessage(message);
-                }
-            }
-        };
-        timer.schedule(task, 0, 1000);
-    }
-
-
     /**
      * 绑定Service
      *
@@ -519,9 +496,14 @@ public class MusicPlayerService extends Service {
     /**
      * 下一首
      */
-    public void next() {
+    public void next(Boolean isAuto) {
         synchronized (this) {
-            mPlayingPos = getNextPosition();
+            if (!NetworkUtils.isNetworkAvailable(this)) {
+                ToastUtils.show("网络不可用，请检查网络连接");
+                return;
+            }
+
+            mPlayingPos = PlayQueueManager.INSTANCE.getNextPosition(isAuto, mPlayQueue.size(), mPlayingPos);
             LogUtil.e(TAG, "next: " + mPlayingPos);
             stop(false);
             playCurrentAndNext();
@@ -533,7 +515,12 @@ public class MusicPlayerService extends Service {
      */
     public void prev() {
         synchronized (this) {
-            mPlayingPos = getPreviousPosition();
+            if (!NetworkUtils.isNetworkAvailable(this)) {
+                ToastUtils.show("网络不可用，请检查网络连接");
+                return;
+            }
+
+            mPlayingPos = PlayQueueManager.INSTANCE.getPreviousPosition(mPlayQueue.size(), mPlayingPos);
             LogUtil.e(TAG, "prev: " + mPlayingPos);
             stop(false);
             playCurrentAndNext();
@@ -545,42 +532,49 @@ public class MusicPlayerService extends Service {
      */
     private void playCurrentAndNext() {
         synchronized (this) {
-            if (mPlayingPos > mPlayQueue.size() || mPlayingPos < 0) {
+            if (mPlayingPos >= mPlayQueue.size() || mPlayingPos < 0) {
                 return;
             }
             mPlayingMusic = mPlayQueue.get(mPlayingPos);
+            //更新当前歌曲
             notifyChange(META_CHANGED);
+            updateNotification(true);
+            //更新播放播放状态
+            isMusicPlaying = false;
+            notifyChange(PLAY_STATE_CHANGED);
+            updateNotification(false);
+
             LogUtil.e(TAG, "playingSongInfo:" + mPlayingMusic.toString());
-            if (mPlayingMusic.getUri() == null || mPlayingMusic.getUri().equals("") || mPlayingMusic.getUri().equals("null")) {
+            if (mPlayingMusic.getUri() == null || !Objects.equals(mPlayingMusic.getType(), Constants.LOCAL) || mPlayingMusic.getUri().equals("") || mPlayingMusic.getUri().equals("null")) {
                 ApiManager.request(MusicApi.INSTANCE.getMusicInfo(mPlayingMusic), new RequestCallBack<Music>() {
                     @Override
                     public void success(Music result) {
                         LogUtil.e(TAG, "-----" + result.toString());
                         mPlayingMusic = result;
                         saveHistory();
-                        isMusicPlaying = true;
+                        playErrorTimes = 0;
                         mPlayer.setDataSource(mPlayingMusic.getUri());
                     }
 
                     @Override
                     public void error(String msg) {
-                        ToastUtils.show(msg);
+                        LogUtil.e(TAG, "播放异常-----" + msg);
+                        checkPlayErrorTimes();
                     }
                 });
             }
             saveHistory();
             mHistoryPos.add(mPlayingPos);
-            isMusicPlaying = true;
-
-
             if (mPlayingMusic.getUri() != null) {
-                mPlayer.setDataSource(mPlayingMusic.getUri());
+                if (!mPlayingMusic.getUri().startsWith(Constants.IS_URL_HEADER) && !FileUtils.exists(mPlayingMusic.getUri())) {
+                    checkPlayErrorTimes();
+                } else {
+                    playErrorTimes = 0;
+                    mPlayer.setDataSource(mPlayingMusic.getUri());
+                }
             }
-
             mediaSessionManager.updateMetaData(mPlayingMusic);
-
             audioAndFocusManager.requestAudioFocus();
-            updateNotification(false);
 
             final Intent intent = new Intent(AudioEffect.ACTION_OPEN_AUDIO_EFFECT_CONTROL_SESSION);
             intent.putExtra(AudioEffect.EXTRA_AUDIO_SESSION, getAudioSessionId());
@@ -590,10 +584,22 @@ public class MusicPlayerService extends Service {
             if (mPlayer.isInitialized()) {
                 mHandler.removeMessages(VOLUME_FADE_DOWN);
                 mHandler.sendEmptyMessage(VOLUME_FADE_UP); //组件调到正常音量
-
-                isMusicPlaying = true;
+//                isMusicPlaying = true;
 //                notifyChange(PLAY_STATE_CHANGED);
             }
+        }
+    }
+
+    /**
+     * 异常播放，自动切换下一首
+     */
+    private void checkPlayErrorTimes() {
+        if (playErrorTimes > MAX_ERROR_TIMES) {
+            pause();
+        } else {
+            playErrorTimes++;
+            ToastUtils.show("播放地址异常，自动切换下一首");
+            next(false);
         }
     }
 
@@ -621,7 +627,7 @@ public class MusicPlayerService extends Service {
      *
      * @return
      */
-    private int getNextPosition() {
+    private int getNextPosition(Boolean isAuto) {
         int playModeId = PlayQueueManager.INSTANCE.getPlayModeId();
         if (mPlayQueue == null || mPlayQueue.isEmpty()) {
             return -1;
@@ -629,18 +635,20 @@ public class MusicPlayerService extends Service {
         if (mPlayQueue.size() == 1) {
             return 0;
         }
-        if (playModeId == PlayQueueManager.PLAY_MODE_REPEAT) {
+        if (playModeId == PlayQueueManager.PLAY_MODE_REPEAT && isAuto) {
             if (mPlayingPos < 0) {
                 return 0;
+            } else {
+                return mPlayingPos;
             }
-        } else if (playModeId == PlayQueueManager.PLAY_MODE_LOOP) {
+        } else if (playModeId == PlayQueueManager.PLAY_MODE_RANDOM) {
+            return new Random().nextInt(mPlayQueue.size());
+        } else {
             if (mPlayingPos == mPlayQueue.size() - 1) {
                 return 0;
             } else if (mPlayingPos < mPlayQueue.size() - 1) {
                 return mPlayingPos + 1;
             }
-        } else if (playModeId == PlayQueueManager.PLAY_MODE_RANDOM) {
-            return new Random().nextInt(mPlayQueue.size());
         }
         return mPlayingPos;
     }
@@ -662,15 +670,15 @@ public class MusicPlayerService extends Service {
             if (mPlayingPos < 0) {
                 return 0;
             }
-        } else if (playModeId == PlayQueueManager.PLAY_MODE_LOOP) {
+        } else if (playModeId == PlayQueueManager.PLAY_MODE_RANDOM) {
+            mPlayingPos = new Random().nextInt(mPlayQueue.size());
+            return new Random().nextInt(mPlayQueue.size());
+        } else {
             if (mPlayingPos == 0) {
                 return mPlayQueue.size() - 1;
             } else if (mPlayingPos > 0) {
                 return mPlayingPos - 1;
             }
-        } else if (playModeId == PlayQueueManager.PLAY_MODE_RANDOM) {
-            mPlayingPos = new Random().nextInt(mPlayQueue.size());
-            return new Random().nextInt(mPlayQueue.size());
         }
         return mPlayingPos;
     }
@@ -682,7 +690,7 @@ public class MusicPlayerService extends Service {
      */
     public void playMusic(int position) {
         if (position >= mPlayQueue.size() || position == -1) {
-            mPlayingPos = getNextPosition();
+            mPlayingPos = PlayQueueManager.INSTANCE.getNextPosition(true, mPlayQueue.size(), position);
         } else {
             mPlayingPos = position;
         }
@@ -702,8 +710,7 @@ public class MusicPlayerService extends Service {
             audioAndFocusManager.requestAudioFocus();
             mHandler.removeMessages(VOLUME_FADE_DOWN);
             mHandler.sendEmptyMessage(VOLUME_FADE_UP); //组件调到正常音量
-
-            updateNotification(true);
+            updateNotification(false);
         } else {
             playCurrentAndNext();
         }
@@ -730,6 +737,8 @@ public class MusicPlayerService extends Service {
         } else {
             mPlayQueue.add(mPlayQueue.size(), music);
         }
+        //发送播放列表改变
+        notifyChange(PLAY_QUEUE_CHANGE);
         LogUtil.e(TAG, music.toString());
         mPlayingMusic = music;
         playCurrentAndNext();
@@ -745,15 +754,25 @@ public class MusicPlayerService extends Service {
             play(music);
         } else if (mPlayingPos < mPlayQueue.size()) {
             mPlayQueue.add(mPlayingPos + 1, music);
+            //发送播放列表改变
+            notifyChange(PLAY_QUEUE_CHANGE);
         }
     }
 
     /**
      * 切换歌单播放
-     * 1、歌单不一样切换
+     * 1、歌单不一样切换，不一样不切换
+     * 2、相同歌单只切换歌曲
+     * 3、相同歌曲不重新播放
+     *
+     * @param musicList 歌单
+     * @param id        歌曲位置id
+     * @param pid       歌单id
      */
     public void play(List<Music> musicList, int id, String pid) {
+        LogUtil.d(TAG, "musicList = " + musicList.size() + " id = " + id + " pid = " + pid + " mPlaylistId =" + mPlaylistId);
         if (musicList.size() <= id) return;
+        if (mPlaylistId.equals(pid) && id == mPlayingPos) return;
         if (!mPlaylistId.equals(pid) || mPlayQueue.size() == 0 || mPlayQueue.size() != musicList.size()) {
             setPlayQueue(musicList);
             mPlaylistId = pid;
@@ -773,7 +792,6 @@ public class MusicPlayerService extends Service {
             if (mPlayer.isInitialized()) {
                 play();
             } else {
-                isMusicPlaying = true;
                 playCurrentAndNext();
             }
         }
@@ -791,7 +809,7 @@ public class MusicPlayerService extends Service {
             if (isPlaying()) {
                 isMusicPlaying = false;
                 notifyChange(PLAY_STATE_CHANGED);
-                updateNotification(true);
+                updateNotification(false);
                 TimerTask task = new TimerTask() {
                     public void run() {
                         final Intent intent = new Intent(
@@ -821,9 +839,16 @@ public class MusicPlayerService extends Service {
     /**
      * 跳到输入的进度
      */
-    public void seekTo(int pos) {
+    public void seekTo(long pos, boolean isInit) {
+        LogUtil.e(TAG, "seekTo " + pos);
         if (mPlayer != null && mPlayer.isInitialized() && mPlayingMusic != null) {
             mPlayer.seek(pos);
+            LogUtil.e(TAG, "seekTo 成功");
+        } else if (isInit) {
+//            playCurrentAndNext();
+//            mPlayer.seek(pos);
+//            mPlayer.pause();
+            LogUtil.e(TAG, "seekTo 失败");
         }
     }
 
@@ -855,7 +880,8 @@ public class MusicPlayerService extends Service {
         SPUtils.setPlayPosition(mPlayingPos);
         //保存歌曲进度
         SPUtils.savePosition(getCurrentPosition());
-        notifyChange(PLAY_QUEUE_CHANGE);
+
+        LogUtil.e(TAG, "save 保存歌曲id=" + mPlayingPos + " 歌曲进度= " + getCurrentPosition());
     }
 
 
@@ -868,21 +894,25 @@ public class MusicPlayerService extends Service {
      * 获取正在播放的歌曲[本地|网络]
      */
     public void removeFromQueue(int position) {
-        LogUtil.e(TAG, position + "---" + mPlayingPos + "---" + mPlayQueue.size());
-        if (position == mPlayingPos) {
-            mPlayQueue.remove(position);
-            if (mPlayQueue.size() == 0) {
-                clearQueue();
-            } else {
-                playMusic(position);
+        try {
+            LogUtil.e(TAG, position + "---" + mPlayingPos + "---" + mPlayQueue.size());
+            if (position == mPlayingPos) {
+                mPlayQueue.remove(position);
+                if (mPlayQueue.size() == 0) {
+                    clearQueue();
+                } else {
+                    playMusic(position);
+                }
+            } else if (position > mPlayingPos) {
+                mPlayQueue.remove(position);
+            } else if (position < mPlayingPos) {
+                mPlayQueue.remove(position);
+                mPlayingPos = mPlayingPos - 1;
             }
-        } else if (position > mPlayingPos) {
-            mPlayQueue.remove(position);
-        } else if (position < mPlayingPos) {
-            mPlayQueue.remove(position);
-            mPlayingPos = mPlayingPos - 1;
+            notifyChange(PLAY_QUEUE_CLEAR);
+        } catch (Exception e) {
+            e.printStackTrace();
         }
-        notifyChange(PLAY_QUEUE_CLEAR);
     }
 
     /**
@@ -922,6 +952,17 @@ public class MusicPlayerService extends Service {
         return 0;
     }
 
+    /**
+     * 是否准备播放
+     *
+     * @return
+     */
+    public boolean isPrepared() {
+        if (mPlayer != null) {
+            return mPlayer.isPrepared();
+        }
+        return false;
+    }
 
     /**
      * 发送更新广播
@@ -934,17 +975,17 @@ public class MusicPlayerService extends Service {
             case META_CHANGED:
                 mFloatLyricViewManager.loadLyric(mPlayingMusic);
                 updateWidget(META_CHANGED);
-                notifyChange(PLAY_STATE_CHANGED);
+//                notifyChange(PLAY_STATE_CHANGED);
                 EventBus.getDefault().post(new MetaChangedEvent(mPlayingMusic));
                 break;
             case PLAY_STATE_CHANGED:
-                updateWidget(PLAY_STATE_CHANGED);
+                updateWidget(ACTION_PLAY_PAUSE);
                 mediaSessionManager.updatePlaybackState();
-                EventBus.getDefault().post(new StatusChangedEvent(mPlayer.isPrepared(), isPlaying()));
+                EventBus.getDefault().post(new StatusChangedEvent(isPrepared(), isPlaying()));
                 break;
             case PLAY_QUEUE_CLEAR:
             case PLAY_QUEUE_CHANGE:
-                EventBus.getDefault().post(new PlaylistEvent(Constants.PLAYLIST_QUEUE_ID));
+                EventBus.getDefault().post(new PlaylistEvent(Constants.PLAYLIST_QUEUE_ID, null));
                 break;
 //            case PLAY_STATE_LOADING_CHANGED:
 //                EventBus.getDefault().post(new StatusChangedEvent(false, isPlaying()));
@@ -957,6 +998,7 @@ public class MusicPlayerService extends Service {
      */
     private void updateWidget(String action) {
         Intent intent = new Intent(action);
+        intent.putExtra(ACTION_IS_WIDGET, true);
         intent.putExtra(Extras.PLAY_STATUS, isPlaying());
         if (action.equals(META_CHANGED)) {
             intent.putExtra(Extras.SONG, mPlayingMusic);
@@ -1023,6 +1065,7 @@ public class MusicPlayerService extends Service {
         mPlayQueue.clear();
         mHistoryPos.clear();
         mPlayQueue.addAll(playQueue);
+        notifyChange(PLAY_QUEUE_CHANGE);
         savePlayQueue(true);
     }
 
@@ -1071,13 +1114,16 @@ public class MusicPlayerService extends Service {
             mNotificationPostTime = System.currentTimeMillis();
         }
         mNotificationBuilder = new Builder(this, initChannelId())
-                .setSmallIcon(R.drawable.ic_icon)
+                .setSmallIcon(R.drawable.ic_music)
                 .setContentIntent(clickIntent)
                 .setContentTitle(getTitle())
                 .setContentText(text)
                 .setWhen(mNotificationPostTime)
                 .addAction(playButtonResId, "",
                         retrievePlaybackAction(ACTION_PLAY_PAUSE))
+                .addAction(R.drawable.ic_skip_previous,
+                        "",
+                        retrievePlaybackAction(ACTION_PREV))
                 .addAction(R.drawable.ic_skip_next,
                         "",
                         retrievePlaybackAction(ACTION_NEXT))
@@ -1100,15 +1146,16 @@ public class MusicPlayerService extends Service {
             mNotificationBuilder.setVisibility(Notification.VISIBILITY_PUBLIC);
             NotificationCompat.MediaStyle style = new NotificationCompat.MediaStyle()
                     .setMediaSession(mediaSessionManager.getMediaSession())
-                    .setShowActionsInCompactView(0, 1, 2, 3);
+                    .setShowActionsInCompactView(1, 0, 2, 3, 4);
             mNotificationBuilder.setStyle(style);
         }
 
         if (mPlayingMusic != null) {
-            CoverLoader.loadImageViewByMusic(this, mPlayingMusic, bitmap -> {
+            CoverLoader.INSTANCE.loadImageViewByMusic(this, mPlayingMusic, bitmap -> {
                 mNotificationBuilder.setLargeIcon(bitmap);
                 mNotification = mNotificationBuilder.build();
                 mNotificationManager.notify(NOTIFICATION_ID, mNotification);
+                return null;
             });
         }
         mNotification = mNotificationBuilder.build();
@@ -1124,7 +1171,7 @@ public class MusicPlayerService extends Service {
         // 通知渠道的id
         String id = "music_lake_01";
         // 用户可以看到的通知渠道的名字.
-        CharSequence name = "音乐湖";
+        CharSequence name = "静谧";
         // 用户可以看到的通知渠道的描述
         String description = "通知栏播放控制";
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
@@ -1154,8 +1201,12 @@ public class MusicPlayerService extends Service {
         }
     }
 
-    private Timer lyricTimer;
 
+    /**
+     * 显示桌面歌词
+     *
+     * @param show
+     */
     public void showDesktopLyric(boolean show) {
         if (show) {
             // 开启定时器，每隔0.5秒刷新一次
@@ -1183,10 +1234,10 @@ public class MusicPlayerService extends Service {
     private class ServicePhoneStateListener extends PhoneStateListener {
         @Override
         public void onCallStateChanged(int state, String incomingNumber) {
-            // TODO Auto-generated method stub
+            LogUtil.d(TAG, "TelephonyManager state=" + state + ",incomingNumber = " + incomingNumber);
             switch (state) {
-                case TelephonyManager.CALL_STATE_OFFHOOK:   //通话状态
-                case TelephonyManager.CALL_STATE_RINGING:   //通话状态
+                case TelephonyManager.CALL_STATE_OFFHOOK:   //接听状态
+                case TelephonyManager.CALL_STATE_RINGING:   //响铃状态
                     pause();
                     break;
             }
@@ -1195,34 +1246,35 @@ public class MusicPlayerService extends Service {
 
     /**
      * 更新状态栏通知
+     *
+     * @param isChange 是否改变歌曲信息
      */
-    private void updateNotification(boolean changePlayStatus) {
-        if (!changePlayStatus) {
+    private void updateNotification(boolean isChange) {
+        if (isChange) {
             if (mPlayingMusic != null) {
-                CoverLoader.loadImageViewByMusic(this, mPlayingMusic, bitmap -> {
+                CoverLoader.INSTANCE.loadImageViewByMusic(this, mPlayingMusic, bitmap -> {
                     mNotificationBuilder.setLargeIcon(bitmap);
                     mNotification = mNotificationBuilder.build();
                     mNotificationManager.notify(NOTIFICATION_ID, mNotification);
+                    return null;
                 });
             }
             mNotificationBuilder.setContentTitle(getTitle());
             mNotificationBuilder.setContentText(getArtistName());
             mNotificationBuilder.setTicker(getTitle() + "-" + getArtistName());
-            updateNotificationStatus();
-        } else {
-            updateNotificationStatus();
         }
-        mNotification = mNotificationBuilder.build();
-        mFloatLyricViewManager.updatePlayStatus(isMusicPlaying);
-        startForeground(NOTIFICATION_ID, mNotification);
-        mNotificationManager.notify(NOTIFICATION_ID, mNotification);
-    }
-
-    private void updateNotificationStatus() {
-        if (isPlaying())
+        LogUtil.d("播放状态 = " + isPlaying());
+        if (isMusicPlaying)
             mNotificationBuilder.mActions.get(0).icon = R.drawable.ic_pause;
         else
             mNotificationBuilder.mActions.get(0).icon = R.drawable.ic_play;
+        mNotification = mNotificationBuilder.build();
+        mFloatLyricViewManager.updatePlayStatus(isMusicPlaying);
+
+        if (mPlayingMusic != null) {
+            startForeground(NOTIFICATION_ID, mNotification);
+            mNotificationManager.notify(NOTIFICATION_ID, mNotification);
+        }
     }
 
     /**
@@ -1238,10 +1290,24 @@ public class MusicPlayerService extends Service {
      * Service broadcastReceiver 监听service中广播
      */
     private class ServiceReceiver extends BroadcastReceiver {
+
+//        public ServiceReceiver() {
+//            intentFilter.addAction(Intent.ACTION_SCREEN_OFF);
+//        }
+
         @Override
         public void onReceive(Context context, Intent intent) {
             LogUtil.d(TAG, intent.getAction());
-            handleCommandIntent(intent);
+//            if (intent.getAction() != null && intent.getAction().equals(Intent.ACTION_SCREEN_OFF)) {
+//                LogUtil.e(TAG, "屏幕熄灭进入锁屏界面");
+//                Intent lockScreen = new Intent(MusicPlayerService.this, LockScreenPlayerActivity.class);
+//                lockScreen.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+//                startActivity(lockScreen);
+//            }
+
+            if (!intent.getBooleanExtra(ACTION_IS_WIDGET, false)) {
+                handleCommandIntent(intent);
+            }
         }
     }
 
@@ -1258,7 +1324,7 @@ public class MusicPlayerService extends Service {
             LogUtil.d(TAG, "handleCommandIntent: action = " + action + ", command = " + command);
 
         if (CMD_NEXT.equals(command) || ACTION_NEXT.equals(action)) {
-            next();
+            next(false);
         } else if (CMD_PREVIOUS.equals(command) || ACTION_PREV.equals(action)) {
             prev();
         } else if (CMD_TOGGLE_PAUSE.equals(command) || PLAY_STATE_CHANGED.equals(action)
@@ -1269,6 +1335,8 @@ public class MusicPlayerService extends Service {
             } else {
                 play();
             }
+        } else if (UNLOCK_DESKTOP_LYRIC.equals(command)) {
+            mFloatLyricViewManager.saveLock(false, true);
         } else if (CMD_PAUSE.equals(command)) {
             pause();
             mPausedByTransientLossOfFocus = false;
@@ -1277,19 +1345,15 @@ public class MusicPlayerService extends Service {
         } else if (CMD_STOP.equals(command)) {
             pause();
             mPausedByTransientLossOfFocus = false;
-            seekTo(0);
+            seekTo(0, false);
             releaseServiceUiAndStop();
         } else if (ACTION_LYRIC.equals(action)) {
             startFloatLyric();
         } else if (ACTION_CLOSE.equals(action)) {
-            releaseServiceUiAndStop();
-            System.exit(0);
             stop(true);
             stopSelf();
-        } else if (SCHEDULE_CHANGED.equals(action)) {
-            totalTime = intent.getIntExtra("time", 0);
-            LogUtil.e(TAG, SCHEDULE_CHANGED + "----" + totalTime);
-            startRemind(totalTime);
+            releaseServiceUiAndStop();
+            System.exit(0);
         }
     }
 
@@ -1297,22 +1361,11 @@ public class MusicPlayerService extends Service {
      * 开启歌词
      */
     private void startFloatLyric() {
-        if (SystemUtils.isOpenSystemWindow()) {
+        if (SystemUtils.isOpenFloatWindow()) {
             showLyric = !showLyric;
             showDesktopLyric(showLyric);
         } else {
-            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
-                try {
-                    Intent intent = new Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION);
-                    intent.setData(Uri.parse("package:" + MusicApp.getAppContext().getPackageName()));
-                    MusicApp.getAppContext().startActivity(intent);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                    ToastUtils.show(getString(R.string.float_settings));
-                }
-            } else {
-                ToastUtils.show(getString(R.string.float_settings));
-            }
+            SystemUtils.applySystemWindow();
         }
     }
 
@@ -1320,16 +1373,11 @@ public class MusicPlayerService extends Service {
      * 耳机插入广播接收器
      */
     public class HeadsetPlugInReceiver extends BroadcastReceiver {
-
-        final IntentFilter filter;
-
         public HeadsetPlugInReceiver() {
-            filter = new IntentFilter();
-
             if (Build.VERSION.SDK_INT >= 21) {
-                filter.addAction(AudioManager.ACTION_HEADSET_PLUG);
+                intentFilter.addAction(AudioManager.ACTION_HEADSET_PLUG);
             } else {
-                filter.addAction(Intent.ACTION_HEADSET_PLUG);
+                intentFilter.addAction(Intent.ACTION_HEADSET_PLUG);
             }
         }
 
@@ -1343,19 +1391,16 @@ public class MusicPlayerService extends Service {
         }
     }
 
-
     /**
      * 耳机拔出广播接收器
      */
     private class HeadsetReceiver extends BroadcastReceiver {
 
-        final IntentFilter filter;
         final BluetoothAdapter bluetoothAdapter;
 
         public HeadsetReceiver() {
-            filter = new IntentFilter();
-            filter.addAction(AudioManager.ACTION_AUDIO_BECOMING_NOISY); //有线耳机拔出变化
-            filter.addAction(BluetoothHeadset.ACTION_CONNECTION_STATE_CHANGED); //蓝牙耳机连接变化
+            intentFilter.addAction(AudioManager.ACTION_AUDIO_BECOMING_NOISY); //有线耳机拔出变化
+            intentFilter.addAction(BluetoothHeadset.ACTION_CONNECTION_STATE_CHANGED); //蓝牙耳机连接变化
 
             bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
         }
@@ -1366,6 +1411,7 @@ public class MusicPlayerService extends Service {
                 //当前是正在运行的时候才能通过媒体按键来操作音频
                 switch (intent.getAction()) {
                     case BluetoothHeadset.ACTION_CONNECTION_STATE_CHANGED:
+                        LogUtil.e("蓝牙耳机插拔状态改变");
                         if (bluetoothAdapter != null &&
                                 BluetoothProfile.STATE_DISCONNECTED == bluetoothAdapter.getProfileConnectionState(BluetoothProfile.HEADSET) &&
                                 isPlaying()) {
@@ -1374,11 +1420,13 @@ public class MusicPlayerService extends Service {
                         }
                         break;
                     case AudioManager.ACTION_AUDIO_BECOMING_NOISY:
+                        LogUtil.e("有线耳机插拔状态改变");
                         if (isPlaying()) {
                             //有线耳机断开连接 同时当前音乐正在播放 则将其暂停
                             pause();
                         }
                         break;
+
                 }
             }
         }
@@ -1428,6 +1476,7 @@ public class MusicPlayerService extends Service {
         unregisterReceiver(mServiceReceiver);
         unregisterReceiver(mHeadsetReceiver);
         unregisterReceiver(mHeadsetPlugInReceiver);
+        unregisterReceiver(mStandardWidget);
 
         if (mWakeLock.isHeld())
             mWakeLock.release();

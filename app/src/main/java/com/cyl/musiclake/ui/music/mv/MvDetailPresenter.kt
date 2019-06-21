@@ -1,13 +1,12 @@
-package com.cyl.musiclake.ui.music.discover
+package com.cyl.musiclake.ui.music.mv
 
 import com.cyl.musicapi.netease.MvComment
 import com.cyl.musicapi.netease.MvDetailInfo
 import com.cyl.musicapi.netease.MvInfo
 import com.cyl.musicapi.netease.SimilarMvInfo
-import com.cyl.musiclake.base.BasePresenter
-import com.cyl.musiclake.net.RequestCallBack
-import com.cyl.musiclake.ui.music.mv.MvDetailContract
-import com.cyl.musiclake.ui.music.mv.MvModel
+import com.cyl.musiclake.bean.MvInfoBean
+import com.cyl.musiclake.ui.base.BasePresenter
+import com.cyl.musiclake.api.net.RequestCallBack
 import javax.inject.Inject
 
 /**
@@ -17,7 +16,23 @@ import javax.inject.Inject
  */
 class MvDetailPresenter @Inject
 constructor() : BasePresenter<MvDetailContract.View>(), MvDetailContract.Presenter {
+    override fun loadBaiduMvInfo(songId: String?) {
+        mvModel.loadBaiduMv(songId, object : RequestCallBack<MvInfoBean> {
+            override fun success(result: MvInfoBean?) {
+                mView?.hideLoading()
+                mView?.showBaiduMvDetailInfo(result)
+            }
+
+            override fun error(msg: String?) {
+                mView?.hideLoading()
+                mView?.showError(msg, true)
+            }
+
+        })
+    }
+
     private val mvModel = MvModel()
+
     override fun loadMvDetail(mvid: String?) {
         mvModel.loadMvDetail(mvid, object : RequestCallBack<MvDetailInfo> {
             override fun success(result: MvDetailInfo?) {

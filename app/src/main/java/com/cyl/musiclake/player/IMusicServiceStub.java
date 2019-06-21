@@ -63,7 +63,7 @@ public class IMusicServiceStub extends IMusicService.Stub {
 
     @Override
     public void next() throws RemoteException {
-        mService.get().next();
+        mService.get().next(false);
     }
     @Override
     public void setLoopMode(int loopmode) throws RemoteException {
@@ -71,7 +71,7 @@ public class IMusicServiceStub extends IMusicService.Stub {
 
     @Override
     public void seekTo(int ms) throws RemoteException {
-        mService.get().seekTo(ms);
+        mService.get().seekTo(ms,false);
     }
 
     @Override

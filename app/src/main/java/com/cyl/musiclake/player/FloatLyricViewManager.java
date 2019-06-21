@@ -3,22 +3,23 @@ package com.cyl.musiclake.player;
 import android.content.Context;
 import android.graphics.PixelFormat;
 import android.graphics.Point;
+import android.os.Build;
 import android.os.Handler;
 import android.view.Gravity;
 import android.view.WindowManager;
 
 import com.cyl.musiclake.MusicApp;
 import com.cyl.musiclake.R;
-import com.cyl.musiclake.api.MusicApi;
-import com.cyl.musiclake.api.MusicApiServiceImpl;
+import com.cyl.musiclake.api.music.MusicApi;
+import com.cyl.musiclake.api.music.MusicApiServiceImpl;
 import com.cyl.musiclake.bean.Music;
-import com.cyl.musiclake.net.ApiManager;
-import com.cyl.musiclake.net.RequestCallBack;
+import com.cyl.musiclake.api.net.ApiManager;
+import com.cyl.musiclake.api.net.RequestCallBack;
+import com.cyl.musiclake.ui.widget.LyricView;
+import com.cyl.musiclake.ui.widget.lyric.FloatLyricView;
+import com.cyl.musiclake.ui.widget.lyric.LyricInfo;
+import com.cyl.musiclake.ui.widget.lyric.LyricParseUtils;
 import com.cyl.musiclake.utils.LogUtil;
-import com.cyl.musiclake.view.LyricView;
-import com.cyl.musiclake.view.lyric.FloatLyricView;
-import com.cyl.musiclake.view.lyric.LyricInfo;
-import com.cyl.musiclake.view.lyric.LyricParseUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,6 +32,7 @@ public class FloatLyricViewManager {
     private static WindowManager.LayoutParams mFloatLyricViewParams;
     private static WindowManager mWindowManager;
     private static LyricInfo mLyricInfo;
+    private boolean mIsLock;
     private Handler handler = new Handler();
     private String mSongName;
     private static boolean isFirstSettingLyric; //第一次设置歌词
@@ -173,8 +175,7 @@ public class FloatLyricViewManager {
      */
     private void createFloatLyricView(Context context) {
         try {
-
-            WindowManager windowManager = getWindowManager(context);
+            WindowManager windowManager = getWindowManager();
             Point size = new Point();
             //获取屏幕宽高
             windowManager.getDefaultDisplay().getSize(size);
@@ -185,12 +186,18 @@ public class FloatLyricViewManager {
                 if (mFloatLyricViewParams == null) {
                     mFloatLyricViewParams = new WindowManager.LayoutParams();
                     mFloatLyricViewParams.type = WindowManager.LayoutParams.TYPE_PHONE;
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                        mFloatLyricViewParams.type = WindowManager.LayoutParams.TYPE_APPLICATION_OVERLAY;
+                    } else {
+                        mFloatLyricViewParams.type = WindowManager.LayoutParams.TYPE_SYSTEM_ALERT;
+                    }
+
                     mFloatLyricViewParams.format = PixelFormat.RGBA_8888;
                     mFloatLyricViewParams.flags = WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL
                             | WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE;
                     mFloatLyricViewParams.gravity = Gravity.START | Gravity.TOP;
-                    mFloatLyricViewParams.width = mFloatLyricView.viewWidth;
-                    mFloatLyricViewParams.height = mFloatLyricView.viewHeight;
+                    mFloatLyricViewParams.width = mFloatLyricView.getViewWidth();
+                    mFloatLyricViewParams.height = mFloatLyricView.getViewHeight();
                     mFloatLyricViewParams.x = screenWidth;
                     mFloatLyricViewParams.y = screenHeight / 2;
                 }
@@ -209,10 +216,14 @@ public class FloatLyricViewManager {
      * @param context 必须为应用程序的Context.
      */
     public void removeFloatLyricView(Context context) {
-        if (mFloatLyricView != null) {
-            WindowManager windowManager = getWindowManager(context);
-            windowManager.removeView(mFloatLyricView);
-            mFloatLyricView = null;
+        try {
+            if (mFloatLyricView != null) {
+                WindowManager windowManager = getWindowManager();
+                windowManager.removeView(mFloatLyricView);
+                mFloatLyricView = null;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 
@@ -229,12 +240,12 @@ public class FloatLyricViewManager {
             handler.post(() -> {
                 if (mFloatLyricView != null) {
                     if (isFirstSettingLyric) {
-                        mFloatLyricView.mTitle.setText(mSongName);
-                        mFloatLyricView.mLyricText.setLyricInfo(mLyricInfo);
+                        mFloatLyricView.getMTitle().setText(mSongName);
+                        mFloatLyricView.getMLyricText().setLyricInfo(mLyricInfo);
                         isFirstSettingLyric = false;
                     }
-                    mFloatLyricView.mLyricText.setCurrentTimeMillis(positon);
-                    mFloatLyricView.mLyricText.setDurationMillis(duration);
+                    mFloatLyricView.getMLyricText().setCurrentTimeMillis(positon);
+                    mFloatLyricView.getMLyricText().setDurationMillis(duration);
                 }
             });
         }
@@ -254,58 +265,18 @@ public class FloatLyricViewManager {
     /**
      * 如果WindowManager还未创建，则创建一个新的WindowManager返回。否则返回当前已创建的WindowManager。
      *
-     * @param context 必须为应用程序的Context.
      * @return WindowManager的实例，用于控制在屏幕上添加或移除悬浮窗。
      */
-    private static WindowManager getWindowManager(Context context) {
+    private static WindowManager getWindowManager() {
         if (mWindowManager == null) {
-            mWindowManager = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
+            mWindowManager = (WindowManager) MusicApp.getAppContext().getSystemService(Context.WINDOW_SERVICE);
         }
         return mWindowManager;
     }
 
-//    private String getProcess() throws Exception {
-//        if (Build.VERSION.SDK_INT >= 21) {
-//            return getProcessNew();
-//        } else {
-//            return getProcessOld();
-//        }
-//    }
-//
-//    private String topPackageName = null;
-//
-//    //API 21 and above
-//    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
-//    private String getProcessNew() throws Exception {
-//        UsageStatsManager mUsageStatsManager = (UsageStatsManager) MusicApp.getAppContext().getSystemService(Context.USAGE_STATS_SERVICE);
-//        long time = System.currentTimeMillis();
-//        // We get usage stats for the last 10 seconds
-//        List<UsageStats> stats = mUsageStatsManager.queryUsageStats(UsageStatsManager.INTERVAL_DAILY, time - 1000 * 5, time);
-//        // Sort the stats by the last time used
-//
-//        if (stats != null) {
-//            SortedMap<Long, UsageStats> mySortedMap = new TreeMap<Long, UsageStats>();
-//            for (UsageStats usageStats : stats) {
-//                mySortedMap.put(usageStats.getLastTimeUsed(), usageStats);
-//            }
-//            if (!mySortedMap.isEmpty()) {
-//                topPackageName = mySortedMap.get(mySortedMap.lastKey()).getPackageName();
-//            }
-//        }
-//        return topPackageName;
-//    }
-//
-//    //API below 21
-//    @SuppressWarnings("deprecation")
-//    private String getProcessOld() throws Exception {
-//        String topPackageName = null;
-//        ActivityManager activity = (ActivityManager) MusicApp.getAppContext().getSystemService(Context.ACTIVITY_SERVICE);
-//        List<ActivityManager.RunningTaskInfo> runningTask = activity.getRunningTasks(1);
-//        if (runningTask != null) {
-//            ActivityManager.RunningTaskInfo taskTop = runningTask.get(0);
-//            ComponentName componentTop = taskTop.topActivity;
-//            topPackageName = componentTop.getPackageName();
-//        }
-//        return topPackageName;
-//    }
+
+    public void saveLock(boolean lock, boolean toast) {
+        mFloatLyricView.saveLock(lock, toast);
+    }
+
 }

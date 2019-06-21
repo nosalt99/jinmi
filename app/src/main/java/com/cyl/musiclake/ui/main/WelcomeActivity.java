@@ -1,14 +1,21 @@
 package com.cyl.musiclake.ui.main;
 
 import android.Manifest;
+import android.animation.AnimatorSet;
+import android.animation.ArgbEvaluator;
+import android.animation.ObjectAnimator;
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.support.constraint.ConstraintLayout;
 import android.support.design.widget.Snackbar;
-import android.widget.RelativeLayout;
+import android.widget.ImageView;
 
 import com.cyl.musiclake.R;
-import com.cyl.musiclake.base.BaseActivity;
+import com.cyl.musiclake.common.Constants;
+import com.cyl.musiclake.ui.base.BaseActivity;
+import com.cyl.musiclake.utils.SPUtils;
 import com.cyl.musiclake.utils.SystemUtils;
+import com.cyl.musiclake.utils.Tools;
 import com.tbruyelle.rxpermissions2.RxPermissions;
 
 import butterknife.BindView;
@@ -19,7 +26,9 @@ import butterknife.BindView;
 public class WelcomeActivity extends BaseActivity {
 
     @BindView(R.id.wel_container)
-    RelativeLayout container;
+    ConstraintLayout container;
+    @BindView(R.id.iv_header_cover)
+    ImageView heardCoverIv;
     RxPermissions rxPermissions;
 
     //需要检查的权限
@@ -42,6 +51,7 @@ public class WelcomeActivity extends BaseActivity {
 
     @Override
     protected void initView() {
+
     }
 
     @Override
@@ -50,7 +60,7 @@ public class WelcomeActivity extends BaseActivity {
         if (SystemUtils.isMarshmallow()) {
             checkPermissionAndThenLoad();
         } else {
-            initPlayQueue();
+            initWelcome();
         }
     }
 
@@ -67,7 +77,7 @@ public class WelcomeActivity extends BaseActivity {
         rxPermissions.request(mPermissionList)
                 .subscribe(granted -> {
                     if (granted) {
-                        initPlayQueue();
+                        initWelcome();
                     } else {
                         Snackbar.make(container, getResources().getString(R.string.permission_hint),
                                 Snackbar.LENGTH_INDEFINITE)
@@ -79,8 +89,14 @@ public class WelcomeActivity extends BaseActivity {
     /**
      * 检查服务是否运行
      */
-    private void initPlayQueue() {
-        mHandler.postDelayed(this::startMainActivity, 2000);
+    private void initWelcome() {
+        boolean isFirst = SPUtils.getAnyByKey(SPUtils.SP_KEY_FIRST_COMING, true);
+        if (isFirst) {
+            getCoverImageUrl();
+            SPUtils.putAnyCommit(SPUtils.SP_KEY_FIRST_COMING, false);
+        } else {
+            mHandler.postDelayed(WelcomeActivity.this::startMainActivity, 1000);
+        }
     }
 
     /**
@@ -91,6 +107,10 @@ public class WelcomeActivity extends BaseActivity {
         startActivity(intent);
         overridePendingTransition(0, 0);
         finish();
+    }
+
+    private void getCoverImageUrl() {
+        mHandler.postDelayed(WelcomeActivity.this::startMainActivity, 3000);
     }
 
 }

@@ -38,7 +38,7 @@ public class MusicPlayerEngine implements MediaPlayer.OnErrorListener,
     //是否已经初始化
     private boolean mIsPrepared = false;
 
-    public MusicPlayerEngine(final MusicPlayerService service) {
+    MusicPlayerEngine(final MusicPlayerService service) {
         mService = new WeakReference<>(service);
         mCurrentMediaPlayer.setWakeMode(mService.get(), PowerManager.PARTIAL_WAKE_LOCK);
     }
@@ -63,9 +63,7 @@ public class MusicPlayerEngine implements MediaPlayer.OnErrorListener,
             player.setOnBufferingUpdateListener(this);
             player.setOnErrorListener(this);
             player.setOnCompletionListener(this);
-        } catch (final IOException todo) {
-            return false;
-        } catch (final IllegalArgumentException todo) {
+        } catch (Exception todo) {
             return false;
         }
         return true;
@@ -140,7 +138,12 @@ public class MusicPlayerEngine implements MediaPlayer.OnErrorListener,
 
 
     public void setVolume(final float vol) {
-        mCurrentMediaPlayer.setVolume(vol, vol);
+        LogUtil.e("Volume", "vol = " + vol);
+        try {
+            mCurrentMediaPlayer.setVolume(vol, vol);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     public int getAudioSessionId() {
@@ -152,6 +155,7 @@ public class MusicPlayerEngine implements MediaPlayer.OnErrorListener,
         LogUtil.e(TAG, "Music Server Error what: " + what + " extra: " + extra);
         switch (what) {
             case MediaPlayer.MEDIA_ERROR_SERVER_DIED:
+            case MediaPlayer.MEDIA_ERROR_UNKNOWN:
                 final MusicPlayerService service = mService.get();
                 final TrackErrorInfo errorInfo = new TrackErrorInfo(service.getAudioId(),
                         service.getTitle());
@@ -191,9 +195,11 @@ public class MusicPlayerEngine implements MediaPlayer.OnErrorListener,
     @Override
     public void onPrepared(MediaPlayer mp) {
         mp.start();
-        mIsPrepared = true;
-        Message message = mHandler.obtainMessage(PLAYER_PREPARED);
-        mHandler.sendMessage(message);
+        if (!mIsPrepared) {
+            mIsPrepared = true;
+            Message message = mHandler.obtainMessage(PLAYER_PREPARED);
+            mHandler.sendMessage(message);
+        }
     }
 
     private class TrackErrorInfo {

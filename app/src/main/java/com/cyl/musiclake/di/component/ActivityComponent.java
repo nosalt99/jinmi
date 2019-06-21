@@ -6,16 +6,21 @@ import android.content.Context;
 import com.cyl.musiclake.di.module.ActivityModule;
 import com.cyl.musiclake.di.scope.ContextLife;
 import com.cyl.musiclake.di.scope.PerActivity;
-import com.cyl.musiclake.ui.map.ShakeActivity;
+import com.cyl.musiclake.ui.chat.ChatActivity;
+import com.cyl.musiclake.ui.chat.ChatDetailActivity;
+import com.cyl.musiclake.ui.music.artist.detail.ArtistDetailActivity;
+import com.cyl.musiclake.ui.music.charts.activity.BaiduMusicListActivity;
+import com.cyl.musiclake.ui.music.charts.activity.BasePlaylistActivity;
+import com.cyl.musiclake.ui.music.edit.EditSongListActivity;
+import com.cyl.musiclake.ui.music.mv.BaiduMvDetailActivity;
 import com.cyl.musiclake.ui.music.mv.MvDetailActivity;
-import com.cyl.musiclake.ui.music.online.activity.BaiduMusicListActivity;
-import com.cyl.musiclake.ui.music.online.activity.BasePlaylistActivity;
-import com.cyl.musiclake.ui.music.player.PlayerActivity;
-import com.cyl.musiclake.ui.music.playlist.PlaylistDetailActivity;
+import com.cyl.musiclake.ui.music.playlist.detail.PlaylistDetailActivity;
+import com.cyl.musiclake.ui.music.playpage.LockScreenPlayerActivity;
+import com.cyl.musiclake.ui.music.playpage.PlayerActivity;
 import com.cyl.musiclake.ui.music.search.SearchActivity;
+import com.cyl.musiclake.ui.my.BindLoginActivity;
 import com.cyl.musiclake.ui.my.LoginActivity;
 import com.cyl.musiclake.ui.my.RegisterActivity;
-import com.cyl.musiclake.ui.my.UserCenterActivity;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -36,10 +41,8 @@ public interface ActivityComponent {
 
     Activity getActivity();
 
-    void inject(ShakeActivity activity);
     void inject(BaiduMusicListActivity baiduMusicListActivity);
 
-    void inject(UserCenterActivity userCenterActivity);
 
     void inject(RegisterActivity registerActivity);
 
@@ -54,4 +57,18 @@ public interface ActivityComponent {
     void inject(@NotNull PlayerActivity playerActivity);
 
     void inject(PlaylistDetailActivity playlistDetailActivity);
+
+    void inject(ArtistDetailActivity playlistDetailActivity);
+
+    void inject(EditSongListActivity editMusicActivity);
+
+    void inject(@NotNull ChatActivity chatActivity);
+
+    void inject(@NotNull ChatDetailActivity chatDetailActivity);
+
+    void inject(@NotNull BaiduMvDetailActivity baiduMvDetailActivity);
+
+    void inject(@NotNull LockScreenPlayerActivity lockScreenPlayerActivity);
+
+    void inject(@NotNull BindLoginActivity bindLoginActivity);
 }

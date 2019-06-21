@@ -1,28 +1,20 @@
 package com.cyl.musiclake.utils
 
+import android.annotation.SuppressLint
 import java.io.UnsupportedEncodingException
+import java.lang.ref.SoftReference
 import java.text.DecimalFormat
 import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.*
 
+@SuppressLint("SimpleDateFormat")
 /**
  * <br></br>
  * **进行一些转换工作**
  */
 object FormatUtil {
 
-
-    /**
-     * 获取当前时间
-     *
-     * @return 时间
-     */
-    val time: String
-        get() {
-            val dfs = SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
-            return dfs.format(Date())
-        }
 
     /**
      * 格式化时间
@@ -60,7 +52,6 @@ object FormatUtil {
         }
     }
 
-
     /**
      * 格式化时间
      *
@@ -72,11 +63,33 @@ object FormatUtil {
         return when {
             duration < 60 * 1000 -> "${duration / 1000}秒前"
             duration < 60 * 1000 * 60 -> "${duration / 1000 / 60}分钟前"
-            duration < 60 * 1000 * 24 -> "${duration / 1000 / 60 / 24}小时前"
+            duration < 60 * 1000 * 60 * 24 -> "${duration / 1000 / 60 / 60}小时前"
             else -> {
                 val dfs = SimpleDateFormat("yyyy年MM月dd日")
                 val date = dfs.format(Date(time))
                 date
+            }
+        }
+    }
+
+
+    @SuppressLint("SimpleDateFormat")
+            /**
+             * 格式化时间
+             *
+             * @param time 时间值 (00:00 -23:59:59)
+             * @return 时间
+             */
+    fun formatDate(time: String): String {
+        val dateFormat = SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
+        val parse = dateFormat.parse(time)
+        val duration = System.currentTimeMillis() - parse.time
+        return when {
+            duration < 60 * 1000 -> "${duration / 1000}秒前"
+            duration < 60 * 1000 * 60 -> "${duration / 1000 / 60}分钟前"
+            duration < 60 * 1000 * 60 * 24 -> "${duration / 1000 / 60 / 60}小时前"
+            else -> {
+                time
             }
         }
     }
@@ -193,10 +206,63 @@ object FormatUtil {
      * @return 时间
      */
     fun distime(time: Long): String {
-
         val dfs = SimpleDateFormat("yyyy-MM-dd")
         val date = Date(time)
         return dfs.format(date)
     }
 
+    private val dfs by lazy { SimpleDateFormat("yyyy-MM-dd HH:mm:ss") }
+
+    /**
+     * 获取当前时间
+     * @return 时间 yyyy-MM-dd HH:mm:ss
+     */
+    fun getChatDateTime(time: Long): String {
+        return dfs.format(Date(time))
+    }
+
+
+    /**
+     * 根据字符串获取当前时间
+     * @return 时间 yyyy-MM-dd HH:mm:ss
+     */
+    fun getChatParseDateTime(time: String): Long {
+        return dfs.parse(time).time
+    }
+
+    fun formatDate(date: Date?, pattern: String?): String {
+        if (date == null) throw IllegalArgumentException("date is null")
+        if (pattern == null) throw IllegalArgumentException("pattern is null")
+
+        val formatter = formatFor(pattern)
+        return formatter.format(date)
+    }
+
+    private val THREADLOCAL_FORMATS = object : ThreadLocal<SoftReference<Map<String, SimpleDateFormat>>>() {
+
+        override fun initialValue(): SoftReference<Map<String, SimpleDateFormat>> {
+            return SoftReference(
+                    HashMap())
+        }
+
+    }
+
+    fun formatFor(pattern: String): SimpleDateFormat {
+        val ref = THREADLOCAL_FORMATS.get()
+        var formats: MutableMap<String, SimpleDateFormat>? = ref.get() as MutableMap<String, SimpleDateFormat>
+        if (formats == null) {
+            formats = HashMap()
+            THREADLOCAL_FORMATS.set(
+                    SoftReference<Map<String, SimpleDateFormat>>(formats))
+        }
+
+        var format = formats[pattern]
+        if (format == null) {
+            format = SimpleDateFormat(pattern, Locale.US)
+            format.timeZone = TimeZone.getTimeZone("GMT")
+            formats[pattern] = format
+        }
+
+        return format
+    }
 }

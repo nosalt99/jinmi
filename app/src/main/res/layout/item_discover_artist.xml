@@ -8,7 +8,7 @@
     android:gravity="center_vertical">
 
     <de.hdodenhof.circleimageview.CircleImageView
-        android:id="@+id/ic_cover"
+        android:id="@+id/iv_cover"
         android:layout_width="@dimen/dp_72"
         android:layout_height="@dimen/dp_72"
         android:layout_marginBottom="8dp"
@@ -32,12 +32,11 @@
         android:layout_marginStart="8dp"
         android:ellipsize="end"
         android:lines="1"
-        android:textColor="@color/black"
         android:textSize="@dimen/sp_14"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/iv_album"
+        app:layout_constraintTop_toBottomOf="@+id/iv_cover"
         tools:text="歌手" />
 </android.support.constraint.ConstraintLayout>
 

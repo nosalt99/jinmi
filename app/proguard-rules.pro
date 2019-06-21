@@ -16,6 +16,15 @@
 #   public *;
 #}
 
+-dontpreverify
+-flattenpackagehierarchy
+-optimizationpasses 5
+-dontusemixedcaseclassnames
+-dontskipnonpubliclibraryclasses
+-verbose
+-useuniqueclassmembernames
+-ignorewarnings
+
 #bugly
 -dontwarn com.tencent.bugly.**
 -keep public class com.tencent.bugly.**{*;}
@@ -88,11 +97,53 @@
 -keep class * extends org.litepal.crud.LitePalSupport {
     *;
 }
--dontwarn com.cyl.musiclake.api.doupan.DoubanMusic.**
--keep class com.cyl.musiclake.api.doupan.DoubanMusic {
+-dontwarn com.cyl.musiclake.api.music.doupan.DoubanMusic.**
+-keep class com.cyl.musiclake.api.music.doupan.DoubanMusic {
     *;
 }
 
 #第三方jar包jaudiotagger
 -dontwarn org.jaudiotagger.**
 -keep class org.jaudiotagger.** {*;}
+
+-dontwarn com.tencent.bugly.**
+-keep public class com.tencent.bugly.**{*;}
+# tinker混淆规则
+-dontwarn com.tencent.tinker.**
+-keep class com.tencent.tinker.** { *; }
+#微博
+-keep class com.sina.weibo.sdk.** { *; }
+
+-keepattributes EnclosingMethod
+#
+##Glide
+#-keep public class * implements com.bumptech.glide.module.GlideModule
+#-keep public class * extends com.bumptech.glide.module.AppGlideModule
+#-keep public enum com.bumptech.glide.load.ImageHeaderParser$** {
+#  **[] $VALUES;
+#  public *;
+#}
+#
+## for DexGuard only
+#-keepresourcexmlelements manifest/application/meta-data@value=GlideModule
+
+-dontwarn com.franmontiel.persistentcookiejar.**
+-keep class com.franmontiel.persistentcookiejar.**
+
+-keepclassmembers class * implements java.io.Serializable {
+    static final long serialVersionUID;
+    private static final java.io.ObjectStreamField[] serialPersistentFields;
+    !static !transient <fields>;
+    private void writeObject(java.io.ObjectOutputStream);
+    private void readObject(java.io.ObjectInputStream);
+    java.lang.Object writeReplace();
+    java.lang.Object readResolve();
+}
+
+##Glide
+-keep public class * implements com.bumptech.glide.module.GlideModule
+-keep public class * extends com.bumptech.glide.module.AppGlideModule
+-keep public enum com.bumptech.glide.load.ImageHeaderParser$** {
+  **[] $VALUES;
+  public *;
+}

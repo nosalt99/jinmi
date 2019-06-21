@@ -1,5 +1,6 @@
 package com.cyl.musiclake.common;
 
+
 /**
  * 作者：yonglong on 2016/9/24 10:57
  * 邮箱：643872807@qq.com
@@ -8,24 +9,18 @@ package com.cyl.musiclake.common;
  */
 
 public class Extras {
-    public static final String BILLBOARD_DESC = "billboard_desc";
-    public static final String BILLBOARD_TYPE = "billboard_type";
-    public static final String BILLBOARD_TITLE = "billboard_title";
-    public static final String BILLBOARD_ALBUM = "billboard_album";
 
     public static final String ALBUM = "album";
     public static final String SONG_NAME = "song_name";
     public static final String PLAY_STATUS = "play_status";
     public static final String SONG = "song";
+    public static final String SONG_LIST = "song_list";
 
     public static final String SECRET_ID = "secret_id";
 
     public static final String USER_ID = "user_id";
 
 
-    public static final String PLAYLIST_FOREGROUND_COLOR = "foreground_color";
-
-    public static final String PLAYLIST_BACKGROUND_IMAGE = "background_image";
     public static final String PLAYLIST_NAME = "playlist_name";
 
     public static final String TRANSITIONNAME = "transitionName";
@@ -41,11 +36,9 @@ public class Extras {
     public static final String MV_TITLE = "mv_title";
     public static final String MV_ID = "mv_mid";
 
+    //视频路径
+    public static final String VIDEO_PATH = "video_path";
 
-    //返回值 playlistDetail
-    public static final int TO_PLAYLISTDETAIL = 0;
-    public static final String SONG_TYPE = "song_type";
-    public static final String COMMUNITY_FLAG = "community_flag";
 
     //在线歌曲id
     public static final String TING_UID = "ting_uid";
@@ -62,4 +55,8 @@ public class Extras {
 
     public static final int REQUEST_CODE_EIDT_SONG = 200;
 
+    public static final String LOGIN_METHEOD = "login_method";
+
+    //搜索信息
+    public static final String SEARCH_INFO = "search_info";
 }

@@ -4,13 +4,16 @@ package com.cyl.musiclake.ui.my
 import android.app.Activity
 import android.content.Intent
 import android.widget.Toast
+import com.cyl.musicapi.netease.LoginInfo
 import com.cyl.musiclake.MusicApp
-import com.cyl.musiclake.api.PlaylistApiServiceImpl
-import com.cyl.musiclake.base.BasePresenter
+import com.cyl.musiclake.api.playlist.PlaylistApiServiceImpl
+import com.cyl.musiclake.api.music.netease.NeteaseApiServiceImpl
 import com.cyl.musiclake.common.Constants
-import com.cyl.musiclake.net.ApiManager
-import com.cyl.musiclake.net.RequestCallBack
+import com.cyl.musiclake.api.net.ApiManager
+import com.cyl.musiclake.api.net.RequestCallBack
+import com.cyl.musiclake.ui.base.BasePresenter
 import com.cyl.musiclake.ui.my.user.User
+import com.cyl.musiclake.ui.my.user.UserStatus
 import com.cyl.musiclake.utils.LogUtil
 import com.cyl.musiclake.utils.SPUtils
 import com.cyl.musiclake.utils.ToastUtils
@@ -29,37 +32,53 @@ import javax.inject.Inject
 
 class LoginPresenter @Inject
 constructor() : BasePresenter<LoginContract.View>(), LoginContract.Presenter {
-    private var userModel: UserModel? = null
+    override fun bindNetease(userName: String, pwd: String) {
+        if (userName.isEmpty()) return
+        if (pwd.isEmpty()) return
+        val observable = NeteaseApiServiceImpl.loginPhone(userName, pwd, userName.contains("@"))
+        ApiManager.request(observable,
+                object : RequestCallBack<LoginInfo> {
+                    override fun success(result: LoginInfo?) {
+                        //登录成功
+                        mView?.hideLoading()
+                        mView?.bindSuccess(result)
+                    }
+
+                    override fun error(msg: String) {
+                        //登录失败
+                        mView?.hideLoading()
+                        ToastUtils.show(msg)
+                        mView?.showErrorInfo(msg)
+                    }
+                }
+        )
+    }
 
     private var loginListener: IUiListener? = null
 
-    init {
-        this.userModel = UserModel()
-    }
-
     override fun attachView(view: LoginContract.View) {
         super.attachView(view)
-        userModel = UserModel()
     }
 
     override fun login(params: Map<String, String>) {
         mView?.showLoading()
     }
 
-    private fun getPrivateToken() {
-        ApiManager.request(
-                PlaylistApiServiceImpl.login(MusicApp.mTencent.accessToken, MusicApp.mTencent.openId),
+    /**
+     * 请求后台登录接口
+     */
+    fun loginServer(accessToken: String, uid: String, method: String) {
+        val observable = PlaylistApiServiceImpl.login(accessToken, uid, method)
+        ApiManager.request(observable,
                 object : RequestCallBack<User> {
                     override fun success(result: User?) {
                         if (result != null) {
-                            val newUserInfo = userModel!!.userInfo
-                            newUserInfo!!.token = result.token
-                            userModel?.savaInfo(newUserInfo)
+                            UserStatus.saveUserInfo(result)
                         }
                         //登录成功
                         mView?.hideLoading()
                         //登录成功
-                        mView?.success(userModel!!.userInfo)
+                        mView?.success(UserStatus.getUserInfo())
                     }
 
                     override fun error(msg: String) {
@@ -73,12 +92,12 @@ constructor() : BasePresenter<LoginContract.View>(), LoginContract.Presenter {
 
 
     /**
-     * 实现QQ第三方登录
+     * 实现QQ第三方登录onActivityResultonActivityResult
      */
     override fun loginByQQ(activity: Activity) {
         mView.showLoading()
         //QQ第三方登录
-        MusicApp.mTencent.login(activity, "all", loginListener)
+        MusicApp.mTencent.login(activity, "all", loginListener, true)
         loginListener = object : IUiListener {
             override fun onComplete(o: Any) {
                 mView?.hideLoading()
@@ -126,12 +145,6 @@ constructor() : BasePresenter<LoginContract.View>(), LoginContract.Presenter {
                                 val nickName = info.getString("nickname")//获取用户昵称
                                 val iconUrl = info.getString("figureurl_qq_2")//获取用户头像的url
                                 val gender = info.getString("gender")//获取用户性别
-                                //                            Map<String, String> params = new HashMap<String, String>();
-                                //                            params.put(Constants.PARAM_METHOD, "qq");
-                                //                            params.put(Constants.USERNAME, nickName);
-                                //                            params.put(Constants.USER_SEX, gender);
-                                //                            params.put(Constants.USER_IMG, iconUrl);
-                                //                            params.put(Constants.USER_ID, mTencent.getOpenId());
                                 val userInfo = User()
                                 userInfo.id = MusicApp.mTencent.openId
                                 userInfo.avatar = iconUrl
@@ -139,12 +152,13 @@ constructor() : BasePresenter<LoginContract.View>(), LoginContract.Presenter {
                                 userInfo.name = nickName
                                 userInfo.nick = nickName
                                 //保存用户信息
-                                userModel!!.savaInfo(userInfo)
-                                getPrivateToken()
+                                UserStatus.saveUserInfo(userInfo)
+                                loginServer(MusicApp.mTencent.accessToken, MusicApp.mTencent.openId, Constants.QQ)
                             } catch (e: JSONException) {
                                 ToastUtils.show("网络异常，请稍后重试！")
                                 e.printStackTrace()
                             }
+
 
                         }
 

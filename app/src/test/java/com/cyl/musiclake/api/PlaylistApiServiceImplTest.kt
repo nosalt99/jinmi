@@ -1,5 +1,6 @@
 package com.cyl.musiclake.api
 
+import com.cyl.musiclake.api.playlist.PlaylistApiServiceImpl
 import org.junit.Test
 
 /**
@@ -43,10 +44,6 @@ class PlaylistApiServiceImplTest {
 
     @Test
     fun login() {
-        PlaylistApiServiceImpl.login("9D6F0084618AACDE881FDCA267F5CFDD", "35300E15E9E245DF0B04031EF6032CD6")
-                .subscribe {
-                    print(it.toString())
-                }
     }
 
     @Test

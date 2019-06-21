@@ -1,55 +1,53 @@
 package com.cyl.musiclake.ui.main;
 
-import android.annotation.TargetApi;
-import android.app.Activity;
 import android.content.Intent;
-import android.graphics.Color;
-import android.media.audiofx.AudioEffect;
-import android.os.Build;
-import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.internal.NavigationMenuView;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.WindowManager;
 import android.widget.ImageView;
+import android.widget.Switch;
 import android.widget.TextView;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.cyl.musiclake.MusicApp;
 import com.cyl.musiclake.R;
-import com.cyl.musiclake.base.BaseActivity;
 import com.cyl.musiclake.bean.Music;
+import com.cyl.musiclake.bean.SocketOnlineEvent;
 import com.cyl.musiclake.common.Constants;
 import com.cyl.musiclake.common.NavigationHelper;
+import com.cyl.musiclake.event.CountDownEvent;
 import com.cyl.musiclake.event.LoginEvent;
 import com.cyl.musiclake.event.MetaChangedEvent;
-import com.cyl.musiclake.event.PlaylistEvent;
 import com.cyl.musiclake.player.PlayManager;
-import com.cyl.musiclake.ui.map.ShakeActivity;
-import com.cyl.musiclake.ui.music.player.PlayControlFragment;
+import com.cyl.musiclake.ui.UIUtilsKt;
+import com.cyl.musiclake.ui.base.BaseActivity;
+import com.cyl.musiclake.ui.chat.ChatActivity;
+import com.cyl.musiclake.ui.music.importplaylist.ImportPlaylistActivity;
 import com.cyl.musiclake.ui.music.search.SearchActivity;
+import com.cyl.musiclake.ui.my.BindLoginActivity;
 import com.cyl.musiclake.ui.my.LoginActivity;
+import com.cyl.musiclake.ui.my.user.User;
 import com.cyl.musiclake.ui.my.user.UserStatus;
 import com.cyl.musiclake.ui.settings.AboutActivity;
 import com.cyl.musiclake.ui.settings.SettingsActivity;
+import com.cyl.musiclake.ui.timing.SleepTimerActivity;
+import com.cyl.musiclake.ui.widget.CountDownTimerTextView;
+import com.cyl.musiclake.utils.CountDownUtils;
 import com.cyl.musiclake.utils.CoverLoader;
 import com.cyl.musiclake.utils.LogUtil;
 import com.cyl.musiclake.utils.SPUtils;
 import com.cyl.musiclake.utils.ToastUtils;
 import com.cyl.musiclake.utils.Tools;
-import com.sothree.slidinguppanel.SlidingUpPanelLayout;
-import com.sothree.slidinguppanel.SlidingUpPanelLayout.PanelState;
-import com.tencent.tauth.IUiListener;
-import com.tencent.tauth.UiError;
 
-import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
@@ -67,25 +65,29 @@ import static com.cyl.musiclake.ui.UIUtilsKt.updateLoginToken;
  */
 public class MainActivity extends BaseActivity implements NavigationView.OnNavigationItemSelectedListener {
 
-    @BindView(R.id.sliding_layout)
-    public SlidingUpPanelLayout mSlidingUpPaneLayout;
-    @BindView(R.id.nav_view)
-    NavigationView mNavigationView;
-    @BindView(R.id.drawer_layout)
-    DrawerLayout mDrawerLayout;
+//    @BindView(R.id.nav_view)
+//    NavigationView mNavigationView;
+//    @BindView(R.id.drawer_layout)
+//    DrawerLayout mDrawerLayout;
+    Switch mSwitchCountDown;
+    Switch mNightModeSw;
+    CountDownTimerTextView mSwitchCountDownTv;
 
     public ImageView mImageView;
     CircleImageView mAvatarIcon;
     TextView mName;
-    TextView mNick;
+    //    TextView mLoginTv;
+    ImageView mShowBindIv;
+    View mBindNeteaseView;
+    TextView mOnlineNumTv;
 
-    private View headerView;
-    private PlayControlFragment controlFragment;
     private static final String TAG = "MainActivity";
 
+    private boolean mIsCountDown = false;
     private boolean mIsLogin = false;
 
     Class<?> mTargetClass = null;
+
 
     @Override
     protected int getLayoutResID() {
@@ -94,28 +96,16 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 
     @Override
     protected void initView() {
-        transparentStatusBar(this);
+//        transparentStatusBar(this);
         //菜单栏的头部控件初始化
-        initNavView();
-        mNavigationView.setNavigationItemSelectedListener(this);
-        mNavigationView.setItemIconTintList(null);
+//        initNavView();
+//        mNavigationView.setNavigationItemSelectedListener(this);
+//        mNavigationView.setItemIconTintList(null);
+//        disableNavigationViewScrollbars(mNavigationView);
         checkLoginStatus();
+        initCountDownView();
     }
 
-
-    /**
-     * 使状态栏透明
-     */
-    @TargetApi(Build.VERSION_CODES.KITKAT)
-    private static void transparentStatusBar(Activity activity) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            activity.getWindow().addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-            activity.getWindow().clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-            activity.getWindow().setStatusBarColor(Color.TRANSPARENT);
-        } else {
-            activity.getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-        }
-    }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onMetaChangedEvent(MetaChangedEvent event) {
@@ -123,35 +113,67 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     }
 
     private void updatePlaySongInfo(Music music) {
-        if (mSlidingUpPaneLayout == null) return;
+//        if (mSlidingUpPaneLayout == null) return;
         if (music != null) {
-            mSlidingUpPaneLayout.setPanelHeight(getResources().getDimensionPixelOffset(R.dimen.dp_56));
-            CoverLoader.loadBigImageView(this, music, mImageView);
+//            mSlidingUpPaneLayout.setPanelHeight(getResources().getDimensionPixelOffset(R.dimen.dp_56));
+            CoverLoader.INSTANCE.loadBigImageView(this, music, mImageView);
         } else {
-            mSlidingUpPaneLayout.setPanelHeight(0);
-            mSlidingUpPaneLayout.setPanelState(PanelState.COLLAPSED);
+//            mSlidingUpPaneLayout.setPanelHeight(0);
+//            mSlidingUpPaneLayout.setPanelState(PanelState.COLLAPSED);
         }
     }
 
-    private void initNavView() {
-        headerView = mNavigationView.getHeaderView(0);
-        mImageView = headerView.findViewById(R.id.header_bg);
-        mAvatarIcon = headerView.findViewById(R.id.header_face);
-        mName = headerView.findViewById(R.id.header_name);
-        mNick = headerView.findViewById(R.id.header_nick);
+//    private void initNavView() {
+//        View mHeaderView = mNavigationView.getHeaderView(0);
+//        mImageView = mHeaderView.findViewById(R.id.header_bg);
+//        mAvatarIcon = mHeaderView.findViewById(R.id.header_face);
+//        mName = mHeaderView.findViewById(R.id.header_name);
+////        mLoginTv = mHeaderView.findViewById(R.id.user_login_tv);
+////        mBindNeteaseView = mHeaderView.findViewById(R.id.nav_sync_netease);
+//        mBindNeteaseView = mHeaderView.findViewById(R.id.heard_netease);
+//        mShowBindIv = mHeaderView.findViewById(R.id.show_sync_iv);
+//        mShowBindIv.setOnClickListener(v -> {
+//            mNavigationView.getMenu().findItem(R.id.nav_bind_wy).setVisible(!mNavigationView.getMenu().findItem(R.id.nav_bind_wy).isVisible());
+//            if (mNavigationView.getMenu().findItem(R.id.nav_bind_wy).isVisible()) {
+//                mShowBindIv.setImageResource(R.drawable.ic_arrow_drop_up);
+//            } else {
+//                mShowBindIv.setImageResource(R.drawable.ic_arrow_drop_down);
+//            }
+//        });
+//
+//    }
+
+    private void checkBindStatus(Boolean isInit) {
+//        UIUtilsKt.getNeteaseLoginStatus(user -> {
+//            ToastUtils.show("已绑定网易云音乐");
+//            if (isInit) {
+//                mNavigationView.getMenu().findItem(R.id.nav_bind_wy).setTitle("已绑定网易云音乐(" + user.getName() + ")");
+//                CoverLoader.INSTANCE.loadDrawable(this, user.getAvatar(), drawable -> {
+//                    mNavigationView.getMenu().findItem(R.id.nav_bind_wy).setIcon(drawable);
+//                    return null;
+//                });
+//            }
+//            return null;
+//        }, () -> {
+//            if (!isInit) {
+//                Intent intent = new Intent(MainActivity.this, BindLoginActivity.class);
+//                startActivityForResult(intent, Constants.REQUEST_CODE_LOGIN);
+//            }
+//            return null;
+//        });
     }
+
 
     @Override
     protected void initData() {
         String from = getIntent().getAction();
-        if (from != null && from.equals(Constants.DEAULT_NOTIFICATION)) {
-            mSlidingUpPaneLayout.setPanelHeight(getResources().getDimensionPixelOffset(R.dimen.dp_56));
-            mSlidingUpPaneLayout.setPanelState(PanelState.COLLAPSED);
-        }
+//        if (from != null && from.equals(Constants.DEAULT_NOTIFICATION)) {
+//            mSlidingUpPaneLayout.setPanelHeight(getResources().getDimensionPixelOffset(R.dimen.dp_56));
+//            mSlidingUpPaneLayout.setPanelState(PanelState.COLLAPSED);
+//        }
         updatePlaySongInfo(PlayManager.getPlayingMusic());
         //加载主fragment
         navigateLibrary.run();
-        navigatePlay.run();
     }
 
     @Override
@@ -161,54 +183,29 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 
     @Override
     protected void listener() {
-        mSlidingUpPaneLayout.addPanelSlideListener(new SlidingUpPanelLayout.PanelSlideListener() {
-            @Override
-            public void onPanelStateChanged(View panel, PanelState previousState, PanelState newState) {
-                LogUtil.d(TAG, "onPanelStateChanged " + newState);
-                if (newState == PanelState.EXPANDED) {
-                    mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
-                } else {
-                    mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
-                }
-            }
-
-            @Override
-            public void onPanelSlide(View panel, float slideOffset) {
-                LogUtil.d(TAG, "onPanelSlide, offset " + slideOffset);
-                if (controlFragment.topContainer != null) {
-                    controlFragment.topContainer.setAlpha(1 - slideOffset * 2);
-                    if (controlFragment.topContainer.getAlpha() < 0) {
-                        controlFragment.topContainer.setVisibility(View.GONE);
-                    } else {
-                        controlFragment.topContainer.setVisibility(View.VISIBLE);
-                        mSlidingUpPaneLayout.setTouchEnabled(true);
-                    }
-                }
-            }
-        });
-
-        mDrawerLayout.addDrawerListener(new DrawerLayout.DrawerListener() {
-            @Override
-            public void onDrawerSlide(@NonNull View drawerView, float slideOffset) {
-
-            }
-
-            @Override
-            public void onDrawerOpened(@NonNull View drawerView) {
-            }
-
-            @Override
-            public void onDrawerClosed(@NonNull View drawerView) {
-                if (mTargetClass != null) {
-                    turnToActivity(mTargetClass);
-                }
-            }
-
-            @Override
-            public void onDrawerStateChanged(int newState) {
-
-            }
-        });
+//        mDrawerLayout.addDrawerListener(new DrawerLayout.DrawerListener() {
+//            @Override
+//            public void onDrawerSlide(@NonNull View drawerView, float slideOffset) {
+//
+//            }
+//
+//            @Override
+//            public void onDrawerOpened(@NonNull View drawerView) {
+//                mSwitchCountDown.setChecked(CountDownUtils.INSTANCE.getType() != 0);
+//            }
+//
+//            @Override
+//            public void onDrawerClosed(@NonNull View drawerView) {
+//                if (mTargetClass != null) {
+//                    turnToActivity(mTargetClass);
+//                }
+//            }
+//
+//            @Override
+//            public void onDrawerStateChanged(int newState) {
+//
+//            }
+//        });
     }
 
     /**
@@ -223,30 +220,34 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
             case R.id.nav_login_status:
                 if (mIsLogin) {
                     new MaterialDialog.Builder(this)
-                            .title("音乐湖")
-                            .content("您确定要退出或切换其他账号吗？")
-                            .positiveText("确定")
+                            .title(R.string.app_name)
+                            .content(R.string.logout_prompt)
+                            .positiveText(android.R.string.yes)
                             .onPositive((materialDialog, dialogAction) -> {
                                 logout();
-                            }).negativeText("取消").show();
+                            }).negativeText(android.R.string.cancel).show();
                 } else {
                     mTargetClass = LoginActivity.class;
                 }
-                mDrawerLayout.closeDrawers();
-                break;
-            case R.id.nav_menu_shake:
-                item.setChecked(true);
-                if (!mIsLogin) {
-                    mTargetClass = LoginActivity.class;
-                } else {
-                    mTargetClass = ShakeActivity.class;
-                }
+//                mDrawerLayout.closeDrawers();
                 break;
             case R.id.nav_menu_playQueue:
                 NavigationHelper.INSTANCE.navigatePlayQueue(this);
                 break;
+            case R.id.nav_bind_wy:
+                checkBindStatus(false);
+                break;
+            case R.id.nav_menu_import:
+                mTargetClass = ImportPlaylistActivity.class;
+                break;
             case R.id.nav_menu_setting:
                 mTargetClass = SettingsActivity.class;
+                break;
+            case R.id.nav_menu_online_num:
+                mTargetClass = ChatActivity.class;
+                break;
+            case R.id.nav_menu_count_down:
+                mTargetClass = SleepTimerActivity.class;
                 break;
             case R.id.nav_menu_feedback:
                 Tools.INSTANCE.feeback(this);
@@ -255,20 +256,14 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                 mTargetClass = AboutActivity.class;
                 break;
             case R.id.nav_menu_equalizer:
-                try {
-                    Intent effects = new Intent(AudioEffect.ACTION_DISPLAY_AUDIO_EFFECT_CONTROL_PANEL);
-                    effects.putExtra(AudioEffect.EXTRA_AUDIO_SESSION, PlayManager.getAudioSessionId());
-                    startActivityForResult(effects, 666);
-                } catch (Exception e) {
-                    ToastUtils.show("设备不支持均衡！");
-                }
+                NavigationHelper.INSTANCE.navigateToSoundEffect(this);
                 break;
             case R.id.nav_menu_exit:
                 mTargetClass = null;
                 finish();
                 break;
         }
-        mDrawerLayout.closeDrawers();
+//        mDrawerLayout.closeDrawers();
         return false;
     }
 
@@ -290,22 +285,17 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 
     };
 
-    private Runnable navigatePlay = () -> {
-        controlFragment = PlayControlFragment.newInstance();
-        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        transaction.replace(R.id.controls_container, controlFragment).commit();
-    };
-
-
     //返回键
     @Override
     public void onBackPressed() {
-        if (mSlidingUpPaneLayout != null &&
-                (mSlidingUpPaneLayout.getPanelState() == PanelState.EXPANDED || mSlidingUpPaneLayout.getPanelState() == PanelState.ANCHORED)) {
-            mSlidingUpPaneLayout.setPanelState(PanelState.COLLAPSED);
-        } else if (mDrawerLayout.isDrawerOpen(GravityCompat.START)) {
-            mDrawerLayout.closeDrawers();
-        } else if (isNavigatingMain()) {
+//        if (mSlidingUpPaneLayout != null &&
+//                (mSlidingUpPaneLayout.getPanelState() == PanelState.EXPANDED || mSlidingUpPaneLayout.getPanelState() == PanelState.ANCHORED)) {
+//            mSlidingUpPaneLayout.setPanelState(PanelState.COLLAPSED);
+//        } else
+//        if (mDrawerLayout.isDrawerOpen(GravityCompat.START)) {
+//            mDrawerLayout.closeDrawers();
+//        } else
+        if (isNavigatingMain()) {
             Intent home = new Intent(Intent.ACTION_MAIN);
             home.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             home.addCategory(Intent.CATEGORY_HOME);
@@ -328,7 +318,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         switch (item.getItemId()) {
             case android.R.id.home:
                 if (isNavigatingMain()) {
-                    mDrawerLayout.openDrawer(GravityCompat.START);
+                    //mDrawerLayout.openDrawer(GravityCompat.START);
                 } else {
                     super.onBackPressed();
                 }
@@ -347,32 +337,28 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         return (currentFragment instanceof MainFragment);
     }
 
-
-    private void setPlaylistQueueChange() {
-//        if (PlayManager.getPlayList().size() == 0) {
-//            mSlidingUpPaneLayout.setPanelState(PanelState.HIDDEN);
-//        } else if (PlayManager.getPlayList().size() >= 0 && mSlidingUpPaneLayout.getPanelState() == PanelState.HIDDEN) {
-//            mSlidingUpPaneLayout.setPanelState(PanelState.EXPANDED);
-//        }
-    }
-
     /**
      * 设置用户状态信息
      */
-    private void setUserStatusInfo() {
-        mIsLogin = UserStatus.getstatus(this);
-        if (mIsLogin) {
-            String url = UserStatus.getUserInfo(this).getAvatar();
-            CoverLoader.loadImageView(this, url, R.drawable.ic_account_circle, mAvatarIcon);
-            mName.setText(UserStatus.getUserInfo(this).getNick());
-            mNick.setText(getResources().getString(R.string.app_name));
-            mNavigationView.getMenu().findItem(R.id.nav_login_status).setTitle(getResources().getString(R.string.logout_hint))
-                    .setIcon(R.drawable.ic_exit);
+    private void setUserStatusInfo(Boolean isLogin, User user) {
+        mIsLogin = isLogin;
+        if (mIsLogin && user != null) {
+//            MusicApp.socketManager.toggleSocket(true);
+//            String url = user.getAvatar();
+//            CoverLoader.INSTANCE.loadImageView(this, url, R.drawable.ic_account_circle, mAvatarIcon);
+//            mName.setText(user.getNick());
+//            mShowBindIv.setVisibility(View.VISIBLE);
+//            mNavigationView.getMenu().findItem(R.id.nav_login_status).setTitle(getResources().getString(R.string.logout_hint))
+//                    .setIcon(R.drawable.ic_exit);
         } else {
-            mAvatarIcon.setImageResource(R.drawable.ic_account_circle);
-            mName.setText(getResources().getString(R.string.app_name));
-            mNavigationView.getMenu().findItem(R.id.nav_login_status).setTitle(getResources().getString(R.string.login_hint));
-            mNick.setText(getResources().getString(R.string.login_hint));
+//            MusicApp.socketManager.toggleSocket(false);
+//            mAvatarIcon.setImageResource(R.drawable.ic_account_circle);
+//            mName.setText(getResources().getString(R.string.app_name));
+//            mShowBindIv.setVisibility(View.GONE);
+//            mNavigationView.getMenu().findItem(R.id.nav_login_status).setTitle(getResources().getString(R.string.login_hint))
+//                    .setIcon(R.drawable.ic_exit);
+//
+//            mNavigationView.getMenu().removeItem(R.id.nav_menu_online_num);
         }
     }
 
@@ -381,27 +367,20 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
      *
      * @param event
      */
-    @Subscribe
+    @Subscribe(threadMode = ThreadMode.MAIN)
     public void updateUserInfo(LoginEvent event) {
-        setUserStatusInfo();
+        setUserStatusInfo(event.getStatus(), event.getUser());
     }
 
     /**
-     * 更新歌单
+     * 更新在线用户数量
      *
      * @param event
      */
-    @Subscribe
-    public void updatePlaylist(PlaylistEvent event) {
-        if (event.getType().equals(Constants.PLAYLIST_QUEUE_ID)) {
-            setPlaylistQueueChange();
-        } else if (event.getType().equals(Constants.PLAYLIST_LOVE_ID)) {
-            Music music = PlayManager.getPlayingMusic();
-            if (music != null && music.isLove()) {
-                controlFragment.mIvLove.setImageResource(R.drawable.item_favorite_love);
-            } else if (music != null && !music.isLove()) {
-                controlFragment.mIvLove.setImageResource(R.drawable.item_favorite);
-            }
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void updateOnlineInfo(SocketOnlineEvent event) {
+        if (mOnlineNumTv != null) {
+            mOnlineNumTv.setText(String.valueOf(event.getNum()));
         }
     }
 
@@ -409,24 +388,79 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
      * 检查QQ登录状态
      */
     private void checkLoginStatus() {
-        String token = SPUtils.getAnyByKey(SPUtils.QQ_ACCESS_TOKEN, "");
-        String openId = SPUtils.getAnyByKey(SPUtils.QQ_OPEN_ID, "");
-        if (token.length() > 0 && openId.length() > 0) {
-            updateLoginToken(token, openId);
-        } else {
-            EventBus.getDefault().post(new PlaylistEvent(Constants.PLAYLIST_CUSTOM_ID));
+        if (UserStatus.getLoginStatus() && !UserStatus.getTokenStatus()) {
+            updateLoginToken();
+        } else if (UserStatus.getLoginStatus()) {
+            updateUserInfo(new LoginEvent(true, UserStatus.getUserInfo()));
+        }
+        checkBindStatus(true);
+    }
+
+    /**
+     * 去掉navigationView的滚动条
+     *
+     * @param navigationView
+     */
+    public static void disableNavigationViewScrollbars(NavigationView navigationView) {
+        if (navigationView != null) {
+            NavigationMenuView navigationMenuView = (NavigationMenuView) navigationView.getChildAt(0);
+            if (navigationMenuView != null) {
+                navigationMenuView.setVerticalScrollBarEnabled(false);
+            }
         }
     }
 
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        EventBus.getDefault().unregister(this);
+    /**
+     * 更新歌单
+     *
+     * @param event
+     */
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void finishCountDown(CountDownEvent event) {
+        if (event.isStop()) {
+            mSwitchCountDown.setChecked(false);
+            mSwitchCountDownTv.setVisibility(View.GONE);
+        } else {
+            mSwitchCountDown.setChecked(true);
+            mSwitchCountDownTv.setVisibility(View.VISIBLE);
+        }
+    }
+
+
+    /**
+     * 初始化倒计时
+     */
+    private void initCountDownView() {
+        //View numItem = mNavigationView.getMenu().findItem(R.id.nav_menu_online_num).getActionView();
+        //mOnlineNumTv = numItem.findViewById(R.id.msg_num_tv);
+//        mOnlineNumTv.setText("0");
+
+        //View item = mNavigationView.getMenu().findItem(R.id.nav_menu_count_down).getActionView();
+        //mSwitchCountDown = item.findViewById(R.id.count_down_switch);
+        //mSwitchCountDownTv = item.findViewById(R.id.count_down_tv);
+//        mSwitchCountDown.setOnClickListener(v -> UIUtilsKt.showCountDown(MainActivity.this, checked -> {
+//            mSwitchCountDown.setChecked(checked);
+//            return null;
+//        }));
     }
 
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        EventBus.getDefault().register(this);
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        Log.e(TAG, "onNewIntent");
+
     }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == Constants.REQUEST_CODE_LOGIN) {
+            String uid = SPUtils.getAnyByKey(SPUtils.SP_KEY_NETEASE_UID, "");
+            if (uid != null && uid.length() > 0) {
+                LogUtil.d(TAG, "uid = " + uid);
+//                mBindNeteaseView.setVisibility(View.GONE);
+            }
+        }
+    }
+
 }

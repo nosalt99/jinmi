@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <group android:checkableBehavior="single">
 
@@ -8,16 +9,46 @@
                 <item
                     android:id="@+id/nav_login_status"
                     android:icon="@drawable/ic_exit"
+                    android:iconTint="?iconColor"
                     android:title="@string/login" />
-
+                <item
+                    android:id="@+id/nav_bind_wy"
+                    android:icon="@drawable/netease"
+                    android:visible="false"
+                    android:title="@string/bind_netease" />
                 <item
                     android:id="@+id/nav_menu_playQueue"
                     android:icon="@drawable/ic_playlist_play"
+                    android:iconTint="?iconColor"
                     android:title="@string/playlist_queue" />
                 <item
                     android:id="@+id/nav_menu_equalizer"
                     android:icon="@drawable/ic_equalizer_black"
+                    android:iconTint="?iconColor"
                     android:title="@string/equalizer" />
+                <item
+                    android:id="@+id/nav_menu_import"
+                    android:icon="@drawable/ic_import_playlist"
+                    android:iconTint="?iconColor"
+                    android:title="@string/import_playlist" />
+                <item
+                    android:id="@+id/nav_menu_online_num"
+                    android:icon="@drawable/ic_supervisor_account"
+                    android:title="@string/real_time_user"
+                    app:actionLayout="@layout/item_red_spot" />
+
+                <item
+                    android:id="@+id/nav_menu_count_down"
+                    android:icon="@drawable/ic_timer_black"
+                    android:iconTint="?iconColor"
+                    android:title="@string/count_down_time"
+                    app:actionLayout="@layout/item_count_down_toggle" />
+                <item
+                    android:id="@+id/nav_menu_night_mode"
+                    android:iconTint="?iconColor"
+                    android:title="@string/theme_change"
+                    android:visible="false"
+                    app:actionLayout="@layout/item_night_mode_toggle" />
             </menu>
         </item>
     </group>
@@ -28,18 +59,22 @@
             <item
                 android:id="@+id/nav_menu_about"
                 android:icon="@drawable/ic_about"
+                android:iconTint="?iconColor"
                 android:title="@string/pref_title_about" />
             <item
                 android:id="@+id/nav_menu_feedback"
                 android:icon="@drawable/ic_feedback"
+                android:iconTint="?iconColor"
                 android:title="@string/about_feedback" />
             <item
                 android:id="@+id/nav_menu_setting"
-                android:icon="@mipmap/icon_setting"
+                android:icon="@drawable/ic_settings"
+                android:iconTint="?iconColor"
                 android:title="@string/settings" />
             <item
                 android:id="@+id/nav_menu_exit"
-                android:icon="@mipmap/icon_exit"
+                android:icon="@drawable/ic_exit"
+                android:iconTint="?iconColor"
                 android:title="@string/exit" />
         </menu>
     </item>

@@ -1,39 +1,33 @@
 package com.cyl.musiclake.ui.settings;
 
 import android.content.Intent;
-import android.net.Uri;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.preference.CheckBoxPreference;
+import android.preference.EditTextPreference;
+import android.preference.ListPreference;
+import android.preference.MultiSelectListPreference;
 import android.preference.Preference;
 import android.preference.PreferenceFragment;
+import android.preference.PreferenceManager;
 import android.preference.PreferenceScreen;
 import android.preference.SwitchPreference;
-import android.provider.Settings;
-import android.text.InputType;
 
-import com.cyl.musiclake.utils.LogUtil;
-
-import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.cyl.musiclake.MusicApp;
 import com.cyl.musiclake.R;
-import com.cyl.musiclake.RxBus;
-import com.cyl.musiclake.event.ScheduleTaskEvent;
-import com.cyl.musiclake.player.MusicPlayerService;
+import com.cyl.musiclake.common.Constants;
+import com.cyl.musiclake.ui.main.MainActivity;
+import com.cyl.musiclake.ui.theme.ThemeStore;
 import com.cyl.musiclake.utils.DataClearManager;
-import com.cyl.musiclake.utils.FormatUtil;
+import com.cyl.musiclake.utils.FileUtils;
+import com.cyl.musiclake.utils.LogUtil;
 import com.cyl.musiclake.utils.SPUtils;
 import com.cyl.musiclake.utils.SystemUtils;
 import com.cyl.musiclake.utils.ToastUtils;
-import com.tencent.bugly.beta.Beta;
 
-import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.schedulers.Schedulers;
-
-import static com.cyl.musiclake.player.MusicPlayerService.SCHEDULE_CHANGED;
-import static com.cyl.musiclake.player.MusicPlayerService.mShutdownScheduled;
-import static com.cyl.musiclake.player.MusicPlayerService.totalTime;
+import java.util.Set;
 
 /**
  * Author   : D22434
@@ -43,11 +37,21 @@ import static com.cyl.musiclake.player.MusicPlayerService.totalTime;
 
 public class SettingsFragment extends PreferenceFragment implements Preference.OnPreferenceClickListener {
 
+    private Preference mPreferenceDownloadFile;
+    private Preference mPreferenceCacheFile;
     private PreferenceScreen mPreferenceCache;
-    public SwitchPreference mWifiSwitch, mTimingSwitch;
+    public SwitchPreference mWifiSwitch, mSocketSwitch, mNightSwitch;
     public CheckBoxPreference mLyricCheckBox;
-    private int time = 0;
-    private int[] times = new int[]{0, 15, 30, 45, 60};
+    public ListPreference mMusicQualityPreference;
+    public MultiSelectListPreference mSearchFilterPreference;
+    public EditTextPreference mMusicApiPreference;
+    public EditTextPreference mNeteaseApiPreference;
+
+    private Set<String> searchOptions;
+    private String[] searchFilters;
+    private String musicApi;// = SPUtils.getAnyByKey(SPUtils.SP_KEY_PLATER_API_URL, Constants.BASE_PLAYER_URL);
+    private String neteaseApi;// = SPUtils.getAnyByKey(SPUtils.SP_KEY_NETEASE_API_URL, Constants.BASE_NETEASE_URL);
+
 
     public static SettingsFragment newInstance() {
         Bundle args = new Bundle();
@@ -70,7 +74,6 @@ public class SettingsFragment extends PreferenceFragment implements Preference.O
 
         });
 
-
         mWifiSwitch.setChecked(SPUtils.getWifiMode());
         mWifiSwitch.setOnPreferenceChangeListener((preference, newValue) -> {
             LogUtil.e("sss", newValue.toString());
@@ -84,15 +87,7 @@ public class SettingsFragment extends PreferenceFragment implements Preference.O
         } else {
             mLyricCheckBox.setChecked(false);
         }
-        updateTimeSwitch(MusicPlayerService.mShutdownScheduled);
-        RxBus.getInstance().register(ScheduleTaskEvent.class)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(metaChangedEvent -> {
-                    if (mTimingSwitch != null) {
-                        mTimingSwitch.setSummary(FormatUtil.INSTANCE.formatTime(MusicPlayerService.time));
-                    }
-                });
+        mSocketSwitch.setChecked(MusicApp.isOpenSocket);
     }
 
     /**
@@ -100,82 +95,132 @@ public class SettingsFragment extends PreferenceFragment implements Preference.O
      */
     private void initView() {
         mPreferenceCache = (PreferenceScreen) findPreference("key_cache");
+        mPreferenceDownloadFile = findPreference("key_download_file");
+        mPreferenceCacheFile = findPreference("key_cache_file");
         mWifiSwitch = (SwitchPreference) findPreference("wifi_mode");
-        mTimingSwitch = (SwitchPreference) findPreference("key_timing");
+        mSocketSwitch = (SwitchPreference) findPreference("key_socket");
+        mNightSwitch = (SwitchPreference) findPreference("key_night_mode");
         mLyricCheckBox = (CheckBoxPreference) findPreference("key_lyric");
+        mMusicQualityPreference = (ListPreference) findPreference("key_music_quality");
+        mSearchFilterPreference = (MultiSelectListPreference) findPreference("key_search_filter");
+        mMusicApiPreference = (EditTextPreference) findPreference("key_music_api");
+        mNeteaseApiPreference = (EditTextPreference) findPreference("key_netease_api");
 
         mPreferenceCache.setOnPreferenceClickListener(this);
-        mTimingSwitch.setOnPreferenceClickListener(this);
+        mSocketSwitch.setOnPreferenceClickListener(this);
         mLyricCheckBox.setOnPreferenceClickListener(this);
 
+        mPreferenceDownloadFile.setSummary(FileUtils.getMusicDir());
+        mPreferenceCacheFile.setSummary(FileUtils.getMusicCacheDir());
+
+        initSearchFilterSettings(true);
+        mMusicQualityPreference.setSummary(mMusicQualityPreference.getEntry());
+        mMusicQualityPreference.setOnPreferenceChangeListener((preference, newValue) -> {
+            //把preference这个Preference强制转化为ListPreference类型
+            ListPreference listPreference = (ListPreference) preference;
+            //获取ListPreference中的实体内容
+            CharSequence[] entries = listPreference.getEntries();
+            //获取ListPreference中的实体内容的下标值
+            int index = listPreference.findIndexOfValue((String) newValue);
+            //把listPreference中的摘要显示为当前ListPreference的实体内容中选择的那个项目
+            listPreference.setSummary(entries[index]);
+            ToastUtils.show("优先播放音质为：" + entries[index]);
+            return false;
+        });
+        mNightSwitch.setChecked(ThemeStore.THEME_MODE == ThemeStore.NIGHT);
+        mNightSwitch.setOnPreferenceChangeListener((preference, newValue) -> {
+            boolean isChecked = (boolean) newValue;
+            mNightSwitch.setChecked(isChecked);
+            if (isChecked && ThemeStore.THEME_MODE != ThemeStore.NIGHT) {
+                ThemeStore.THEME_MODE = ThemeStore.NIGHT;
+                ThemeStore.updateThemeMode();
+                updateTheme();
+            } else if (!isChecked && ThemeStore.THEME_MODE != ThemeStore.DAY) {
+                ThemeStore.THEME_MODE = ThemeStore.DAY;
+                ThemeStore.updateThemeMode();
+                updateTheme();
+            }
+            return false;
+        });
+
+        mSearchFilterPreference.setOnPreferenceChangeListener((preference, newValue) -> {
+            if (searchOptions != newValue) {
+                searchOptions = (Set<String>) newValue;
+            }
+            initSearchFilterSettings(false);
+            return false;
+        });
+        initApiSettings();
     }
 
     /**
-     * 开启对话框
+     * 更新主题配置
      */
-    private void openDialog() {
-        new MaterialDialog.Builder(getActivity())
-                .title("定时关闭")
-                .items("不开启", "15分钟", "30分钟", "45分钟", "60分钟", "自定义")
-                .itemsCallbackSingleChoice(getSelectTime(), (dialog, itemView, which, text) -> {
-                    if (which == 0) {
-                        updateTimeSwitch(false);
-                        mTimingSwitch.setSummary(null);
-                        time = times[which];
-                        startTimerService();
-                    } else if (which == 5) {
-                        dialog.cancel();
-                        new MaterialDialog.Builder(getActivity())
-                                .title("自定义时间")
-                                .inputType(InputType.TYPE_CLASS_NUMBER)//可以输入的类型-电话号码
-                                .input("分钟（不能大于24小时）", "", (dialog1, input) -> LogUtil.d("yqy", "输入的是：" + input))
-                                .inputRange(1, 3)
-                                .onPositive((dialog12, which1) -> {
-                                    if (dialog12.getInputEditText().length() > 4) {
-                                        dialog12.getActionButton(DialogAction.POSITIVE).setEnabled(false);
-                                    } else {
-                                        dialog12.getActionButton(DialogAction.POSITIVE).setEnabled(true);
-                                        time = Integer.parseInt(dialog12.getInputEditText().getText().toString());
-                                        updateTimeSwitch(true);
-                                        startTimerService();
-                                    }
-                                }).show();
-                    } else {
-                        time = times[which];
-                        updateTimeSwitch(true);
-                        startTimerService();
-                    }
-                    return false;
-                }).build()
-                .show();
-    }
-
-    /**
-     * 更新定时器开关
-     *
-     * @param mOpen
-     */
-    private void updateTimeSwitch(boolean mOpen) {
-        MusicPlayerService.mShutdownScheduled = mOpen;
-        mTimingSwitch.setChecked(mOpen);
-    }
-
-    /**
-     * 开启service中定时任务
-     */
-    private void startTimerService() {
-        Intent intent = new Intent(getActivity(), MusicPlayerService.class);
-        intent.setAction(SCHEDULE_CHANGED);
-        intent.putExtra("time", time);
-        getActivity().startService(intent);
-    }
-
-    private int getSelectTime() {
-        for (int i = 0; i < times.length; i++) {
-            if (totalTime == times[i]) return i;
+    private void updateTheme(){
+        for (int i = 0; i < MusicApp.activities.size(); i++) {
+            if (MusicApp.activities.get(i) instanceof MainActivity) {
+                MusicApp.activities.get(i).recreate();
+            }
         }
-        return 0;
+        startActivity(new Intent(getActivity(), SettingsActivity.class));
+        getActivity().overridePendingTransition(0, 0);
+        getActivity().finish();
     }
+
+    /**
+     * 初始化搜索过滤
+     */
+    private void initSearchFilterSettings(boolean isInit) {
+        if (isInit) {
+            SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
+            searchOptions = prefs.getStringSet("key_search_filter", null);
+            searchFilters = getResources().getStringArray(R.array.pref_search_filter_select);
+        }
+
+        if (searchOptions != null) {
+            StringBuilder info = new StringBuilder();
+            for (String t : searchOptions) {
+                info.append(searchFilters[Integer.valueOf(t) - 1]);
+                info.append("、");
+            }
+            info.deleteCharAt(info.length() - 1);
+            mSearchFilterPreference.setSummary(info);
+        }
+    }
+
+    /**
+     * 初始化Api设置
+     */
+    private void initApiSettings() {
+        //获取本地api地址
+        musicApi = SPUtils.getAnyByKey(SPUtils.SP_KEY_PLATER_API_URL, Constants.BASE_PLAYER_URL);
+        neteaseApi = SPUtils.getAnyByKey(SPUtils.SP_KEY_NETEASE_API_URL, Constants.BASE_NETEASE_URL);
+//
+        mMusicApiPreference.setSummary(musicApi);
+        mMusicApiPreference.setText(musicApi);
+        mNeteaseApiPreference.setSummary(neteaseApi);
+        mNeteaseApiPreference.setText(neteaseApi);
+
+        mMusicApiPreference.setOnPreferenceChangeListener((preference, newValue) -> {
+            if (!newValue.toString().equals(neteaseApi)) {
+                musicApi = String.valueOf(newValue);
+                preference.setSummary(musicApi);
+                SPUtils.putAnyCommit(SPUtils.SP_KEY_PLATER_API_URL, musicApi);
+                ToastUtils.show(getString(R.string.settings_restart_app));
+            }
+            return false;
+        });
+        mNeteaseApiPreference.setOnPreferenceChangeListener((preference, newValue) -> {
+            if (!newValue.toString().equals(neteaseApi)) {
+                neteaseApi = String.valueOf(newValue);
+                preference.setSummary(neteaseApi);
+                SPUtils.putAnyCommit(SPUtils.SP_KEY_NETEASE_API_URL, neteaseApi);
+                ToastUtils.show(getString(R.string.settings_restart_app));
+            }
+            return false;
+        });
+    }
+
 
     @Override
     public boolean onPreferenceClick(Preference preference) {
@@ -205,13 +250,10 @@ public class SettingsFragment extends PreferenceFragment implements Preference.O
                             });
                         }).show();
                 break;
-            case "key_timing":
-                if (mShutdownScheduled) {
-                    updateTimeSwitch(false);
-                } else {
-                    mTimingSwitch.setChecked(false);
-                    openDialog();
-                }
+            case "key_socket":
+                MusicApp.isOpenSocket = !MusicApp.isOpenSocket;
+                mSocketSwitch.setChecked(MusicApp.isOpenSocket);
+                MusicApp.socketManager.toggleSocket(MusicApp.isOpenSocket);
                 break;
             case "key_lyric":
                 checkLyricPermission();
@@ -225,14 +267,13 @@ public class SettingsFragment extends PreferenceFragment implements Preference.O
      */
     private void checkLyricPermission() {
         try {
-            if (!SystemUtils.isOpenSystemWindow() && SystemUtils.isMarshmallow()) {
-                ToastUtils.show(getActivity(), "请手动打开显示悬浮窗权限");
-                Intent intent = new Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION);
-                intent.setData(Uri.parse("package:" + getActivity().getPackageName()));
-                startActivityForResult(intent, 100);
+            if (!SystemUtils.isOpenFloatWindow()) {
+                ToastUtils.show(getString(R.string.float_window_manual_open));
+                SystemUtils.applySystemWindow();
+                mLyricCheckBox.setChecked(true);
             } else {
                 mLyricCheckBox.setChecked(true);
-                ToastUtils.show(getActivity(), "显示悬浮窗权限已开通");
+                ToastUtils.show(getString(R.string.float_window_is_ready));
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -252,11 +293,11 @@ public class SettingsFragment extends PreferenceFragment implements Preference.O
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == 100) {
-            if (SystemUtils.isOpenSystemWindow()) {
+        if (requestCode == Constants.REQUEST_CODE_FLOAT_WINDOW) {
+            if (SystemUtils.isOpenFloatWindow()) {
                 checkLyricPermission();
             } else {
-                ToastUtils.show(MusicApp.getAppContext(), "悬浮窗权限已被拒绝！");
+                ToastUtils.show(MusicApp.getAppContext(), getString(R.string.float_window_is_refused));
             }
         }
     }

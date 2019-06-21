@@ -4,14 +4,19 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorPrimary"
-    tools:context=".ui.music.player.PlayerActivity">
+    tools:context=".ui.music.playpage.PlayerActivity">
 
     <ImageView
         android:id="@+id/playingBgIv"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:scaleType="centerCrop" />
+        android:scaleType="centerCrop"
+        android:transitionName="@string/transition_cover" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#1f000000" />
 
     <android.support.v7.widget.Toolbar
         android:id="@+id/toolbar"
@@ -34,7 +39,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="@dimen/dp_16"
                 android:contentDescription="@string/search_lyric"
-                android:src="@drawable/ic_arrow_back" />
+                android:src="@drawable/ic_arrow_back"
+                android:tint="@color/white" />
 
             <LinearLayout
                 android:layout_width="0dp"
@@ -65,19 +71,34 @@
                     android:layout_marginTop="@dimen/dp_4"
                     android:gravity="center"
                     android:lines="1"
+                    android:textColor="@color/whiteAlpha54"
                     android:textSize="@dimen/sp_12"
                     tools:text="@string/artist_tips" />
 
             </LinearLayout>
 
-            <ImageView
-                android:id="@+id/searchLyricIv"
+            <FrameLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_margin="@dimen/dp_16"
-                android:contentDescription="@string/search_lyric"
-                android:src="@drawable/ic_search_lyric"
-                android:visibility="invisible" />
+                android:layout_margin="@dimen/dp_16">
+
+                <ImageView
+                    android:id="@+id/operateSongIv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:contentDescription="@string/song_operate"
+                    android:src="@drawable/ic_more"
+                    android:tint="@color/white" />
+
+                <ImageView
+                    android:id="@+id/searchLyricIv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:contentDescription="@string/search_lyric"
+                    android:src="@drawable/ic_search_lyric"
+                    android:visibility="gone" />
+
+            </FrameLayout>
 
         </LinearLayout>
 
@@ -94,13 +115,13 @@
         android:orientation="vertical"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-        <com.cyl.musiclake.view.MultiTouchViewPager
+        <com.cyl.musiclake.ui.widget.MultiTouchViewPager
             android:id="@+id/viewPager"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1">
 
-        </com.cyl.musiclake.view.MultiTouchViewPager>
+        </com.cyl.musiclake.ui.widget.MultiTouchViewPager>
 
         <LinearLayout
             android:id="@+id/detailView"
@@ -190,7 +211,7 @@
                         android:layout_gravity="center"
                         android:layout_margin="@dimen/dp_8" />
 
-                    <com.cyl.musiclake.view.PlayPauseView
+                    <com.cyl.musiclake.ui.widget.PlayPauseView
                         android:id="@+id/playPauseIv"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
@@ -238,8 +259,6 @@
                     android:layout_weight="1"
                     android:background="?android:attr/selectableItemBackgroundBorderless"
                     android:onClick="openPlayQueue"
-                    android:src="@drawable/ic_detail"
-
                     app:materialIcon="playlist_play"
                     app:materialIconColor="@color/white"
                     app:materialIconSize="24dp" />
@@ -275,13 +294,11 @@
                     android:layout_gravity="center"
                     android:layout_weight="1"
                     android:background="?android:attr/selectableItemBackgroundBorderless"
-
                     android:gravity="center"
                     android:onClick="downloadMusic"
                     app:materialIcon="arrow_collapse_down"
                     app:materialIconColor="@color/white"
-                    app:materialIconSize="24dp"
-                    tools:targetApi="lollipop" />
+                    app:materialIconSize="24dp" />
 
                 <net.steamcrafted.materialiconlib.MaterialIconView
                     android:id="@+id/shareIv"
@@ -321,8 +338,20 @@
                     android:onClick="addToPlaylist"
                     app:materialIcon="playlist_plus"
                     app:materialIconColor="@color/white"
-                    app:materialIconSize="24dp"
-                    tools:targetApi="lollipop" />
+                    app:materialIconSize="24dp" />
+
+                <net.steamcrafted.materialiconlib.MaterialIconView
+                    android:id="@+id/songCommentTv"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_gravity="center"
+                    android:layout_weight="1"
+                    android:background="?android:attr/selectableItemBackgroundBorderless"
+                    android:gravity="center"
+                    android:onClick="showSongComment"
+                    app:materialIcon="comment_multiple_outline"
+                    app:materialIconColor="@color/white"
+                    app:materialIconSize="24dp" />
 
             </LinearLayout>
 

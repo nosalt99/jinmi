@@ -1,9 +1,11 @@
 package com.cyl.musiclake.ui.music.mv
 
 import com.cyl.musicapi.netease.*
-import com.cyl.musiclake.api.netease.NeteaseApiServiceImpl
-import com.cyl.musiclake.net.ApiManager
-import com.cyl.musiclake.net.RequestCallBack
+import com.cyl.musiclake.api.music.baidu.BaiduApiServiceImpl
+import com.cyl.musiclake.api.music.netease.NeteaseApiServiceImpl
+import com.cyl.musiclake.bean.MvInfoBean
+import com.cyl.musiclake.api.net.ApiManager
+import com.cyl.musiclake.api.net.RequestCallBack
 
 /**
  * Des    :
@@ -31,10 +33,19 @@ class MvModel {
 
     /**
      *
-     * 加载推荐mv
+     * 加载排行榜mv
      */
     fun loadMv(offset: Int, result: RequestCallBack<MvInfo>?) {
         val observable = NeteaseApiServiceImpl.getTopMv(50, offset)
+        ApiManager.request(observable, result)
+    }
+
+    /**
+     *
+     * 加载推荐mv
+     */
+    fun loadPersonalizedMv( result: RequestCallBack<MvInfo>?) {
+        val observable = NeteaseApiServiceImpl.personalizedMv()
         ApiManager.request(observable, result)
     }
 
@@ -51,6 +62,19 @@ class MvModel {
      */
     fun loadMvComment(mvid: String?, result: RequestCallBack<MvComment>?) {
         val observable = mvid?.let { NeteaseApiServiceImpl.getMvComment(it) } ?: return
+        ApiManager.request(observable, result)
+    }
+
+    /**
+     *搜索mv数据
+     */
+    fun searchMv(key: String, offset: Int, result: RequestCallBack<SearchInfo>?) {
+        val observable = NeteaseApiServiceImpl.searchMoreInfo(key, 30, offset, 1004)
+        ApiManager.request(observable, result)
+    }
+
+    fun loadBaiduMv(songId: String?, result: RequestCallBack<MvInfoBean>?) {
+        val observable = BaiduApiServiceImpl.getMvInfo(songId)
         ApiManager.request(observable, result)
     }
 }
