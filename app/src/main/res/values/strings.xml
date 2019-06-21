@@ -1,12 +1,12 @@
 <resources>
-    <string name="app_name">音乐湖</string>
+    <string name="app_name">静谧</string>
     <string name="sure">确定</string>
     <string name="open">打开</string>
     <string name="close">关闭</string>
     <!--欢迎界面-->
     <string name="permission_hint">软件必须获取相关权限</string>
     <string name="welcome_tips">听我想听的歌</string>
-    <string name="welcome_tips_1">音乐湖</string>
+    <string name="welcome_tips_1">静谧</string>
 
 
     <!--主界面-->
@@ -20,7 +20,7 @@
     <string name="logout_hint">退出登录/关闭</string>
     <string name="action_settings">设置</string>
     <string name="header_author_url">个性标签</string>
-    <string name="widget_standard">音乐湖</string>
+    <string name="widget_standard">静谧</string>
     <string name="warning_add_playlist">暂不支持添加本地音乐和百度音乐</string>
     <string name="add_un_support_local">暂不支持添加本地歌曲到在线歌单</string>
     <string name="warning_network">暂不支持添加本地音乐和百度音乐</string>
@@ -222,7 +222,7 @@
     <string name="count_down_time">定时关闭播放</string>
 
     <!--about-->
-    <string name="title_about">关于音乐湖</string>
+    <string name="title_about">关于静谧</string>
     <string name="version">版本号</string>
     <string name="author">作者</string>
     <string name="about_des">描述</string>

@@ -65,10 +65,10 @@ import static com.cyl.musiclake.ui.UIUtilsKt.updateLoginToken;
  */
 public class MainActivity extends BaseActivity implements NavigationView.OnNavigationItemSelectedListener {
 
-    @BindView(R.id.nav_view)
-    NavigationView mNavigationView;
-    @BindView(R.id.drawer_layout)
-    DrawerLayout mDrawerLayout;
+//    @BindView(R.id.nav_view)
+//    NavigationView mNavigationView;
+//    @BindView(R.id.drawer_layout)
+//    DrawerLayout mDrawerLayout;
     Switch mSwitchCountDown;
     Switch mNightModeSw;
     CountDownTimerTextView mSwitchCountDownTv;
@@ -98,10 +98,10 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     protected void initView() {
 //        transparentStatusBar(this);
         //菜单栏的头部控件初始化
-        initNavView();
-        mNavigationView.setNavigationItemSelectedListener(this);
-        mNavigationView.setItemIconTintList(null);
-        disableNavigationViewScrollbars(mNavigationView);
+//        initNavView();
+//        mNavigationView.setNavigationItemSelectedListener(this);
+//        mNavigationView.setItemIconTintList(null);
+//        disableNavigationViewScrollbars(mNavigationView);
         checkLoginStatus();
         initCountDownView();
     }
@@ -123,44 +123,44 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         }
     }
 
-    private void initNavView() {
-        View mHeaderView = mNavigationView.getHeaderView(0);
-        mImageView = mHeaderView.findViewById(R.id.header_bg);
-        mAvatarIcon = mHeaderView.findViewById(R.id.header_face);
-        mName = mHeaderView.findViewById(R.id.header_name);
-//        mLoginTv = mHeaderView.findViewById(R.id.user_login_tv);
-//        mBindNeteaseView = mHeaderView.findViewById(R.id.nav_sync_netease);
-        mBindNeteaseView = mHeaderView.findViewById(R.id.heard_netease);
-        mShowBindIv = mHeaderView.findViewById(R.id.show_sync_iv);
-        mShowBindIv.setOnClickListener(v -> {
-            mNavigationView.getMenu().findItem(R.id.nav_bind_wy).setVisible(!mNavigationView.getMenu().findItem(R.id.nav_bind_wy).isVisible());
-            if (mNavigationView.getMenu().findItem(R.id.nav_bind_wy).isVisible()) {
-                mShowBindIv.setImageResource(R.drawable.ic_arrow_drop_up);
-            } else {
-                mShowBindIv.setImageResource(R.drawable.ic_arrow_drop_down);
-            }
-        });
-
-    }
+//    private void initNavView() {
+//        View mHeaderView = mNavigationView.getHeaderView(0);
+//        mImageView = mHeaderView.findViewById(R.id.header_bg);
+//        mAvatarIcon = mHeaderView.findViewById(R.id.header_face);
+//        mName = mHeaderView.findViewById(R.id.header_name);
+////        mLoginTv = mHeaderView.findViewById(R.id.user_login_tv);
+////        mBindNeteaseView = mHeaderView.findViewById(R.id.nav_sync_netease);
+//        mBindNeteaseView = mHeaderView.findViewById(R.id.heard_netease);
+//        mShowBindIv = mHeaderView.findViewById(R.id.show_sync_iv);
+//        mShowBindIv.setOnClickListener(v -> {
+//            mNavigationView.getMenu().findItem(R.id.nav_bind_wy).setVisible(!mNavigationView.getMenu().findItem(R.id.nav_bind_wy).isVisible());
+//            if (mNavigationView.getMenu().findItem(R.id.nav_bind_wy).isVisible()) {
+//                mShowBindIv.setImageResource(R.drawable.ic_arrow_drop_up);
+//            } else {
+//                mShowBindIv.setImageResource(R.drawable.ic_arrow_drop_down);
+//            }
+//        });
+//
+//    }
 
     private void checkBindStatus(Boolean isInit) {
-        UIUtilsKt.getNeteaseLoginStatus(user -> {
-            ToastUtils.show("已绑定网易云音乐");
-            if (isInit) {
-                mNavigationView.getMenu().findItem(R.id.nav_bind_wy).setTitle("已绑定网易云音乐(" + user.getName() + ")");
-                CoverLoader.INSTANCE.loadDrawable(this, user.getAvatar(), drawable -> {
-                    mNavigationView.getMenu().findItem(R.id.nav_bind_wy).setIcon(drawable);
-                    return null;
-                });
-            }
-            return null;
-        }, () -> {
-            if (!isInit) {
-                Intent intent = new Intent(MainActivity.this, BindLoginActivity.class);
-                startActivityForResult(intent, Constants.REQUEST_CODE_LOGIN);
-            }
-            return null;
-        });
+//        UIUtilsKt.getNeteaseLoginStatus(user -> {
+//            ToastUtils.show("已绑定网易云音乐");
+//            if (isInit) {
+//                mNavigationView.getMenu().findItem(R.id.nav_bind_wy).setTitle("已绑定网易云音乐(" + user.getName() + ")");
+//                CoverLoader.INSTANCE.loadDrawable(this, user.getAvatar(), drawable -> {
+//                    mNavigationView.getMenu().findItem(R.id.nav_bind_wy).setIcon(drawable);
+//                    return null;
+//                });
+//            }
+//            return null;
+//        }, () -> {
+//            if (!isInit) {
+//                Intent intent = new Intent(MainActivity.this, BindLoginActivity.class);
+//                startActivityForResult(intent, Constants.REQUEST_CODE_LOGIN);
+//            }
+//            return null;
+//        });
     }
 
 
@@ -183,29 +183,29 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 
     @Override
     protected void listener() {
-        mDrawerLayout.addDrawerListener(new DrawerLayout.DrawerListener() {
-            @Override
-            public void onDrawerSlide(@NonNull View drawerView, float slideOffset) {
-
-            }
-
-            @Override
-            public void onDrawerOpened(@NonNull View drawerView) {
-                mSwitchCountDown.setChecked(CountDownUtils.INSTANCE.getType() != 0);
-            }
-
-            @Override
-            public void onDrawerClosed(@NonNull View drawerView) {
-                if (mTargetClass != null) {
-                    turnToActivity(mTargetClass);
-                }
-            }
-
-            @Override
-            public void onDrawerStateChanged(int newState) {
-
-            }
-        });
+//        mDrawerLayout.addDrawerListener(new DrawerLayout.DrawerListener() {
+//            @Override
+//            public void onDrawerSlide(@NonNull View drawerView, float slideOffset) {
+//
+//            }
+//
+//            @Override
+//            public void onDrawerOpened(@NonNull View drawerView) {
+//                mSwitchCountDown.setChecked(CountDownUtils.INSTANCE.getType() != 0);
+//            }
+//
+//            @Override
+//            public void onDrawerClosed(@NonNull View drawerView) {
+//                if (mTargetClass != null) {
+//                    turnToActivity(mTargetClass);
+//                }
+//            }
+//
+//            @Override
+//            public void onDrawerStateChanged(int newState) {
+//
+//            }
+//        });
     }
 
     /**
@@ -229,7 +229,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                 } else {
                     mTargetClass = LoginActivity.class;
                 }
-                mDrawerLayout.closeDrawers();
+//                mDrawerLayout.closeDrawers();
                 break;
             case R.id.nav_menu_playQueue:
                 NavigationHelper.INSTANCE.navigatePlayQueue(this);
@@ -263,7 +263,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                 finish();
                 break;
         }
-        mDrawerLayout.closeDrawers();
+//        mDrawerLayout.closeDrawers();
         return false;
     }
 
@@ -292,9 +292,10 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 //                (mSlidingUpPaneLayout.getPanelState() == PanelState.EXPANDED || mSlidingUpPaneLayout.getPanelState() == PanelState.ANCHORED)) {
 //            mSlidingUpPaneLayout.setPanelState(PanelState.COLLAPSED);
 //        } else
-        if (mDrawerLayout.isDrawerOpen(GravityCompat.START)) {
-            mDrawerLayout.closeDrawers();
-        } else if (isNavigatingMain()) {
+//        if (mDrawerLayout.isDrawerOpen(GravityCompat.START)) {
+//            mDrawerLayout.closeDrawers();
+//        } else
+        if (isNavigatingMain()) {
             Intent home = new Intent(Intent.ACTION_MAIN);
             home.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             home.addCategory(Intent.CATEGORY_HOME);
@@ -317,7 +318,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         switch (item.getItemId()) {
             case android.R.id.home:
                 if (isNavigatingMain()) {
-                    mDrawerLayout.openDrawer(GravityCompat.START);
+                    //mDrawerLayout.openDrawer(GravityCompat.START);
                 } else {
                     super.onBackPressed();
                 }
@@ -342,22 +343,22 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     private void setUserStatusInfo(Boolean isLogin, User user) {
         mIsLogin = isLogin;
         if (mIsLogin && user != null) {
-            MusicApp.socketManager.toggleSocket(true);
-            String url = user.getAvatar();
-            CoverLoader.INSTANCE.loadImageView(this, url, R.drawable.ic_account_circle, mAvatarIcon);
-            mName.setText(user.getNick());
+//            MusicApp.socketManager.toggleSocket(true);
+//            String url = user.getAvatar();
+//            CoverLoader.INSTANCE.loadImageView(this, url, R.drawable.ic_account_circle, mAvatarIcon);
+//            mName.setText(user.getNick());
 //            mShowBindIv.setVisibility(View.VISIBLE);
-            mNavigationView.getMenu().findItem(R.id.nav_login_status).setTitle(getResources().getString(R.string.logout_hint))
-                    .setIcon(R.drawable.ic_exit);
+//            mNavigationView.getMenu().findItem(R.id.nav_login_status).setTitle(getResources().getString(R.string.logout_hint))
+//                    .setIcon(R.drawable.ic_exit);
         } else {
-            MusicApp.socketManager.toggleSocket(false);
-            mAvatarIcon.setImageResource(R.drawable.ic_account_circle);
-            mName.setText(getResources().getString(R.string.app_name));
+//            MusicApp.socketManager.toggleSocket(false);
+//            mAvatarIcon.setImageResource(R.drawable.ic_account_circle);
+//            mName.setText(getResources().getString(R.string.app_name));
 //            mShowBindIv.setVisibility(View.GONE);
-            mNavigationView.getMenu().findItem(R.id.nav_login_status).setTitle(getResources().getString(R.string.login_hint))
-                    .setIcon(R.drawable.ic_exit);
-
-            mNavigationView.getMenu().removeItem(R.id.nav_menu_online_num);
+//            mNavigationView.getMenu().findItem(R.id.nav_login_status).setTitle(getResources().getString(R.string.login_hint))
+//                    .setIcon(R.drawable.ic_exit);
+//
+//            mNavigationView.getMenu().removeItem(R.id.nav_menu_online_num);
         }
     }
 
@@ -430,17 +431,17 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
      * 初始化倒计时
      */
     private void initCountDownView() {
-        View numItem = mNavigationView.getMenu().findItem(R.id.nav_menu_online_num).getActionView();
-        mOnlineNumTv = numItem.findViewById(R.id.msg_num_tv);
-        mOnlineNumTv.setText("0");
+        //View numItem = mNavigationView.getMenu().findItem(R.id.nav_menu_online_num).getActionView();
+        //mOnlineNumTv = numItem.findViewById(R.id.msg_num_tv);
+//        mOnlineNumTv.setText("0");
 
-        View item = mNavigationView.getMenu().findItem(R.id.nav_menu_count_down).getActionView();
-        mSwitchCountDown = item.findViewById(R.id.count_down_switch);
-        mSwitchCountDownTv = item.findViewById(R.id.count_down_tv);
-        mSwitchCountDown.setOnClickListener(v -> UIUtilsKt.showCountDown(MainActivity.this, checked -> {
-            mSwitchCountDown.setChecked(checked);
-            return null;
-        }));
+        //View item = mNavigationView.getMenu().findItem(R.id.nav_menu_count_down).getActionView();
+        //mSwitchCountDown = item.findViewById(R.id.count_down_switch);
+        //mSwitchCountDownTv = item.findViewById(R.id.count_down_tv);
+//        mSwitchCountDown.setOnClickListener(v -> UIUtilsKt.showCountDown(MainActivity.this, checked -> {
+//            mSwitchCountDown.setChecked(checked);
+//            return null;
+//        }));
     }
 
     @Override

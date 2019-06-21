@@ -1171,7 +1171,7 @@ public class MusicPlayerService extends Service {
         // 通知渠道的id
         String id = "music_lake_01";
         // 用户可以看到的通知渠道的名字.
-        CharSequence name = "音乐湖";
+        CharSequence name = "静谧";
         // 用户可以看到的通知渠道的描述
         String description = "通知栏播放控制";
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {

@@ -44,7 +44,6 @@
 
         <activity
             android:name=".ui.main.WelcomeActivity"
-            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.Welcome">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -55,78 +54,77 @@
         <activity
             android:name=".ui.main.MainActivity"
             android:launchMode="singleTask"
-            android:screenOrientation="portrait"
             android:theme="@style/MainActivityTheme" />
         <activity
             android:name=".ui.my.LoginActivity"
-            android:screenOrientation="portrait" />
+/>
         <activity
             android:name=".ui.my.BindLoginActivity"
-            android:screenOrientation="portrait" />
+/>
         <activity
             android:name="com.cyl.musiclake.ui.music.playlist.square.PlaylistSquareActivity"
-            android:screenOrientation="portrait" />
+/>
         <activity
             android:name=".ui.music.playlist.PlaylistActivity"
-            android:screenOrientation="portrait" />
+ />
         <activity
             android:name=".ui.my.RegisterActivity"
-            android:screenOrientation="portrait" />
+ />
         <activity
             android:name=".ui.music.playlist.edit.PlaylistManagerActivity"
-            android:screenOrientation="portrait" />
+/>
         <activity
             android:name=".ui.music.comment.SongCommentActivity"
             android:label="@string/song_comment_title"
-            android:screenOrientation="portrait" />
+ />
         <activity
             android:name=".ui.music.charts.activity.BaiduMusicListActivity"
             android:label="@string/app_name"
-            android:screenOrientation="portrait"
+
             android:theme="@style/MainActivityTheme" />
         <activity
             android:name=".ui.music.mv.MvDetailActivity"
             android:configChanges="keyboardHidden|orientation|screenSize|locale"
             android:label="@string/app_name"
-            android:screenOrientation="portrait"
+
             android:theme="@style/FullScreen" />
         <activity
             android:name=".ui.music.charts.activity.NeteasePlaylistActivity"
             android:label="@string/app_name"
-            android:screenOrientation="portrait"
+
             android:theme="@style/MainActivityTheme" />
         <activity
             android:name=".ui.music.search.SearchActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:label="@string/app_name"
-            android:screenOrientation="portrait"
+
             android:windowSoftInputMode="adjustPan|stateHidden" />
         <activity
             android:name=".ui.music.edit.EditSongListActivity"
             android:label="@string/app_name"
-            android:screenOrientation="portrait" />
+ />
         <activity
             android:name=".ui.music.playlist.detail.PlaylistDetailActivity"
             android:label="@string/playlist_name"
-            android:screenOrientation="portrait"
+
             android:theme="@style/MainActivityTheme" />
         <activity
             android:name=".ui.music.artist.detail.ArtistDetailActivity"
             android:label="@string/artist_detail"
-            android:screenOrientation="portrait"
+
             android:theme="@style/MainActivityTheme" />
         <activity
             android:name=".ui.music.edit.EditMusicActivity"
             android:label="@string/app_name"
-            android:screenOrientation="portrait" />
+ />
         <activity
             android:name=".ui.music.local.fragment.LocalMusicActivity"
             android:label="@string/local_music"
-            android:screenOrientation="portrait" />
+/>
         <activity
             android:name=".ui.music.local.fragment.LocalVideoActivity"
             android:label="@string/item_video"
-            android:screenOrientation="portrait" />
+ />
 
         <service
             android:name=".player.MusicPlayerService"
@@ -142,18 +140,18 @@
             android:name=".ui.settings.AboutActivity"
             android:label="@string/title_about"
             android:parentActivityName=".ui.settings.SettingsActivity"
-            android:screenOrientation="portrait" />
+/>
         <activity
             android:name=".ui.main.WebActivity"
-            android:screenOrientation="portrait" /> <!-- 接入第三方QQ登录 -->
+ /> <!-- 接入第三方QQ登录 -->
         <activity
             android:name=".ui.music.mv.BaiduMvDetailActivity"
-            android:screenOrientation="portrait" /> <!-- 接入第三方QQ登录 -->
+ /> <!-- 接入第三方QQ登录 -->
         <activity
             android:name="com.tencent.tauth.AuthActivity"
             android:launchMode="singleTask"
             android:noHistory="true"
-            android:screenOrientation="portrait">
+>
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
 
@@ -203,13 +201,13 @@
         <activity
             android:name=".ui.music.playpage.PlayerActivity"
             android:launchMode="singleTask"
-            android:screenOrientation="portrait"
+
             android:theme="@style/MainActivityTheme" />
         <activity
             android:name=".ui.music.importplaylist.ImportPlaylistActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:label="@string/import_playlist"
-            android:screenOrientation="portrait"
+
             android:windowSoftInputMode="adjustPan|stateHidden">
             <intent-filter>
                 <action android:name="android.intent.action.SEND" />
@@ -227,7 +225,7 @@
             android:name=".ui.chat.ChatActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:label="@string/title_activity_chat"
-            android:screenOrientation="portrait"
+
             android:windowSoftInputMode="adjustResize">
             <intent-filter>
                 <action android:name="android.intent.action.SEND" />
@@ -240,17 +238,17 @@
         <activity
             android:name=".ui.music.playpage.LockScreenPlayerActivity"
             android:launchMode="singleTask"
-            android:screenOrientation="portrait" />
+ />
         <activity
             android:name=".ui.chat.ChatDetailActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:label="@string/title_activity_chat"
-            android:screenOrientation="portrait" />
+/>
         <activity
             android:name=".ui.timing.SleepTimerActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:label="@string/title_count_down"
-            android:screenOrientation="portrait" />
+/>
     </application>
 
 </manifest>

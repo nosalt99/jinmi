@@ -173,7 +173,7 @@ public class Constants {
     /**
      * 网易云音乐接口
      */
-    public static final String BASE_NETEASE_URL = "http://192.168.31.78:3000/";
+    public static final String BASE_NETEASE_URL = "https://neteasemusic.letra.work/";
     //bugly app_id
     public static final String BUG_APP_ID = "fd892b37ea";
 

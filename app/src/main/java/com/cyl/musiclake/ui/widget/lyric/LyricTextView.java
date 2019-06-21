@@ -32,7 +32,7 @@ public class LyricTextView extends View {
     private int fontColor = Color.RED;    // 设置字体颜色
 
     private LyricInfo mLyricInfo;
-    private String mDefaultHint = "音乐湖";
+    private String mDefaultHint = "静谧";
     private Paint mTextPaint, mHighLightPaint;//默认画笔、已读歌词画笔
 
     /**
@@ -249,7 +249,7 @@ public class LyricTextView extends View {
             LogUtil.e(TAG, mLineCount + "===" + mLyricInfo.songLines.toString());
         } else {
             hasLyric = false;
-            mDefaultHint = "音乐湖，暂无歌词";
+            mDefaultHint = "静谧，暂无歌词";
         }
         invalidateView();
     }
