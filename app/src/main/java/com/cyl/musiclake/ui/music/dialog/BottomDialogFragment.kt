@@ -41,9 +41,7 @@ class BottomDialogFragment : BottomSheetDialogFragment() {
 
     var mAdapter: ItemAdapter? = null
     var type: String = Constants.PLAYLIST_LOCAL_ID
-    /**
-     * 歌单id
-     */
+
     var pid: String = Constants.PLAYLIST_LOCAL_ID
 
     var removeSuccessListener: ((music: Music?) -> Unit)? = null
@@ -86,9 +84,7 @@ class BottomDialogFragment : BottomSheetDialogFragment() {
         return dialog
     }
 
-    /**
-     * 初始化items
-     */
+
     private fun initItems() {
         titleTv.text = music?.title
         subTitleTv.text = ConvertUtils.getArtistAndAlbum(music?.artist, music?.album)
@@ -100,9 +96,7 @@ class BottomDialogFragment : BottomSheetDialogFragment() {
         recyclerView.adapter = mAdapter
     }
 
-    /**
-     * 跳转到专辑
-     */
+
     private fun turnToAlbum() {
         val album = Album()
         album.albumId = music?.albumId
@@ -111,9 +105,7 @@ class BottomDialogFragment : BottomSheetDialogFragment() {
         NavigationHelper.navigateToPlaylist(mContext, album, null)
     }
 
-    /**
-     * 打开歌手列表
-     */
+
     private fun turnToArtist() {
         activity?.let { it1 ->
             if (music != null && music?.artistId != null && music?.artist != null) {
@@ -149,9 +141,7 @@ class BottomDialogFragment : BottomSheetDialogFragment() {
         }
     }
 
-    /**
-     * 下拉列表适配器
-     */
+
     inner class ItemAdapter(type: String = Constants.PLAYLIST_LOCAL_ID) : RecyclerView.Adapter<ItemAdapter.ItemViewHolder>() {
         private var itemData = mutableMapOf(
                 R.string.popup_play_next to R.drawable.ic_queue_play_next,

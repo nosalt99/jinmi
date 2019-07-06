@@ -5,9 +5,7 @@ import android.support.annotation.ColorInt;
 import android.support.annotation.Nullable;
 import android.support.v7.graphics.Palette;
 
-/**
- * Created by D22434 on 2017/9/26.
- */
+
 
 public class ColorUtil {
 

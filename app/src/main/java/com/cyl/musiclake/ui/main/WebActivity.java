@@ -14,11 +14,7 @@ import com.just.agentweb.AgentWeb;
 
 import butterknife.BindView;
 
-/**
- * Author   : D22434
- * version  : 2018/3/20
- * function :
- */
+
 
 public class WebActivity extends BaseActivity {
     private String url;

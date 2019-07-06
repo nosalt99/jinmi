@@ -24,9 +24,7 @@ import java.io.InputStreamReader
 object HuaweiUtils {
     private val TAG = "HuaweiUtils"
 
-    /**
-     * 检测 Huawei 悬浮窗权限
-     */
+
     fun checkFloatWindowPermission(context: Context): Boolean {
         val version = Build.VERSION.SDK_INT
         return if (version >= 19) {
@@ -34,9 +32,7 @@ object HuaweiUtils {
         } else true
     }
 
-    /**
-     * 去华为权限申请页面
-     */
+
     fun applyPermission(context: Context) {
         try {
             val intent = Intent()
@@ -66,9 +62,7 @@ object HuaweiUtils {
             (context as AppCompatActivity).startActivityForResult(intent, Constants.REQUEST_CODE_FLOAT_WINDOW)
             Log.e(TAG, Log.getStackTraceString(e))
         } catch (e: ActivityNotFoundException) {
-            /**
-             * 手机管家版本较低 HUAWEI SC-UL10
-             */
+
             //   Toast.makeText(MainActivity.this, "act找不到", Toast.LENGTH_LONG).show();
             val intent = Intent()
             intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
@@ -109,9 +103,7 @@ object HuaweiUtils {
 object MeizuUtils {
     private val TAG = "MeizuUtils"
 
-    /**
-     * 检测 meizu 悬浮窗权限
-     */
+
     fun checkFloatWindowPermission(context: Context): Boolean {
         val version = Build.VERSION.SDK_INT
         return if (version >= 19) {
@@ -119,9 +111,7 @@ object MeizuUtils {
         } else true
     }
 
-    /**
-     * 去魅族权限申请页面
-     */
+
     fun applyPermission(context: Context) {
         try {
             val intent = Intent("com.meizu.safe.security.SHOW_APPSEC")
@@ -165,11 +155,7 @@ object MeizuUtils {
 object MiuiUtils {
     private val TAG = "MiuiUtils"
 
-    /**
-     * 获取小米 rom 版本号，获取失败返回 -1
-     *
-     * @return miui rom version code, if fail , return -1
-     */
+
     val miuiVersion: Int
         get() {
             val version = RomUtils.getSystemProperty("ro.miui.ui.version.name")
@@ -185,9 +171,7 @@ object MiuiUtils {
             return -1
         }
 
-    /**
-     * 检测 miui 悬浮窗权限
-     */
+
     fun checkFloatWindowPermission(context: Context): Boolean {
         val version = Build.VERSION.SDK_INT
 
@@ -222,9 +206,7 @@ object MiuiUtils {
         return false
     }
 
-    /**
-     * 小米 ROM 权限申请
-     */
+
     fun applyMiuiPermission(context: Context) {
         val versionCode = miuiVersion
         when (versionCode) {
@@ -242,9 +224,7 @@ object MiuiUtils {
         } else context.packageManager.queryIntentActivities(intent, PackageManager.MATCH_DEFAULT_ONLY).size > 0
     }
 
-    /**
-     * 小米 V5 版本 ROM权限申请
-     */
+
     private fun goToMiuiPermissionActivity_V5(context: Context) {
         var intent: Intent? = null
         val packageName = context.packageName
@@ -278,9 +258,7 @@ object MiuiUtils {
         //        }
     }
 
-    /**
-     * 小米 V6 版本 ROM权限申请
-     */
+
     fun goToMiuiPermissionActivity_V6(context: Context) {
         val intent = Intent("miui.intent.action.APP_PERM_EDITOR")
         intent.setClassName("com.miui.securitycenter", "com.miui.permcenter.permissions.AppPermissionsEditorActivity")
@@ -295,9 +273,7 @@ object MiuiUtils {
         }
     }
 
-    /**
-     * 小米 V7 版本 ROM权限申请
-     */
+
     fun goToMiuiPermissionActivity_V7(context: Context) {
         val intent = Intent("miui.intent.action.APP_PERM_EDITOR")
         intent.setClassName("com.miui.securitycenter", "com.miui.permcenter.permissions.AppPermissionsEditorActivity")
@@ -312,9 +288,7 @@ object MiuiUtils {
         }
     }
 
-    /**
-     * 小米 V8 版本 ROM权限申请
-     */
+
     fun goToMiuiPermissionActivity_V8(context: Context) {
         var intent = Intent("miui.intent.action.APP_PERM_EDITOR")
         intent.setClassName("com.miui.securitycenter", "com.miui.permcenter.permissions.PermissionsEditorActivity")
@@ -345,9 +319,7 @@ object OppoUtils {
 
     private val TAG = "OppoUtils"
 
-    /**
-     * 检测 360 悬浮窗权限
-     */
+
     fun checkFloatWindowPermission(context: Context): Boolean {
         val version = Build.VERSION.SDK_INT
         return if (version >= 19) {
@@ -374,9 +346,7 @@ object OppoUtils {
         return false
     }
 
-    /**
-     * oppo ROM 权限申请
-     */
+
     fun applyOppoPermission(context: Context) {
         //merge request from https://github.com/zhaozepeng/FloatWindowPermission/pull/26
         try {
@@ -395,9 +365,7 @@ object OppoUtils {
 object QikuUtils {
     private val TAG = "QikuUtils"
 
-    /**
-     * 检测 360 悬浮窗权限
-     */
+
     fun checkFloatWindowPermission(context: Context): Boolean {
         val version = Build.VERSION.SDK_INT
         return if (version >= 19) {
@@ -424,9 +392,7 @@ object QikuUtils {
         return false
     }
 
-    /**
-     * 去360权限申请页面
-     */
+
     fun applyPermission(context: Context) {
         val intent = Intent()
         intent.setClassName("com.android.settings", "com.android.settings.Settings\$OverlaySettingsActivity")
@@ -453,10 +419,7 @@ object QikuUtils {
 object RomUtils {
     private val TAG = "RomUtils"
 
-    /**
-     * 获取 emui 版本号
-     * @return
-     */
+
     val emuiVersion: Double
         get() {
             try {
@@ -469,11 +432,7 @@ object RomUtils {
             return 4.0
         }
 
-    /**
-     * 获取小米 rom 版本号，获取失败返回 -1
-     *
-     * @return miui rom version code, if fail , return -1
-     */
+
     val miuiVersion: Int
         get() {
             val version = RomUtils.getSystemProperty("ro.miui.ui.version.name")
@@ -516,9 +475,7 @@ object RomUtils {
         return Build.MANUFACTURER.contains("HUAWEI")
     }
 
-    /**
-     * check if is miui ROM
-     */
+
     fun checkIsMiuiRom(): Boolean {
         return !TextUtils.isEmpty(RomUtils.getSystemProperty("ro.miui.ui.version.name"))
     }

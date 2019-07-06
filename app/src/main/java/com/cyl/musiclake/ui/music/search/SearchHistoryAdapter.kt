@@ -7,11 +7,7 @@ import com.cyl.musiclake.bean.HotSearchBean
 import com.cyl.musiclake.bean.SearchHistoryBean
 
 
-/**
- * 作者：yonglong on 2016/9/26 23:47
- * 邮箱：643872807@qq.com
- * 版本：2.5
- */
+
 class SearchHistoryAdapter(suggestions: List<SearchHistoryBean>) : BaseQuickAdapter<SearchHistoryBean, BaseViewHolder>(R.layout.item_search_suggestion, suggestions) {
 
     override fun convert(holder: BaseViewHolder, item: SearchHistoryBean) {

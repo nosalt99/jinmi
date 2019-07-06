@@ -9,30 +9,18 @@ import android.view.View;
 
 import com.cyl.musiclake.R;
 
-/**
- * 作者：yonglong on 2016/11/6 16:41
- *
- *
- */
+
 
 public class MultiViewPager extends ViewPager {
 
-    /**
-     * Maximum size.
-     */
+
     private int mMaxWidth = -1;
-    /**
-     * Maximum size.
-     */
+
     private int mMaxHeight = -1;
-    /**
-     * Child view inside a page to match the page size against.
-     */
+
     private int mMatchWidthChildResId;
 
-    /**
-     * Internal state to schedule a new measurement pass.
-     */
+
     private boolean mNeedsMeasurePage;
     private final Point size;
     private final Point maxSize;
@@ -128,11 +116,7 @@ public class MultiViewPager extends ViewPager {
         mNeedsMeasurePage = true;
     }
 
-    /**
-     * Sets the child view inside a page to match the page size against.
-     *
-     * @param matchChildWidthResId the child id
-     */
+
     public void setMatchChildWidth(int matchChildWidthResId) {
         if (mMatchWidthChildResId != matchChildWidthResId) {
             mMatchWidthChildResId = matchChildWidthResId;
@@ -140,20 +124,12 @@ public class MultiViewPager extends ViewPager {
         }
     }
 
-    /**
-     * Sets the maximum size.
-     *
-     * @param width in pixels
-     */
+
     public void setMaxWidth(int width) {
         mMaxWidth = width;
     }
 
-    /**
-     * Sets the maximum size.
-     *
-     * @param height in pixels
-     */
+
     public void setMaxHeight(int height) {
         mMaxHeight = height;
     }

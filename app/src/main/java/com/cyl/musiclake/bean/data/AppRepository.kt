@@ -5,9 +5,7 @@ import com.cyl.musiclake.bean.Music
 import com.cyl.musiclake.bean.FolderInfo
 import io.reactivex.Observable
 
-/**
- * Created by D22434 on 2018/1/8.
- */
+
 
 object AppRepository {
 

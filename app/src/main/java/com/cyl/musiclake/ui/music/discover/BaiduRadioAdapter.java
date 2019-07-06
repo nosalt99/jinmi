@@ -8,11 +8,7 @@ import com.cyl.musiclake.utils.CoverLoader;
 
 import java.util.List;
 
-/**
- * 作者：yonglong on 2016/8/10 21:36
- * 邮箱：643872807@qq.com
- * 版本：2.5
- */
+
 public class BaiduRadioAdapter extends BaseQuickAdapter<Playlist, BaseViewHolder> {
 
     public BaiduRadioAdapter(List<Playlist> list) {

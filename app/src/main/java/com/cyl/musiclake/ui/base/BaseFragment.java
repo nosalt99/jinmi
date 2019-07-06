@@ -33,11 +33,7 @@ import butterknife.Unbinder;
 
 import static com.cyl.musiclake.utils.AnimationUtils.animateView;
 
-/**
- * 作者：YongLong on 2016/8/8 16:58
- * 邮箱：643872807@qq.com
- * 版本：2.5
- */
+
 public abstract class BaseFragment<T extends BaseContract.BasePresenter> extends RxFragment implements BaseContract.BaseView {
     @Nullable
     @Inject
@@ -165,9 +161,7 @@ public abstract class BaseFragment<T extends BaseContract.BasePresenter> extends
     }
 
 
-    /**
-     * 初始化FragmentComponent
-     */
+
     private void initFragmentComponent() {
         mFragmentComponent = DaggerFragmentComponent.builder()
                 .applicationComponent(MusicApp.getInstance().getApplicationComponent())
@@ -175,18 +169,14 @@ public abstract class BaseFragment<T extends BaseContract.BasePresenter> extends
                 .build();
     }
 
-    /**
-     * 贴上view
-     */
+
     private void attachView() {
         if (mPresenter != null) {
             mPresenter.attachView(this);
         }
     }
 
-    /**
-     * 分离view
-     */
+
     private void detachView() {
         if (mPresenter != null) {
             mPresenter.detachView();

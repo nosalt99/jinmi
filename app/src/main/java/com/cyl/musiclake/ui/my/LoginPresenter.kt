@@ -26,9 +26,7 @@ import org.json.JSONException
 import org.json.JSONObject
 import javax.inject.Inject
 
-/**
- * Created by D22434 on 2018/1/3.
- */
+
 
 class LoginPresenter @Inject
 constructor() : BasePresenter<LoginContract.View>(), LoginContract.Presenter {
@@ -64,9 +62,7 @@ constructor() : BasePresenter<LoginContract.View>(), LoginContract.Presenter {
         mView?.showLoading()
     }
 
-    /**
-     * 请求后台登录接口
-     */
+
     fun loginServer(accessToken: String, uid: String, method: String) {
         val observable = PlaylistApiServiceImpl.login(accessToken, uid, method)
         ApiManager.request(observable,
@@ -91,9 +87,7 @@ constructor() : BasePresenter<LoginContract.View>(), LoginContract.Presenter {
     }
 
 
-    /**
-     * 实现QQ第三方登录onActivityResultonActivityResult
-     */
+
     override fun loginByQQ(activity: Activity) {
         mView.showLoading()
         //QQ第三方登录

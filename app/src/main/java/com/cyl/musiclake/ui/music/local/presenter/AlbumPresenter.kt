@@ -8,9 +8,7 @@ import org.jetbrains.anko.uiThread
 import javax.inject.Inject
 
 
-/**
- * Created by yonglong on 2018/1/7.
- */
+
 
 class AlbumPresenter @Inject
 constructor() : BasePresenter<AlbumsContract.View>(), AlbumsContract.Presenter {

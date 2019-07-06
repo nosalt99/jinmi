@@ -39,9 +39,7 @@ import org.jetbrains.anko.uiThread
 
 
 object UIUtils {
-    /**
-     * 防止快速点击却换歌曲
-     */
+
     private var lastClickTime: Long = 0
 
     @Synchronized
@@ -54,9 +52,7 @@ object UIUtils {
         return false
     }
 
-    /**
-     * 改变播放模式
-     */
+
     fun updatePlayMode(imageView: ImageView, isChange: Boolean = false) {
         try {
             var playMode = PlayQueueManager.getPlayModeId()
@@ -80,9 +76,7 @@ object UIUtils {
         }
     }
 
-    /**
-     * 收藏歌曲
-     */
+
     fun collectMusic(imageView: ImageView, music: Music?) {
         music?.let {
             imageView.setImageResource(if (!it.isLove) R.drawable.item_favorite_love else R.drawable.item_favorite)
@@ -117,9 +111,7 @@ object UIUtils {
 
 }
 
-/**
- * 删除歌单
- */
+
 fun Context.deletePlaylist(playlist: Playlist, success: (() -> Unit)?, fail: (() -> Unit)? = null) {
     when (playlist.pid) {
         Constants.PLAYLIST_HISTORY_ID -> {
@@ -148,9 +140,7 @@ fun Context.deletePlaylist(playlist: Playlist, success: (() -> Unit)?, fail: (()
     }
 }
 
-/**
- * 下载歌曲
- */
+
 fun AppCompatActivity.downloadMusic(music: Music?, isCache: Boolean = false) {
     if (music == null) {
         ToastUtils.show(MusicApp.getAppContext(), getString(R.string.download_empty_error))
@@ -167,9 +157,7 @@ fun AppCompatActivity.downloadMusic(music: Music?, isCache: Boolean = false) {
     ApiManager.request(MusicApi.getMusicDownloadUrl(music, isCache), object : RequestCallBack<String> {
         override fun success(result: String) {
             LogUtil.e(javaClass.simpleName, "-----$result")
-            /**
-             * 当前activity 销毁时 不显示
-             */
+
             if (this@downloadMusic.isDestroyed || this@downloadMusic.isFinishing) return
 
             if (!NetworkUtils.isWifiAvaliable(MusicApp.getAppContext()) && SPUtils.getWifiMode()) {
@@ -203,9 +191,7 @@ fun AppCompatActivity.downloadMusic(music: Music?, isCache: Boolean = false) {
 }
 
 
-/**
- * 删除歌曲
- */
+
 fun AppCompatActivity.deleteMusic(music: Music?) {
     if (music == null) {
         ToastUtils.show(MusicApp.getAppContext(), getString(R.string.download_empty_error))
@@ -225,9 +211,7 @@ fun AppCompatActivity.deleteMusic(music: Music?) {
     }
 }
 
-/**
- * 批量下载
- */
+
 fun AppCompatActivity.downloadBatchMusic(downloadList: MutableList<Music>) {
     val tips = if (downloadList.size == 0) {
         getString(R.string.download_list_empty_tips)
@@ -254,9 +238,7 @@ fun AppCompatActivity.downloadBatchMusic(downloadList: MutableList<Music>) {
     }
 }
 
-/**
- * 批量删除歌曲
- */
+
 fun AppCompatActivity.deleteSingleMusic(music: Music?, success: (() -> Unit)? = null) {
     if (this.isFinishing || this.isDestroyed) return
     if (music == null) {
@@ -275,9 +257,7 @@ fun AppCompatActivity.deleteSingleMusic(music: Music?, success: (() -> Unit)? = 
     }
 }
 
-/**
- * 批量删除歌曲
- */
+
 fun AppCompatActivity.deleteLocalMusic(deleteList: MutableList<Music>, success: (() -> Unit)? = null) {
     if (deleteList.size == 0) {
         showTipsDialog(this@deleteLocalMusic, R.string.delete_local_song_empty)
@@ -301,9 +281,7 @@ fun AppCompatActivity.deleteLocalMusic(deleteList: MutableList<Music>, success: 
 }
 
 
-/**
- * 提示对话框显示tip
- */
+
 fun showTipsDialog(context: AppCompatActivity, content: String, success: (() -> Unit)? = null) {
     if (context.isDestroyed || context.isFinishing) return
     MaterialDialog.Builder(context)
@@ -317,9 +295,7 @@ fun showTipsDialog(context: AppCompatActivity, content: String, success: (() -> 
             .show()
 }
 
-/**
- * 对话框显示tip
- */
+
 fun showTipsDialog(context: AppCompatActivity, content: Int, success: (() -> Unit)? = null) {
     if (context.isDestroyed || context.isFinishing) return
     MaterialDialog.Builder(context)
@@ -334,9 +310,7 @@ fun showTipsDialog(context: AppCompatActivity, content: Int, success: (() -> Uni
 }
 
 
-/**
- * 增加到增加到下载队列
- */
+
 fun Context.addDownloadQueue(result: Music, isBatch: Boolean = false, isCache: Boolean = false) {
     LogUtil.e(javaClass.simpleName, "-----${result.uri}")
 
@@ -363,9 +337,7 @@ fun Context.addDownloadQueue(result: Music, isBatch: Boolean = false, isCache: B
 
 }
 
-/**
- * 更新用户Token(主要用于在线歌单)
- */
+
 fun updateLoginToken() {
     ApiManager.request(PlaylistApiServiceImpl.checkLoginStatus(),
             object : RequestCallBack<User> {
@@ -381,9 +353,7 @@ fun updateLoginToken() {
     )
 }
 
-/**
- * 注销登录
- */
+
 fun logout() {
     UserStatus.clearUserInfo()
     UserStatus.saveLoginStatus(false)
@@ -395,9 +365,7 @@ fun logout() {
     EventBus.getDefault().post(LoginEvent(false, null))
 }
 
-/**
- * 倒计时弹窗
- */
+
 fun Context.showCountDown(dismissListener: (checked: Boolean) -> Unit) {
     if (this is MainActivity && (this.isDestroyed || this.isFinishing)) {
         return

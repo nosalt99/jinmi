@@ -8,9 +8,7 @@ import java.io.IOException;
 import okhttp3.ResponseBody;
 import retrofit2.Converter;
 
-/**
- * Created by D22434 on 2018/1/16.
- */
+
 
 public class MyGsonResponseBodyConverter<T> implements Converter<ResponseBody, T> {
     private final Gson gson;
@@ -21,13 +19,7 @@ public class MyGsonResponseBodyConverter<T> implements Converter<ResponseBody, T
         this.adapter = adapter;
     }
 
-    /**
-     * 重写转换类
-     *
-     * @param value 巨坑。ResponseBody只能使用一次。使用完后会自动关闭，所以多次使用会报错 closed
-     * @return
-     * @throws IOException
-     */
+
     @Override
     public T convert(ResponseBody value) throws IOException {
         String response = value.string();

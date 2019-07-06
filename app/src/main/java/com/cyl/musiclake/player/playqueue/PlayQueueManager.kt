@@ -7,14 +7,10 @@ import com.cyl.musiclake.utils.LogUtil
 import com.cyl.musiclake.utils.SPUtils
 import org.greenrobot.eventbus.EventBus
 
-/**
- * Created by master on 2018/5/14.
- */
+
 
 object PlayQueueManager {
-    /**
-     * 播放模式 0：顺序播放，1：单曲循环，2：随机播放
-     */
+
     const val PLAY_MODE_LOOP = 0
     const val PLAY_MODE_REPEAT = 1
     const val PLAY_MODE_RANDOM = 2
@@ -23,18 +19,14 @@ object PlayQueueManager {
 
     private val playingMode = arrayOf(R.string.play_mode_loop, R.string.play_mode_repeat, R.string.play_mode_random)
 
-    /**
-     * 总共多少首歌曲
-     */
+
     private var total = 0
     private var orderList = mutableListOf<Int>()
     private var saveList = mutableListOf<Int>()
     private var randomPosition = 0
 
 
-    /**
-     * 更新播放模式
-     */
+
     fun updatePlayMode(): Int {
         playingModeId = (playingModeId + 1) % 3
         SPUtils.savePlayMode(playingModeId)
@@ -42,17 +34,13 @@ object PlayQueueManager {
         return playingModeId
     }
 
-    /**
-     * 获取播放模式id
-     */
+
     fun getPlayModeId(): Int {
         playingModeId = SPUtils.getPlayMode()
         return playingModeId
     }
 
-    /**
-     * 获取播放模式
-     */
+
     fun getPlayMode(): String {
         return MusicApp.mContext.getString(playingMode[playingModeId]);
     }
@@ -64,9 +52,7 @@ object PlayQueueManager {
             orderList.add(i)
         }
 
-        /**
-         * 更新
-         */
+
         if (getPlayModeId() == PLAY_MODE_RANDOM) {
             orderList.shuffle()
             randomPosition = 0
@@ -74,11 +60,7 @@ object PlayQueueManager {
         }
     }
 
-    /**
-     * 获取下一首位置
-     *
-     * @return isAuto 是否自动下一曲
-     */
+
     fun getNextPosition(isAuto: Boolean?, total: Int, cuePosition: Int): Int {
         if (total == 1) {
             return 0
@@ -104,11 +86,7 @@ object PlayQueueManager {
         return cuePosition
     }
 
-    /**
-     * 获取下一首位置
-     *
-     * @return isAuto 是否自动下一曲
-     */
+
     fun getPreviousPosition(total: Int, cuePosition: Int): Int {
         if (total == 1) {
             return 0
@@ -143,9 +121,7 @@ object PlayQueueManager {
         return cuePosition
     }
 
-    /**
-     * 打印当前顺序
-     */
+
     private fun printOrderList(cur: Int) {
         LogUtil.e("PlayQueueManager", orderList.toString() + " --- $cur")
     }

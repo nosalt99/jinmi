@@ -13,19 +13,11 @@ import java.text.DecimalFormat;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-/**
- * Created by D22434 on 2018/1/17.
- */
+
 
 public class ConvertUtils {
 
-    /**
-     * mp3文件格式名
-     *
-     * @param artist
-     * @param title
-     * @return
-     */
+
     public static String getMp3FileName(String artist, String title) {
         artist = stringFilter(artist);
         title = stringFilter(title);
@@ -38,13 +30,7 @@ public class ConvertUtils {
         return artist + " - " + title + Constants.FILENAME_MP3;
     }
 
-    /**
-     * 歌词文件名
-     *
-     * @param artist
-     * @param title
-     * @return
-     */
+
     public static String getLrcFileName(String artist, String title) {
         artist = stringFilter(artist);
         title = stringFilter(title);
@@ -57,12 +43,7 @@ public class ConvertUtils {
         return artist + " - " + title + Constants.FILENAME_LRC;
     }
 
-    /**
-     * 音乐名格式化
-     *
-     * @param title
-     * @return
-     */
+
     public static String getTitle(String title) {
         title = stringFilter(title);
         if (TextUtils.isEmpty(title)) {
@@ -71,12 +52,7 @@ public class ConvertUtils {
         return title;
     }
 
-    /**
-     * 歌手名格式化
-     *
-     * @param artist
-     * @return
-     */
+
     public static String getArtist(String artist) {
         artist = stringFilter(artist);
         if (TextUtils.isEmpty(artist)) {
@@ -86,13 +62,7 @@ public class ConvertUtils {
     }
 
 
-    /**
-     * 歌手专辑格式化
-     *
-     * @param artist
-     * @param album
-     * @return
-     */
+
     public static String getArtistAndAlbum(String artist, String album) {
         artist = stringFilter(artist);
         album = stringFilter(album);
@@ -108,9 +78,7 @@ public class ConvertUtils {
     }
 
 
-    /**
-     * 过滤特殊字符(\/:*?"<>|)
-     */
+
     private static String stringFilter(String str) {
         if (str == null) {
             return null;
@@ -128,13 +96,7 @@ public class ConvertUtils {
         return Float.valueOf(MB);
     }
 
-    /**
-     * string转inputStream按编码
-     *
-     * @param string      字符串
-     * @param charsetName 编码格式
-     * @return 输入流
-     */
+
     public static InputStream string2InputStream(final String string, final String charsetName) {
         if (string == null || isSpace(charsetName)) return null;
         try {
@@ -146,12 +108,7 @@ public class ConvertUtils {
         }
     }
 
-    /**
-     * 判断字符串是否为null或全为空白字符
-     *
-     * @param s 待校验字符串
-     * @return {@code true}: null或全空白字符<br> {@code false}: 不为null且不全空白字符
-     */
+
     private static boolean isSpace(final String s) {
         if (s == null) return true;
         for (int i = 0, len = s.length(); i < len; ++i) {

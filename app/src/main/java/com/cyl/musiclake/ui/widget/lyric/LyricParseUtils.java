@@ -15,18 +15,12 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 
-/**
- * 歌词解析器
- */
+
 
 public class LyricParseUtils {
     private static LyricInfo mLyricInfo;
 
-    /**
-     * 设置歌词文件
-     *
-     * @param file 歌词文件
-     */
+
     public static LyricInfo setLyricResource(File file) {
         try {
             return setupLyricResource(new FileInputStream(file), "utf-8");
@@ -36,11 +30,7 @@ public class LyricParseUtils {
         }
     }
 
-    /**
-     * 设置歌词字符串
-     *
-     * @param lyricInfo 歌词字符串
-     */
+
     public static LyricInfo setLyricResource(String lyricInfo) {
         if (lyricInfo != null && lyricInfo.length() > 0) {
             InputStream inputStream = new ByteArrayInputStream(lyricInfo.getBytes());
@@ -50,11 +40,7 @@ public class LyricParseUtils {
         }
     }
 
-    /**
-     * 初始化歌词信息
-     *
-     * @param inputStream 歌词文件的流信息
-     */
+
     private static LyricInfo setupLyricResource(InputStream inputStream, String charsetName) {
         if (inputStream != null) {
             try {
@@ -83,9 +69,7 @@ public class LyricParseUtils {
         return mLyricInfo;
     }
 
-    /**
-     * 逐行解析歌词内容
-     */
+
     private static void analyzeLyric(LyricInfo lyricInfo, String line) {
         try {
             int index = line.indexOf("]");
@@ -145,12 +129,7 @@ public class LyricParseUtils {
                     if (temp.trim().length() == 0) {
                         continue;
                     }
-                    /** [02:34.14][01:07.00]当你我不小心又想起她
-                     *
-                     上面的歌词的就可以拆分为下面两句歌词了
-                     [02:34.14]当你我不小心又想起她
-                     [01:07.00]当你我不小心又想起她
-                     */
+
                     LineInfo lineInfo = new LineInfo();
                     lineInfo.content = content.trim();
                     lineInfo.start = measureStartTimeMillis(temp);
@@ -164,9 +143,7 @@ public class LyricParseUtils {
 
     }
 
-    /**
-     * 将解析得到的表示时间的字符转化为Long型
-     */
+
     private static long measureStartTimeMillis(String timeString) {
         //因为给如的字符串的时间格式为XX:XX.XX,返回的long要求是以毫秒为单位
         //将字符串 XX:XX.XX 转换为 XX:XX:XX
@@ -179,9 +156,7 @@ public class LyricParseUtils {
                 Integer.valueOf(times[2]);//毫秒
     }
 
-    /**
-     * 重置歌词内容
-     */
+
     private static void resetLyricInfo() {
         if (mLyricInfo != null) {
             if (mLyricInfo.songLines != null) {

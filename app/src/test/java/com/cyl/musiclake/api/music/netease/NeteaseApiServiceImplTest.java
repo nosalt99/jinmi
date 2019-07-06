@@ -14,9 +14,7 @@ import javax.crypto.Cipher;
 import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.SecretKeySpec;
 
-/**
- * Created by master on 2018/3/19.
- */
+
 public class NeteaseApiServiceImplTest {
     // 加密
     public static String Encrypt(String sSrc, String sKey, String cKey) throws Exception {
@@ -106,13 +104,7 @@ public class NeteaseApiServiceImplTest {
         return "";
     }
 
-    /**
-     * ASE-128-CBC加密模式可以需要16位
-     *
-     * @param src 加密内容
-     * @param key 密钥
-     * @return
-     */
+
     public static String aesEncrypt(String src, String key) throws Exception {
         String encodingFormat = "UTF-8";
         String iv = "0102030405060708";
@@ -173,9 +165,7 @@ public class NeteaseApiServiceImplTest {
         return time;
     }
 
-    /*
-     * 将时间戳转换为时间
-     */
+
     public static String stampToDate(long s) {
         String res;
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
@@ -185,11 +175,7 @@ public class NeteaseApiServiceImplTest {
         return res;
     }
 
-    /**
-     * 将emoji表情替换成*
-     *
-     * @return 过滤后的字符串
-     */
+
 //    public static String filterEmoji(String source) {
 //        if (StringUtils.isNotBlank(source)) {
 //            return source.replaceAll("[\\ud800\\udc00-\\udbff\\udfff\\ud800-\\udfff]", "*");

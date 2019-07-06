@@ -22,11 +22,7 @@ import io.socket.engineio.client.transports.WebSocket
 import org.greenrobot.eventbus.EventBus
 import org.json.JSONArray
 
-/**
- * Des    : 实时在线socket统计
- * Author : master.
- * Date   : 2018/9/10 .
- */
+
 class SocketManager {
     companion object {
         val MESSAGE_BROADCAST = "broadcast"
@@ -57,9 +53,7 @@ class SocketManager {
         }
     }
 
-    /**
-     * 发送消息
-     */
+
     fun sendSocketMessage(msg: String, event: String) {
         if (msg.isEmpty()) return
         if (!UserStatus.getLoginStatus()) {
@@ -73,9 +67,7 @@ class SocketManager {
         socket.emit(event, msg)
     }
 
-    /**
-     * 建立连接
-     */
+
     private fun buildSocket() {
         socket.io().on(Manager.EVENT_TRANSPORT) { args ->
             val transport = args[0] as Transport
@@ -154,9 +146,7 @@ class SocketManager {
         }
     }
 
-    /**
-     * 断开链接
-     */
+
     private fun disconnect() {
         socket.disconnect()
         socket.off(EVENT_TRANSPORT)
@@ -172,9 +162,7 @@ class SocketManager {
         EventBus.getDefault().post(SocketOnlineEvent(0))
     }
 
-    /**
-     * 开关
-     */
+
     fun toggleSocket(open: Boolean) {
         if (MusicApp.isOpenSocket) {
             if (open) {
@@ -188,23 +176,17 @@ class SocketManager {
         }
     }
 
-    /**
-     * 增加监听
-     */
+
     fun addSocketListener(listener: SocketListener) {
         socketListeners.add(listener)
     }
 
-    /**
-     * 移除监听
-     */
+
     fun removeSocketListener(listener: SocketListener) {
         socketListeners.remove(listener)
     }
 
-    /**
-     * 保存用户信息
-     */
+
     private fun saveUserInfo(userInfo: MutableList<UserInfoBean>?) {
         userInfo?.let {
             onlineUsers = it

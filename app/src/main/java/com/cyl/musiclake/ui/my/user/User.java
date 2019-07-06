@@ -2,10 +2,7 @@ package com.cyl.musiclake.ui.my.user;
 
 import java.io.Serializable;
 
-/**
- * Created by 永龙 on 2016/3/15.
- * 个人信息类
- */
+
 public class User implements Serializable {
     private String id = "";  //id
     private String name = "";  //姓名

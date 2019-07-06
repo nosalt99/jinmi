@@ -1,18 +1,4 @@
-/*
- * Copyright (c) 2016 Tim Malseed
- *
- *  Licensed under the Apache License, Version 2.0 (the "License");
- *  you may not use this file except in compliance with the License.
- *  You may obtain a copy of the License at
- *
- *       http://www.apache.org/licenses/LICENSE-2.0
- *
- *  Unless required by applicable law or agreed to in writing, software
- *  distributed under the License is distributed on an "AS IS" BASIS,
- *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- *  See the License for the specific language governing permissions and
- *  limitations under the License.
- */
+
 
 package com.cyl.musiclake.ui.widget.fastscroll;
 
@@ -179,11 +165,7 @@ public class FastScroller {
         return mIsDragging;
     }
 
-    /**
-     * 处理触摸事件，并决定是否显示快速滚动条(如果已经显示则更新)
-     * Handles the touch event and determines whether to show the fast scroller (or updates it if
-     * it is already showing).
-     */
+
     public void handleTouchEvent(MotionEvent ev, int downX, int downY, int lastY,
                                  OnFastScrollStateChangeListener stateChangeListener) {
         int action = ev.getAction();
@@ -258,9 +240,7 @@ public class FastScroller {
         mPopup.draw(canvas);
     }
 
-    /**
-     * Returns whether the specified points are near the scroll bar bounds.
-     */
+
     private boolean isNearPoint(int x, int y) {
         mTmpRect.set(mThumbPosition.x, mThumbPosition.y, mThumbPosition.x + mWidth,
                 mThumbPosition.y + mThumbHeight);

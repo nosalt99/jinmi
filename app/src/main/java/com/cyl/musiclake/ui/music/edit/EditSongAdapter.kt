@@ -11,11 +11,7 @@ import com.cyl.musiclake.common.Constants
 import com.cyl.musiclake.ui.music.dialog.BottomDialogFragment
 import com.cyl.musiclake.utils.CoverLoader
 
-/**
- * 作者：yonglong
- * 邮箱：643872807@qq.com
- * 版本：2.5
- */
+
 class EditSongAdapter(list: MutableList<Music>) : BaseItemDraggableAdapter<Music, BaseViewHolder>(R.layout.item_music_edit, list) {
     var checkedMap = mutableMapOf<String, Music>()
 

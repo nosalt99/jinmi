@@ -57,12 +57,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 import static com.cyl.musiclake.ui.UIUtilsKt.logout;
 import static com.cyl.musiclake.ui.UIUtilsKt.updateLoginToken;
 
-/**
- * 描述 主要的Activity
- *
- * @author yonglong
- * @date 2016/8/3
- */
+
 public class MainActivity extends BaseActivity implements NavigationView.OnNavigationItemSelectedListener {
 
 //    @BindView(R.id.nav_view)
@@ -208,12 +203,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 //        });
     }
 
-    /**
-     * 菜单条目点击事件
-     *
-     * @param item
-     * @return
-     */
+
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
         switch (item.getItemId()) {
@@ -267,11 +257,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         return false;
     }
 
-    /**
-     * 跳转Activity
-     *
-     * @param cls
-     */
+
     private void turnToActivity(Class<?> cls) {
         Intent intent = new Intent(MainActivity.this, cls);
         startActivity(intent);
@@ -338,9 +324,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         return (currentFragment instanceof MainFragment);
     }
 
-    /**
-     * 设置用户状态信息
-     */
+
     private void setUserStatusInfo(Boolean isLogin, User user) {
         mIsLogin = isLogin;
         if (mIsLogin && user != null) {
@@ -363,21 +347,13 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         }
     }
 
-    /**
-     * 登陆成功重新设置用户新
-     *
-     * @param event
-     */
+
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void updateUserInfo(LoginEvent event) {
         setUserStatusInfo(event.getStatus(), event.getUser());
     }
 
-    /**
-     * 更新在线用户数量
-     *
-     * @param event
-     */
+
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void updateOnlineInfo(SocketOnlineEvent event) {
         if (mOnlineNumTv != null) {
@@ -385,9 +361,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         }
     }
 
-    /**
-     * 检查QQ登录状态
-     */
+
     private void checkLoginStatus() {
         if (UserStatus.getLoginStatus() && !UserStatus.getTokenStatus()) {
             updateLoginToken();
@@ -397,11 +371,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         checkBindStatus(true);
     }
 
-    /**
-     * 去掉navigationView的滚动条
-     *
-     * @param navigationView
-     */
+
     public static void disableNavigationViewScrollbars(NavigationView navigationView) {
         if (navigationView != null) {
             NavigationMenuView navigationMenuView = (NavigationMenuView) navigationView.getChildAt(0);
@@ -411,11 +381,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         }
     }
 
-    /**
-     * 更新歌单
-     *
-     * @param event
-     */
+
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void finishCountDown(CountDownEvent event) {
         if (event.isStop()) {
@@ -428,9 +394,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     }
 
 
-    /**
-     * 初始化倒计时
-     */
+
     private void initCountDownView() {
         //View numItem = mNavigationView.getMenu().findItem(R.id.nav_menu_online_num).getActionView();
         //mOnlineNumTv = numItem.findViewById(R.id.msg_num_tv);

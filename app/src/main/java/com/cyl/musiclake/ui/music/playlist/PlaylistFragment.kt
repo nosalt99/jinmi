@@ -15,19 +15,13 @@ import com.cyl.musiclake.ui.music.charts.PlaylistPresenter
 import com.cyl.musiclake.ui.music.discover.TopPlaylistAdapter
 import kotlinx.android.synthetic.main.fragment_recyclerview_notoolbar.*
 
-/**
- * Created by Monkey on 2015/6/29.
- */
+
 class PlaylistFragment : BaseFragment<PlaylistPresenter>(), PlaylistContract.View {
 
-    /**
-     * 适配器
-     */
+
     private var mNeteaseAdapter: TopPlaylistAdapter? = null
 
-    /**
-     * 数据集合
-     */
+
     private var playlist = mutableListOf<Playlist>()
 
 

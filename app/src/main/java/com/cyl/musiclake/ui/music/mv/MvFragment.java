@@ -19,12 +19,7 @@ import java.lang.reflect.Field;
 
 import butterknife.BindView;
 
-/**
- * 功能：在线排行榜
- * 作者：yonglong on 2016/8/11 18:14
- * 邮箱：643872807@qq.com
- * 版本：2.5
- */
+
 public class MvFragment extends BaseFragment<BasePresenter> {
 
     private static final String TAG = "ChartsFragment";

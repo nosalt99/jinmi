@@ -10,11 +10,7 @@ import org.jetbrains.anko.doAsync
 import org.jetbrains.anko.uiThread
 import javax.inject.Inject
 
-/**
- * Author   : D22434
- * version  : 2018/1/24
- * function :
- */
+
 
 class DownloadPresenter @Inject
 constructor() : BasePresenter<DownloadContract.View>(), DownloadContract.Presenter {

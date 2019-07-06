@@ -6,9 +6,7 @@ import com.cyl.musiclake.bean.Music;
 
 import java.util.List;
 
-/**
- * Created by D22434 on 2018/1/8.
- */
+
 
 public interface FoldersContract {
 

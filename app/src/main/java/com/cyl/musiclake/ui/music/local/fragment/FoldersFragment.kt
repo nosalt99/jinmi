@@ -22,9 +22,7 @@ import kotlinx.android.synthetic.main.frag_local_song.*
 import kotlinx.android.synthetic.main.header_local_list.*
 import org.jetbrains.anko.support.v4.startActivity
 
-/**
- * Created by D22434 on 2018/1/8.
- */
+
 
 class FoldersFragment : BaseLazyFragment<FoldersPresenter>(), FoldersContract.View {
 
@@ -130,9 +128,7 @@ class FoldersFragment : BaseLazyFragment<FoldersPresenter>(), FoldersContract.Vi
         }
     }
 
-    /**
-     * 初始化文件头
-     */
+
     private fun initHeader() {
         songNumTv.text = "..."
         reloadIv.visibility = View.GONE

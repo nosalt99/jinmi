@@ -31,10 +31,7 @@ import com.cyl.musiclake.ui.music.playqueue.PlayQueueFragment
 import com.cyl.musiclake.utils.ToastUtils
 import java.io.File
 
-/**
- * Created by yonglong on 2016/12/24.
- * 导航工具类
- */
+
 
 object NavigationHelper {
     fun navigateToLocalMusic(context: Activity, transitionViews: Pair<View, String>?) {
@@ -224,39 +221,28 @@ object NavigationHelper {
         return intent
     }
 
-    /**
-     * 下一首
-     */
+
     fun getNextIntent(context: Context): Intent {
         val intent = Intent(MusicPlayerService.ACTION_NEXT)
         intent.component = ComponentName(context, MusicPlayerService::class.java)
         return intent
     }
 
-    /**
-     * 上一首
-     */
+
     fun getPrevIntent(context: Context): Intent {
         val intent = Intent(MusicPlayerService.ACTION_PREV)
         intent.component = ComponentName(context, MusicPlayerService::class.java)
         return intent
     }
 
-    /**
-     * 暂停
-     */
+
     fun getPlayPauseIntent(context: Context): Intent {
         val intent = Intent(MusicPlayerService.ACTION_PREV)
         intent.component = ComponentName(context, MusicPlayerService::class.java)
         return intent
     }
 
-    /**
-     * 扫描文件夹
-     *
-     * @param ctx
-     * @param filePath
-     */
+
     fun scanFileAsync(ctx: Context, filePath: String) {
         val scanIntent = Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE)
         scanIntent.data = Uri.fromFile(File(filePath))

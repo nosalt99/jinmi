@@ -8,9 +8,7 @@ import com.cyl.musiclake.di.scope.PerApp;
 import dagger.Component;
 
 
-/**
- * Created by lw on 2017/1/19.
- */
+
 @PerApp
 @Component(modules = ApplicationModule.class)
 public interface ApplicationComponent {

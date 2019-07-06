@@ -18,11 +18,7 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 
-/**
- * Des    : 播放界面
- * Author : master.
- * Date   : 2018/5/19 .
- */
+
 class LockScreenPlayerActivity : BaseActivity<PlayPresenter>(), PlayContract.View {
 
     override fun setPlayingBitmap(albumArt: Bitmap?) {
@@ -105,9 +101,7 @@ class LockScreenPlayerActivity : BaseActivity<PlayPresenter>(), PlayContract.Vie
         super.onPostCreate(savedInstanceState)
     }
 
-    /**
-     * 禁用返回键
-     */
+
     override fun onBackPressed() {
     }
 

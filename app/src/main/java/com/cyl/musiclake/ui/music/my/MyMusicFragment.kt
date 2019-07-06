@@ -33,10 +33,7 @@ import org.jetbrains.anko.support.v4.alert
 import org.jetbrains.anko.yesButton
 
 
-/**
- * Created by yonglong on 2015/6/29.
- * 我的 界面
- */
+
 class MyMusicFragment : BaseFragment<MyMusicPresenter>(), MyMusicContract.View {
 
 
@@ -135,9 +132,7 @@ class MyMusicFragment : BaseFragment<MyMusicPresenter>(), MyMusicContract.View {
     }
 
 
-    /**
-     * 数据加载
-     */
+
     override fun loadData() {
         mPresenter?.loadSongs()
         mPresenter?.loadPlaylist()
@@ -158,9 +153,7 @@ class MyMusicFragment : BaseFragment<MyMusicPresenter>(), MyMusicContract.View {
         }
     }
 
-    /**
-     * 更新歌单列表
-     */
+
     private fun updatePlaylist() {
         when (playlistTag) {
             Constants.PLAYLIST_LOCAL_ID -> {
@@ -182,25 +175,19 @@ class MyMusicFragment : BaseFragment<MyMusicPresenter>(), MyMusicContract.View {
         }
     }
 
-    /**
-     * 显示本地歌单
-     */
+
     override fun showLocalPlaylist(playlists: MutableList<Playlist>) {
         this.localPlaylists = playlists
         updatePlaylist()
     }
 
-    /**
-     * 显示网易歌单
-     */
+
     override fun showWyPlaylist(playlists: MutableList<Playlist>) {
         this.wyPlaylists = playlists
         updatePlaylist()
     }
 
-    /**
-     * 显示在线歌单
-     */
+
     override fun showPlaylist(playlists: MutableList<Playlist>) {
         this.playlists = playlists
         updatePlaylist()
@@ -217,9 +204,7 @@ class MyMusicFragment : BaseFragment<MyMusicPresenter>(), MyMusicContract.View {
         }
     }
 
-    /**
-     * 显示收藏列表
-     */
+
     override fun showLoveList(musicList: MutableList<Music>) {
         favoriteView.setSongsNum(musicList.size, 2)
         favoriteView.setOnItemClickListener { view, position ->
@@ -231,9 +216,7 @@ class MyMusicFragment : BaseFragment<MyMusicPresenter>(), MyMusicContract.View {
         }
     }
 
-    /**
-     * 显示下载列表
-     */
+
     override fun showDownloadList(musicList: MutableList<Music>) {
         downloadView.setSongsNum(musicList.size, 4)
         downloadView.setOnItemClickListener { view, position ->
@@ -245,9 +228,7 @@ class MyMusicFragment : BaseFragment<MyMusicPresenter>(), MyMusicContract.View {
         }
     }
 
-    /**
-     * 显示video列表
-     */
+
     fun showVideoList(musicList: MutableList<Music>) {
         videoView.setSongsNum(musicList.size, 3)
         videoView.setOnItemClickListener { view, position ->
@@ -296,9 +277,7 @@ class MyMusicFragment : BaseFragment<MyMusicPresenter>(), MyMusicContract.View {
         }
     }
 
-    /**
-     * 更新在线歌单
-     */
+
     @Subscribe(threadMode = ThreadMode.MAIN)
     fun onPlaylistChangedEvent(event: MyPlaylistEvent) {
         when (event.operate) {

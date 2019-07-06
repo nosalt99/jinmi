@@ -8,11 +8,7 @@ import com.liulishuo.filedownloader.BaseDownloadTask;
 import com.liulishuo.filedownloader.FileDownloadSampleListener;
 import com.liulishuo.filedownloader.model.FileDownloadStatus;
 
-/**
- * Author   : D22434
- * version  : 2018/1/25
- * function :
- */
+
 
 public class FileDownloadListener extends FileDownloadSampleListener {
 

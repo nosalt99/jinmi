@@ -14,21 +14,12 @@ import com.cyl.musiclake.utils.ToastUtils
 import io.reactivex.Observable
 import io.reactivex.ObservableOnSubscribe
 
-/**
- * Author   : D22434
- * version  : 2018/3/9
- * function : 接口数据集中到一个类中管理。
- */
+
 
 object MusicApi {
     private val TAG = "MusicApi"
 
-    /**
-     * 获取歌词
-     *
-     * @param music
-     * @return
-     */
+
     fun getLyricInfo(music: Music): Observable<String>? {
         return when (music.type) {
             Constants.BAIDU -> {
@@ -51,10 +42,7 @@ object MusicApi {
     }
 
 
-    /**
-     * 搜索音乐具体信息（QQ音乐的播放地址会在一定的时间后失效（大概一天））
-     *
-     */
+
     fun getMusicInfo(music: Music): Observable<Music> {
         //获取默认音质
         var quality = SPUtils.getAnyByKey(Constants.SP_KEY_SONG_QUALITY, music.quality)
@@ -124,9 +112,7 @@ object MusicApi {
         }
     }
 
-    /**
-     * 获取播放地址（下载）
-     */
+
     fun getMusicDownloadUrl(music: Music, isCache: Boolean = false): Observable<String>? {
         return when (music.type) {
             Constants.BAIDU -> BaiduApiServiceImpl.getTingSongInfo(music).flatMap { result ->
@@ -156,9 +142,7 @@ object MusicApi {
     }
 
 
-    /**
-     * 搜索歌曲评论
-     */
+
     fun getMusicCommentInfo(music: Music, success: (MutableList<SongComment>?) -> Unit, fail: (() -> Unit?)? = null) {
         if (music.type == null || music.mid == null) {
             fail?.invoke()
@@ -182,9 +166,7 @@ object MusicApi {
     }
 
 
-    /**
-     * 加载图片
-     */
+
     fun getMusicAlbumPic(info: String, success: (String?) -> Unit, fail: (() -> Unit?)? = null) {
         ApiManager.request(MusicApiServiceImpl.getAlbumUrl(info), object : RequestCallBack<String> {
             override fun success(result: String?) {
@@ -202,9 +184,7 @@ object MusicApi {
         })
     }
 
-    /**
-     * 根据路径获取本地歌词
-     */
+
     fun getLocalLyricInfo(path: String?): Observable<String> {
         return Observable.create { emitter ->
             try {
@@ -217,9 +197,7 @@ object MusicApi {
         }
     }
 
-    /**
-     * 根据id获取歌曲信息
-     */
+
     fun loadSongDetailInfo(vendor: String, mid: String, success: ((Music?) -> Unit)?) {
         val observable = MusicApiServiceImpl.getSongDetail(vendor, mid)
         ApiManager.request(observable, object : RequestCallBack<Music> {

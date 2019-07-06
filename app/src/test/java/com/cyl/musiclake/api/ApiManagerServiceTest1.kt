@@ -3,9 +3,7 @@ package com.cyl.musiclake.api
 import org.junit.Test
 
 
-/**
- * Created by yonglong on 2018/1/15.
- */
+
 class ApiManagerServiceTest1 {
     @Test
     @Throws(Exception::class)
@@ -86,9 +84,7 @@ class ApiManagerServiceTest1 {
         var start: Long = 0  // 开始时间
     }
 
-    /**
-     * 逐行解析歌词内容
-     */
+
     private fun analyzeLyric(lyricInfo: LyricInfo, line: String) {
         val index = line.indexOf("]")
         if (line.startsWith("[offset:")) {
@@ -132,12 +128,7 @@ class ApiManagerServiceTest1 {
                 if (temp.trim { it <= ' ' }.length == 0) {
                     continue
                 }
-                /** [02:34.14][01:07.00]当你我不小心又想起她
-                 *
-                 * 上面的歌词的就可以拆分为下面两句歌词了
-                 * [02:34.14]当你我不小心又想起她
-                 * [01:07.00]当你我不小心又想起她
-                 */
+
 
                 val lineInfo = LineInfo()
                 lineInfo.content = content + ""
@@ -147,9 +138,7 @@ class ApiManagerServiceTest1 {
         }
     }
 
-    /**
-     * 将解析得到的表示时间的字符转化为Long型
-     */
+
     private fun measureStartTimeMillis(timeString: String): Long {
         var timeString = timeString
         //因为给如的字符串的时间格式为XX:XX.XX,返回的long要求是以毫秒为单位

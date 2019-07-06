@@ -5,11 +5,7 @@ import android.os.Bundle
 import com.cyl.musiclake.bean.Playlist
 import com.cyl.musiclake.common.Extras
 
-/**
- * 作者：yonglong on 2016/8/24 10:43
- * 邮箱：643872807@qq.com
- * 版本：2.5
- */
+
 class NeteasePlaylistActivity : BasePlaylistActivity() {
     override fun setEnableMore(): Boolean {
         return false

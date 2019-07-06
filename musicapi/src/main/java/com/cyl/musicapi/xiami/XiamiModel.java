@@ -2,17 +2,10 @@ package com.cyl.musicapi.xiami;
 
 import java.util.List;
 
-/**
- * Created by yonglong on 2018/1/15.
- */
+
 
 public class XiamiModel {
-    /**
-     * state : 0
-     * message :
-     * request_id : 0a679e4815159457758297833e49b6
-     * data : {"songs":[{"song_id":1769253963,"song_name":"认真的雪","album_id":358513,"album_name":"未完成的歌","album_logo":"http://pic.xiami.net/images/album/img44/7244/3585131260327414_1.jpg","artist_id":7244,"artist_name":"薛之谦","artist_logo":"http://pic.xiami.net/images/artistlogo/24/14688337551624_1.jpg","listen_file":"http://m128.xiami.net/244/7244/358513/1769253963_935996_l.mp3?auth_key=1516503600-0-0-3b37631fea5f216372316a73e70987b0","demo":0,"need_pay_flag":2,"lyric":"http://img.xiami.net/lyric/63/1769253963_1472550789_602.trc","purview_roles":[{"quality":"e","operation_list":[{"purpose":1,"upgrade_role":0},{"purpose":2,"upgrade_role":4}]},{"quality":"f","operation_list":[{"purpose":1,"upgrade_role":0},{"purpose":2,"upgrade_role":4}]},{"quality":"l","operation_list":[{"purpose":1,"upgrade_role":0},{"purpose":2,"upgrade_role":4}]},{"quality":"h","operation_list":[{"purpose":1,"upgrade_role":4},{"purpose":2,"upgrade_role":4}]},{"quality":"s","operation_list":[{"purpose":1,"upgrade_role":4},{"purpose":2,"upgrade_role":4}]}],"is_play":0,"play_counts":0,"singer":""}],"total":278}
-     */
+
 
     private int state;
     private String message;
@@ -52,10 +45,7 @@ public class XiamiModel {
     }
 
     public static class DataBean {
-        /**
-         * songs : [{"song_id":1769253963,"song_name":"认真的雪","album_id":358513,"album_name":"未完成的歌","album_logo":"http://pic.xiami.net/images/album/img44/7244/3585131260327414_1.jpg","artist_id":7244,"artist_name":"薛之谦","artist_logo":"http://pic.xiami.net/images/artistlogo/24/14688337551624_1.jpg","listen_file":"http://m128.xiami.net/244/7244/358513/1769253963_935996_l.mp3?auth_key=1516503600-0-0-3b37631fea5f216372316a73e70987b0","demo":0,"need_pay_flag":2,"lyric":"http://img.xiami.net/lyric/63/1769253963_1472550789_602.trc","purview_roles":[{"quality":"e","operation_list":[{"purpose":1,"upgrade_role":0},{"purpose":2,"upgrade_role":4}]},{"quality":"f","operation_list":[{"purpose":1,"upgrade_role":0},{"purpose":2,"upgrade_role":4}]},{"quality":"l","operation_list":[{"purpose":1,"upgrade_role":0},{"purpose":2,"upgrade_role":4}]},{"quality":"h","operation_list":[{"purpose":1,"upgrade_role":4},{"purpose":2,"upgrade_role":4}]},{"quality":"s","operation_list":[{"purpose":1,"upgrade_role":4},{"purpose":2,"upgrade_role":4}]}],"is_play":0,"play_counts":0,"singer":""}]
-         * total : 278
-         */
+
 
         private int total;
         private List<SongsBean> songs;
@@ -77,24 +67,7 @@ public class XiamiModel {
         }
 
         public static class SongsBean {
-            /**
-             * song_id : 1769253963
-             * song_name : 认真的雪
-             * album_id : 358513
-             * album_name : 未完成的歌
-             * album_logo : http://pic.xiami.net/images/album/img44/7244/3585131260327414_1.jpg
-             * artist_id : 7244
-             * artist_name : 薛之谦
-             * artist_logo : http://pic.xiami.net/images/artistlogo/24/14688337551624_1.jpg
-             * listen_file : http://m128.xiami.net/244/7244/358513/1769253963_935996_l.mp3?auth_key=1516503600-0-0-3b37631fea5f216372316a73e70987b0
-             * demo : 0
-             * need_pay_flag : 2
-             * lyric : http://img.xiami.net/lyric/63/1769253963_1472550789_602.trc
-             * purview_roles : [{"quality":"e","operation_list":[{"purpose":1,"upgrade_role":0},{"purpose":2,"upgrade_role":4}]},{"quality":"f","operation_list":[{"purpose":1,"upgrade_role":0},{"purpose":2,"upgrade_role":4}]},{"quality":"l","operation_list":[{"purpose":1,"upgrade_role":0},{"purpose":2,"upgrade_role":4}]},{"quality":"h","operation_list":[{"purpose":1,"upgrade_role":4},{"purpose":2,"upgrade_role":4}]},{"quality":"s","operation_list":[{"purpose":1,"upgrade_role":4},{"purpose":2,"upgrade_role":4}]}]
-             * is_play : 0
-             * play_counts : 0
-             * singer :
-             */
+
 
             private int song_id;
             private String song_name;
@@ -242,10 +215,7 @@ public class XiamiModel {
             }
 
             public static class PurviewRolesBean {
-                /**
-                 * quality : e
-                 * operation_list : [{"purpose":1,"upgrade_role":0},{"purpose":2,"upgrade_role":4}]
-                 */
+
 
                 private String quality;
                 private List<OperationListBean> operation_list;
@@ -267,10 +237,7 @@ public class XiamiModel {
                 }
 
                 public static class OperationListBean {
-                    /**
-                     * purpose : 1
-                     * upgrade_role : 0
-                     */
+
 
                     private int purpose;
                     private int upgrade_role;

@@ -26,20 +26,14 @@ import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileDescriptor;
 
-/**
- * 作者：yonglong on 2016/8/24 20:14
- * 邮箱：643872807@qq.com
- * 版本：2.5
- */
+
 public class ImageUtils {
 
     public static Uri getAlbumArtUri(long paramInt) {
         return ContentUris.withAppendedId(Uri.parse("content://media/external/audio/albumart"), paramInt);
     }
 
-    /**
-     * 将图片放大或缩小到指定尺寸
-     */
+
     public static Bitmap resizeImage(Bitmap source, int w, int h) {
         int width = source.getWidth();
         int height = source.getHeight();
@@ -50,9 +44,7 @@ public class ImageUtils {
         return Bitmap.createBitmap(source, 0, 0, width, height, matrix, true);
     }
 
-    /**
-     * 将图片剪裁为圆形
-     */
+
     public static Bitmap createCircleImage(Bitmap source) {
         int length = source.getWidth() < source.getHeight() ? source.getWidth() : source.getHeight();
         Paint paint = new Paint();
@@ -68,13 +60,7 @@ public class ImageUtils {
     public static final int BLUR_RADIUS = 30;
 
 
-    /**
-     * 模糊图片
-     *
-     * @param sentBitmap
-     * @param radius
-     * @return
-     */
+
     public static Drawable blur(Context context, Bitmap sentBitmap, int radius) {
 
         // Stack Blur v1.0 from
@@ -305,30 +291,17 @@ public class ImageUtils {
         return new BitmapDrawable(context.getResources(), bitmap);
     }
 
-    /**
-     * 判断bitmap对象是否为空
-     *
-     * @param src 源图片
-     * @return {@code true}: 是<br>{@code false}: 否
-     */
+
     private static boolean isEmptyBitmap(Bitmap src) {
         return src == null || src.getWidth() == 0 || src.getHeight() == 0;
     }
 
-    /**
-     * 判断文件是否为图片
-     *
-     * @param file 　文件
-     */
+
     public static boolean isImage(File file) {
         return file != null && isImage(file.getPath());
     }
 
-    /**
-     * 判断文件是否为图片
-     *
-     * @param filePath 　文件路径
-     */
+
     public static boolean isImage(String filePath) {
         String path = filePath.toUpperCase();
         return path.endsWith(".PNG") || path.endsWith(".JPG") ||
@@ -375,9 +348,7 @@ public class ImageUtils {
         return bitmap;
     }
 
-    /**
-     * @param inSampleSize 图片像素的 1/n*n
-     */
+
     public static Drawable createBlurredImageFromBitmap(Bitmap bitmap, int inSampleSize) {
 
         RenderScript rs = RenderScript.create(MusicApp.getAppContext());

@@ -2,9 +2,7 @@ package com.cyl.musiclake.ui.download
 
 import org.litepal.crud.LitePalSupport
 
-/**
- * Created by yonglong on 2018/1/23.
- */
+
 
 class TasksManagerModel : LitePalSupport() {
     //LitePal自动递增ID

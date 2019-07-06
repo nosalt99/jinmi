@@ -12,18 +12,14 @@ import io.reactivex.Observable
 import io.reactivex.ObservableOnSubscribe
 
 
-/**
- * Created by D22434 on 2018/1/5.
- */
+
 
 object QQMusicApiServiceImpl {
     private val TAG = "QQMusicApiServiceImpl"
 
     val apiService by lazy { ApiManager.getInstance().create(QQApiService::class.java, Constants.BASE_URL_QQ_MUSIC_URL) }
 
-    /**
-     * 获取歌单歌曲
-     */
+
     fun getArtists(offset: Int, params: Map<String, Int>): Observable<Artists> {
         val data = ArtistsData(
                 comm = Comm(ct = 24

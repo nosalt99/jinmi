@@ -12,9 +12,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
-/**
- * Created by master on 2018/4/7.
- */
+
 public class XiamiServiceImplTest {
     @Test
     public void getSongInfo() {

@@ -9,9 +9,7 @@ import com.cyl.musiclake.utils.LogUtil;
 
 import java.io.IOException;
 
-/**
- * Created by master on 2018/5/14.
- */
+
 
 public class Player implements MediaPlayer.OnErrorListener,
         MediaPlayer.OnCompletionListener, MediaPlayer.OnBufferingUpdateListener, MediaPlayer.OnPreparedListener {
@@ -98,11 +96,7 @@ public class Player implements MediaPlayer.OnErrorListener,
     }
 
 
-    /**
-     * getDuration 只能在prepared之后才能调用，不然会报-38错误
-     *
-     * @return
-     */
+
     public long duration() {
         if (mIsPrepared) {
             return mCurrentMediaPlayer.getDuration();

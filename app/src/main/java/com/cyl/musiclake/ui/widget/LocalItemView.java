@@ -17,9 +17,7 @@ import android.widget.TextView;
 import com.cyl.musiclake.R;
 
 
-/**
- * Created by D22434 on 2018/1/4.
- */
+
 
 public class LocalItemView extends LinearLayout {
     private ImageView mIcon, mPlay;

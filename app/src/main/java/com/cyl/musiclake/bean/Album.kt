@@ -4,9 +4,7 @@ import com.cyl.musiclake.common.Constants
 import org.litepal.crud.LitePalSupport
 import java.io.Serializable
 
-/**
- * Created by yonglong on 2016/11/23.
- */
+
 
 class Album : LitePalSupport, Serializable, Comparable<Album> {
 

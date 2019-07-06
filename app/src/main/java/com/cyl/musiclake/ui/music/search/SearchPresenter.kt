@@ -17,9 +17,7 @@ import org.jetbrains.anko.doAsync
 import org.jetbrains.anko.uiThread
 import javax.inject.Inject
 
-/**
- * Created by yonglong on 2018/1/6.
- */
+
 
 class SearchPresenter @Inject
 constructor() : BasePresenter<SearchContract.View>(), SearchContract.Presenter {

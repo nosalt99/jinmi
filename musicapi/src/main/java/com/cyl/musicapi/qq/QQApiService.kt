@@ -12,20 +12,11 @@ import retrofit2.http.QueryMap
 import retrofit2.http.Streaming
 import retrofit2.http.Url
 
-/**
- * Created by D22434 on 2018/1/5.
- */
+
 
 interface QQApiService {
     //http://c.y.qq.com/soso/fcgi-bin/search_cp?
-    /*
-        'p': page,
-        'n': limit,
-        'w': key,
-        'aggr': 1,
-        'lossless': 1,
-        'cr': 1
-     */
+
     @Headers("referer: https://y.qq.com/portal/player.html")
     @GET("soso/fcgi-bin/search_cp?")
     fun searchByQQ(@QueryMap params: Map<String, String>): Observable<QQApiModel>

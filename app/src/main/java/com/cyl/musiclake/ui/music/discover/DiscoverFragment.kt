@@ -22,36 +22,25 @@ import kotlinx.android.synthetic.main.frag_discover.*
 import org.jetbrains.anko.support.v4.startActivity
 
 
-/**
- * 功能：在线排行榜
- * 作者：yonglong on 2016/8/11 18:14
- * 邮箱：643872807@qq.com
- * 版本：2.5
- */
+
 class DiscoverFragment : BaseFragment<DiscoverPresenter>(), DiscoverContract.View, View.OnClickListener {
 
     private val TAG = "DiscoverFragment"
-    /**
-     * 适配器
-     */
+
     private var mNeteaseAdapter: TopPlaylistAdapter? = null
     private var mArtistListAdapter: TopArtistListAdapter? = null
     private var mRadioAdapter: BaiduRadioAdapter? = null
     private var mMusicAdapter: SongAdapter? = null
     private var mPlaylistAdapter: TopPlaylistAdapter? = null
 
-    /**
-     * 数据集合
-     */
+
     private var playlist = mutableListOf<Playlist>()
     private var artists = mutableListOf<Artist>()
     private var channels = mutableListOf<Playlist>()
     private var recommend = mutableListOf<Music>()
     private var recommendPlaylist = mutableListOf<Playlist>()
 
-    /**
-     * 更新分类标签
-     */
+
     private fun updateCate(name: String) {
         cateTagTv.text = name
         mPresenter?.loadNetease(name)
@@ -61,9 +50,7 @@ class DiscoverFragment : BaseFragment<DiscoverPresenter>(), DiscoverContract.Vie
         return R.layout.frag_discover
     }
 
-    /**
-     * 初始化
-     */
+
     override fun initViews() {
     }
 
@@ -134,15 +121,11 @@ class DiscoverFragment : BaseFragment<DiscoverPresenter>(), DiscoverContract.Vie
         loadData()
     }
 
-    /**
-     * 显示百度排行榜
-     */
+
     override fun showBaiduCharts(charts: MutableList<Playlist>) {
     }
 
-    /**
-     * 显示顶部横幅
-     */
+
     override fun showBannerView(banners: MutableList<BannerBean>) {
         if (banners.size > 0) {
             mzBannerView.visibility = View.VISIBLE
@@ -162,9 +145,7 @@ class DiscoverFragment : BaseFragment<DiscoverPresenter>(), DiscoverContract.Vie
         mzBannerView.pause()
     }
 
-    /**
-     * 显示网易云排行榜
-     */
+
     override fun showNeteaseCharts(charts: MutableList<Playlist>) {
         this.playlist = charts
         if (mNeteaseAdapter == null) {
@@ -185,9 +166,7 @@ class DiscoverFragment : BaseFragment<DiscoverPresenter>(), DiscoverContract.Vie
         playlistView.visibility = if (playlist.size > 0) View.VISIBLE else View.GONE
     }
 
-    /**
-     * 显示歌手榜单
-     */
+
     override fun showArtistCharts(charts: MutableList<Artist>) {
         this.artists = charts
         if (mArtistListAdapter == null) {
@@ -208,9 +187,7 @@ class DiscoverFragment : BaseFragment<DiscoverPresenter>(), DiscoverContract.Vie
         artistView.visibility = if (artists.size <= 0) View.GONE else View.VISIBLE
     }
 
-    /**
-     * 显示电台列表
-     */
+
     override fun showRadioChannels(channels: MutableList<Playlist>) {
         this.channels = channels
         if (mRadioAdapter == null) {
@@ -231,9 +208,7 @@ class DiscoverFragment : BaseFragment<DiscoverPresenter>(), DiscoverContract.Vie
         radioView.visibility = if (channels.size <= 0) View.GONE else View.VISIBLE
     }
 
-    /**
-     * 显示推荐歌单
-     */
+
     override fun showRecommendPlaylist(playlists: MutableList<Playlist>) {
         LogUtil.d(TAG, "获取推荐歌单 songs：" + playlists.size)
         recommendPlaylistView.visibility = if (playlists.size == 0) View.GONE else View.VISIBLE
@@ -260,9 +235,7 @@ class DiscoverFragment : BaseFragment<DiscoverPresenter>(), DiscoverContract.Vie
         recommendPlaylistView.visibility = if (recommendPlaylist.size <= 0) View.GONE else View.VISIBLE
     }
 
-    /**
-     * 显示推荐歌曲
-     */
+
     override fun showRecommendSongs(songs: MutableList<Music>) {
         LogUtil.d(TAG, "获取推荐歌曲 songs：" + songs.size)
         recommendView.visibility = if (songs.size == 0) View.GONE else View.VISIBLE

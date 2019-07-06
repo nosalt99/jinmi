@@ -11,9 +11,7 @@ import com.cyl.musiclake.R
 import com.cyl.musiclake.bean.UserInfoBean
 import com.cyl.musiclake.utils.CoverLoader
 
-/**
- * Created by cyl on 2018/9/30.
- */
+
 class NoticeView : FrameLayout {
     private val mRootView by lazy { View.inflate(context, R.layout.item_user_notice, this) }
     private val userNameTv by lazy { mRootView.findViewById<TextView>(R.id.userNameTv) }

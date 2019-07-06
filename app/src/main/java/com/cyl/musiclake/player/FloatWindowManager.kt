@@ -15,9 +15,7 @@ import com.cyl.musiclake.ui.widget.FloatPlayerView
 import com.cyl.musiclake.utils.SPUtils
 import com.google.android.exoplayer2.ExoPlayer
 
-/**
- * 悬浮窗管理类
- */
+
 object FloatWindowManager {
 
 
@@ -35,9 +33,7 @@ object FloatWindowManager {
     private var statusBarHeight: Int = 0
     private var position: IntArray? = null
 
-    /**
-     * 创建播放悬浮窗/更新悬浮窗位置
-     */
+
     fun createFloatPlayerWindow(context: Context, startView: View? = null, enableTouch: Boolean): Boolean {
         try {
             removeFloatView(context)
@@ -70,9 +66,7 @@ object FloatWindowManager {
         return false
     }
 
-    /**
-     * 移动到View的固定位置，且不可点击
-     */
+
     fun moveToViewPosition(context: Context, view: View?, enableTouch: Boolean, position: IntArray? = null) {
         if (playerView == null || playerViewParams == null) return
         when {
@@ -112,16 +106,12 @@ object FloatWindowManager {
         }
     }
 
-    /**
-     * 设置播放exoPlayer
-     */
+
     fun setPlayerView(exoPlayer: ExoPlayer? = null) {
         playerView?.setPlayerView(exoPlayer)
     }
 
-    /**
-     * 获取悬浮窗大小位置参数
-     */
+
     private fun getPlayerParams(context: Context, startView: View? = null): WindowManager.LayoutParams? {
         if (playerViewParams == null) {
             playerViewParams = initParams()
@@ -148,9 +138,7 @@ object FloatWindowManager {
         return playerViewParams
     }
 
-    /**
-     * 创建上下两个按钮悬浮窗
-     */
+
     fun createFloatControlWindow(context: Context) {
         if (controlView == null) {
             controlView = FloatControlView(context)
@@ -176,12 +164,7 @@ object FloatWindowManager {
         return params
     }
 
-    /**
-     * 移除播放悬浮窗
-     * @param view
-     * *
-     * @return
-     */
+
     fun removeFloatView(context: Context): Boolean {
         if (playerView != null) {
             MusicApp.isShowingFloatView = false
@@ -198,12 +181,7 @@ object FloatWindowManager {
         return false
     }
 
-    /**
-     * 移除上下按钮悬浮窗
-     * @param view
-     * *
-     * @return
-     */
+
     fun removeFloatControlView(context: Context) {
         if (controlView != null) {
             val windowManager = getWindowManager(context)
@@ -213,13 +191,7 @@ object FloatWindowManager {
     }
 
 
-    /**
-     * 如果WindowManager还未创建，则创建一个新的WindowManager返回。否则返回当前已创建的WindowManager。
-     *
-     * @param context
-     * 必须为应用程序的Context.
-     * @return WindowManager的实例，用于控制在屏幕上添加或移除悬浮窗。
-     */
+
     private fun getWindowManager(context: Context): WindowManager? {
         if (windowManager == null) {
             windowManager = context.getSystemService(Context.WINDOW_SERVICE) as WindowManager
@@ -227,9 +199,7 @@ object FloatWindowManager {
         return windowManager
     }
 
-    /**
-     * 更新悬浮窗的位置
-     */
+
     fun updateViewPosition(context: Context, x: Int, y: Int) {
         if (playerView == null || playerViewParams == null) return
         if (windowManager == null) windowManager = getWindowManager(context)
@@ -249,18 +219,14 @@ object FloatWindowManager {
         return true
     }
 
-    /**
-     * 更新上下View的状态
-     */
+
     fun updateControlViewStatus(params: WindowManager.LayoutParams) {
         if (controlView != null) {
             controlView?.updateViewStatus(params)
         }
     }
 
-    /**
-     * 返回状态值 0 :正常，1: 滑动到顶部触发省电播放，2: 滑动到底部触发关闭
-     */
+
     fun getControlViewStatus(): Int {
         if (controlView != null) {
             return controlView?.getControlViewStatus() ?: 0
@@ -269,9 +235,7 @@ object FloatWindowManager {
     }
 
 
-    /**
-     * 获取屏幕尺寸高度
-     */
+
     fun getWindowSize(context: Context): Point {
         val size = Point()
         windowManager = getWindowManager(context)
@@ -281,9 +245,7 @@ object FloatWindowManager {
     }
 
 
-    /**
-     * 获取状态栏的高度
-     */
+
     fun getStatusBarHeight(context: Context): Int {
         if (statusBarHeight == 0) {
             try {

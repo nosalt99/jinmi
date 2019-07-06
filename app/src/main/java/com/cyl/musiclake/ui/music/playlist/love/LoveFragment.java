@@ -22,9 +22,7 @@ import java.util.List;
 
 import butterknife.BindView;
 
-/**
- * Created by Monkey on 2015/6/29.
- */
+
 public class LoveFragment extends BaseFragment<LovePresenter> implements LoveContract.View {
 
     @BindView(R.id.recyclerView)

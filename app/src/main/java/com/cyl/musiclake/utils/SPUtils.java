@@ -10,29 +10,18 @@ import com.cyl.musiclake.R;
 
 import java.util.Set;
 
-/**
- * 作者：yonglong on 2016/8/12 16:03
- * 邮箱：643872807@qq.com
- * 版本：2.5
- * 内部存儲工具類
- */
+
 public class SPUtils {
-    /**
-     * 第一次进入应用
-     */
+
     public static final String SP_KEY_FIRST_COMING = "first_coming";
     public static final String SP_KEY_FIRST_INIT_DATABASE = "first_init_database";
     public static final String SP_KEY_NOTICE_CODE = "notice_code";
 
-    /**
-     * 音乐接口
-     */
+
     public static final String SP_KEY_PLATER_API_URL = "music_api";
     public static final String SP_KEY_NETEASE_API_URL = "netease_api";
     public static final String SP_KEY_NETEASE_UID = "netease_uid";
-    /**
-     * 桌面歌词锁定
-     */
+
     public static final String SP_KEY_FLOAT_LYRIC_LOCK = "float_lyric_lock";
     public static final String SP_KEY_THEME_MODE = "theme_mode";
     public static final String SP_KEY_USER_NAME = "user_name";
@@ -136,11 +125,7 @@ public class SPUtils {
         return getAnyByKey(DESKTOP_LYRIC_COLOR, Color.RED);
     }
 
-    /**
-     * -------------------------------------------------------
-     * <p>底层操作
-     * -------------------------------------------------------
-     */
+
     public static boolean getAnyByKey(String key, boolean defValue) {
         return getPreferences().getBoolean(key, defValue);
     }

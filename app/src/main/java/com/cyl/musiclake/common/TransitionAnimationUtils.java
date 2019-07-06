@@ -11,20 +11,11 @@ import android.view.View;
 import android.view.animation.AccelerateInterpolator;
 import android.widget.ImageView;
 
-/**
- * Author   : D22434
- * version  : 2018/1/22
- * function : 图片切换动画
- */
+
 
 public class TransitionAnimationUtils {
 
-    /**
-     * 图片渐变切换动画
-     *
-     * @param imageView
-     * @param bitmapDrawable
-     */
+
     public static void startChangeAnimation(ImageView imageView, Drawable bitmapDrawable) {
         Drawable oldDrawable = imageView.getDrawable();
         Drawable oldBitmapDrawable = null;
@@ -44,9 +35,7 @@ public class TransitionAnimationUtils {
     }
 
 
-    /**
-     * 颜色渐变动画
-     */
+
     public static void startColorAnimation(View mView, int newColor) {
         int olderColor = ((ColorDrawable) mView.getBackground()).getColor();
         ObjectAnimator objectAnimator;
@@ -57,9 +46,7 @@ public class TransitionAnimationUtils {
         objectAnimator.start();
     }
 
-    /**
-     * 旋转动画
-     */
+
     public static void startCoverChangeAnimation(ImageView mView, Bitmap bitmap) {
         float startY = mView.getBottom();
         float endY = mView.getHeight();

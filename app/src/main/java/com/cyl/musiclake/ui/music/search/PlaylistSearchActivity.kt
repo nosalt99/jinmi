@@ -33,47 +33,29 @@
 //import kotlinx.android.synthetic.main.toolbar_search_layout.*
 //import java.util.*
 //
-///**
-// * 作者：yonglong on 2016/9/15 12:32
-// * 邮箱：643872807@qq.com
-// * 版本：2.5
-// */
+//
 //class PlaylistSearchActivity : BaseActivity<SearchPresenter>(), SearchContract.View {
-//    /**
-//     * 搜索信息
-//     */
+//
 //    private var queryString: String? = null
-//    /**
-//     * 搜索结果
-//     */
+//
 //    private val searchResults = mutableListOf<Music>()
-//    /**
-//     * 歌曲列表
-//     */
+//
 //    private var songList = mutableListOf<Music>()
 //
-//    /**
-//     * 适配器
-//     */
+//
 //    private var historyAdapter: SearchHistoryAdapter? = null
 //    private var hotSearchAdapter: HotSearchAdapter? = null
 //    private var mAdapter: SongAdapter = SongAdapter(searchResults)
-//    /**
-//     * 搜索历史
-//     */
+//
 //    private var searchHistory: MutableList<SearchHistoryBean> = ArrayList()
 //
-//    /**
-//     * 分页偏移量
-//     */
+//
 //    private var mCurrentCounter = 10
 //    private val limit = 10
 //    private var mOffset = 0
 //    private var isSearchOnline = false
 //
-//    /**
-//     * 过滤
-//     */
+//
 //    var filter = mutableMapOf(SearchEngine.Filter.QQ to true,
 //            SearchEngine.Filter.XIAMI to true,
 //            SearchEngine.Filter.NETEASE to true,
@@ -124,9 +106,7 @@
 //        mActivityComponent.inject(this)
 //    }
 //
-//    /**
-//     * 监听事件
-//     */
+//
 //    override fun listener() {
 //        clearAllIv.setOnClickListener {
 //            DaoLitepal.clearAllSearch()
@@ -237,11 +217,7 @@
 //    }
 //
 //
-//    /**
-//     * 本地搜索
-//     *
-//     * @param query
-//     */
+//
 //    private fun searchLocal(query: String?) {
 //        if (query != null && query.isNotEmpty()) {
 //            searchResults.clear()
@@ -252,9 +228,7 @@
 //        }
 //    }
 //
-//    /**
-//     * 在线搜索
-//     */
+//
 //    private fun search(query: String?) {
 //        if (query != null && query.isNotEmpty()) {
 //            showLoading()
@@ -271,9 +245,7 @@
 //        }
 //    }
 //
-//    /**
-//     * 显示搜索记录
-//     */
+//
 //    override fun showSearchResult(list: MutableList<Music>) {
 //        if (list.size != 0) {
 //            mOffset++
@@ -293,9 +265,7 @@
 //        LogUtil.e("search", mCurrentCounter.toString() + "--" + mCurrentCounter + "--" + mOffset)
 //    }
 //
-//    /**
-//     * 显示过滤后的搜索结果
-//     */
+//
 //    private fun showFilterResult() {
 //        songList.clear()
 //        searchResults.forEach {
@@ -336,9 +306,7 @@
 //        mAdapter.loadMoreComplete()
 //    }
 //
-//    /**
-//     * 初始化过滤条件
-//     */
+//
 //    private fun initSearchFilter(menu: Menu) {
 //        filter[SearchEngine.Filter.QQ] = PreferenceManager.getDefaultSharedPreferences(this).getBoolean("key_search_filter_qq", true)
 //        filter[SearchEngine.Filter.XIAMI] = PreferenceManager.getDefaultSharedPreferences(this).getBoolean("key_search_filter_xiami", true)
@@ -355,9 +323,7 @@
 //        menu.findItem(R.id.menu_filter_repeat).isChecked = filter[SearchEngine.Filter.REPEAT] ?: true
 //    }
 //
-//    /**
-//     * 移除重复歌曲
-//     */
+//
 //    private fun removeDuplicate(list: MutableList<Music>): MutableList<Music> {
 //        for (i in 0 until list.size - 1) {
 //            for (j in list.size - 1 downTo i + 1) {
@@ -369,9 +335,7 @@
 //        return list
 //    }
 //
-//    /**
-//     * 设置热搜
-//     */
+//
 //    override fun showHotSearchInfo(result: MutableList<HotSearchBean>) {
 //        if (result.size > 0) {
 //            hotSearchView.visibility = View.VISIBLE
@@ -400,9 +364,7 @@
 //        }
 //    }
 //
-//    /**
-//     * 显示历史
-//     */
+//
 //    override fun showSearchHistory(result: MutableList<SearchHistoryBean>) {
 //        searchHistory = result
 //        if (historyAdapter == null) {

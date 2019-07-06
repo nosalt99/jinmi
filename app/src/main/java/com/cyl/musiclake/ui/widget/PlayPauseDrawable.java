@@ -15,11 +15,7 @@ import com.cyl.musiclake.utils.LogUtil;
 import android.util.Property;
 import android.view.animation.DecelerateInterpolator;
 
-/**
- * 作者：yonglong on 2016/9/27 14:51
- * 邮箱：643872807@qq.com
- * 版本：2.5
- */
+
 public class PlayPauseDrawable extends Drawable {
 
 
@@ -50,9 +46,7 @@ public class PlayPauseDrawable extends Drawable {
         paint.setColor(Color.WHITE);
     }
 
-    /**
-     * Linear interpolate between a and b with parameter t.
-     */
+
     private static float interpolate(float a, float b, float t) {
         return a + (b - a) * t;
     }

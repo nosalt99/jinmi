@@ -13,9 +13,7 @@ import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
 
-/**
- * Created by D22434 on 2018/1/4.
- */
+
 
 class OnlinePlaylistPresenter @Inject
 constructor() : BasePresenter<OnlinePlaylistContract.View>(), OnlinePlaylistContract.Presenter {

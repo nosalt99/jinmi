@@ -6,21 +6,12 @@ import com.cyl.musiclake.ui.download.TasksManagerModel
 import com.cyl.musiclake.utils.FileUtils
 import org.litepal.LitePal
 
-/**
- * 数据库操作类
- * Created by master on 2018/4/26.
- */
+
 
 object DaoLitepal {
 
-/*
- **********************************
- * 播放历史操作
- **********************************
- */
-    /**
-     * 获取搜索历史
-     */
+
+
     fun getAllSearchInfo(title: String? = null): MutableList<SearchHistoryBean> {
         return if (title == null) {
             LitePal.order("id desc").find(SearchHistoryBean::class.java)
@@ -29,9 +20,7 @@ object DaoLitepal {
         }
     }
 
-    /**
-     * 增加搜索
-     */
+
     fun addSearchInfo(info: String) :Boolean{
         val id = System.currentTimeMillis()
         val queryInfo = SearchHistoryBean(id, info)
@@ -39,27 +28,19 @@ object DaoLitepal {
     }
 
 
-    /**
-     * 删除搜索历史
-     */
+
     fun deleteSearchInfo(info: String) {
         LitePal.deleteAllAsync(SearchHistoryBean::class.java, "title = ? ", info).listen {
 
         }
     }
 
-    /**
-     * 删除所有搜索历史
-     */
+
     fun clearAllSearch() {
         LitePal.deleteAll(SearchHistoryBean::class.java)
     }
 
-    /*
-     **********************************
-     * 播放歌单操作
-     **********************************
-     */
+
     fun saveOrUpdateMusic(music: Music, isAsync: Boolean = false) {
         if (isAsync) {
             music.saveOrUpdateAsync("mid = ?", music.mid)
@@ -69,9 +50,7 @@ object DaoLitepal {
     }
 
 
-    /**
-     * 扫描更新本地歌曲信息，如果
-     */
+
 //    fun saveOrUpdateLocalMusic(music: Music, isAsync: Boolean = false) {
 //        val downloadInfo = LitePal.where("path = ?", music.uri).find(TasksManagerModel::class.java)
 //        downloadInfo?.size?.let {
@@ -82,9 +61,7 @@ object DaoLitepal {
 //        }
 //    }
 
-    /**
-     * 添加歌曲到歌单
-     */
+
     fun addToPlaylist(music: Music, pid: String): Boolean {
         saveOrUpdateMusic(music)
         val count = LitePal.where("mid = ? and pid = ?", music.mid, pid)
@@ -110,9 +87,7 @@ object DaoLitepal {
         return playlist.saveOrUpdate("pid = ?", playlist.pid)
     }
 
-    /**
-     * 删除本地歌曲（Music、MusicToPlaylist）
-     */
+
     fun deleteMusic(music: Music) {
         val cachePath = FileUtils.getMusicCacheDir() + music.artist + " - " + music.title + "(" + music.quality + ")"
         val downloadPath = FileUtils.getMusicDir() + music.artist + " - " + music.title + ".mp3"
@@ -130,26 +105,18 @@ object DaoLitepal {
         LitePal.deleteAll(MusicToPlaylist::class.java, "mid = ?", music.mid)
     }
 
-    /**
-     * 删除歌单
-     * 先删除歌单歌曲，然后删除歌单
-     */
+
     fun deletePlaylist(playlist: Playlist):Int {
        LitePal.deleteAll(MusicToPlaylist::class.java, "pid=?", playlist.pid)
        return LitePal.deleteAll(Playlist::class.java, "pid=?", playlist.pid)
     }
 
-    /**
-     * 清空歌单歌曲
-     */
+
     fun clearPlaylist(pid: String):Int{
         return  LitePal.deleteAll(MusicToPlaylist::class.java, "pid=?", pid)
     }
 
-    /**
-     * 根据pid获取本地歌单所有歌曲
-     * @param pid
-     */
+
     fun getMusicList(pid: String, order: String = ""): MutableList<Music> {
         val musicLists = mutableListOf<Music>()
         when (pid) {
@@ -172,18 +139,13 @@ object DaoLitepal {
         return musicLists
     }
 
-    /**
-     * 获取本地新建的所有歌单
-     */
+
     fun getAllPlaylist(): MutableList<Playlist> {
         return LitePal.where("type = ?", Constants.PLAYLIST_LOCAL_ID).find(Playlist::class.java)
     }
 
 
-    /**
-     * 根据pid获取本地歌单
-     * @param pid
-     */
+
     fun getPlaylist(pid: String): Playlist {
         return LitePal.where("pid = ?", pid).findFirst(Playlist::class.java)
     }

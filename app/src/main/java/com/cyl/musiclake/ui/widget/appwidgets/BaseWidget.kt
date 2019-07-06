@@ -13,9 +13,7 @@ import com.cyl.musiclake.player.MusicPlayerService
 import com.cyl.musiclake.utils.LogUtil
 
 
-/**
- * Created by nv95 on 02.11.16.
- */
+
 
 abstract class BaseWidget : AppWidgetProvider() {
 

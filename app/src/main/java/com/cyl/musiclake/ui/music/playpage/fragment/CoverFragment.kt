@@ -79,10 +79,7 @@ class CoverFragment : BaseFragment<BasePresenter<BaseContract.BaseView>>() {
         }
     }
 
-    /**
-     * 更新歌曲類型
-     * 更新音乐品质
-     */
+
     fun updateMusicType(playingMusic: Music) {
         if (context == null) return
         LogUtil.d(TAG, "CoverFragment = ${playingMusic.type}")
@@ -117,9 +114,7 @@ class CoverFragment : BaseFragment<BasePresenter<BaseContract.BaseView>>() {
         }
     }
 
-    /**
-     * 设置Bitmap
-     */
+
     fun setImageBitmap(bm: Bitmap?) {
         civ_cover?.setImageBitmap(bm)
         LogUtil.d(TAG, "civ_cover 设置Bitmap")
@@ -130,9 +125,7 @@ class CoverFragment : BaseFragment<BasePresenter<BaseContract.BaseView>>() {
         currentBitmap = bm
     }
 
-    /**
-     * 初始化旋转动画
-     */
+
     fun initAlbumPic() {
         if (civ_cover == null) return
 
@@ -226,9 +219,7 @@ class CoverFragment : BaseFragment<BasePresenter<BaseContract.BaseView>>() {
         animatorSet?.play(objectAnimator2)?.with(objectAnimator3)?.after(objectAnimator1)
     }
 
-    /**
-     * 切换歌曲，开始旋转动画
-     */
+
     fun startRotateAnimation() {
         coverAnimator?.cancel()
         coverAnimator?.start()
@@ -243,16 +234,12 @@ class CoverFragment : BaseFragment<BasePresenter<BaseContract.BaseView>>() {
         }
     }
 
-    /**
-     * 停止旋转
-     */
+
     fun stopRotateAnimation() {
         coverAnimator?.pause()
     }
 
-    /**
-     * 继续旋转
-     */
+
     fun resumeRotateAnimation() {
         coverAnimator?.isStarted?.let {
             if (it) coverAnimator?.resume() else coverAnimator?.start()

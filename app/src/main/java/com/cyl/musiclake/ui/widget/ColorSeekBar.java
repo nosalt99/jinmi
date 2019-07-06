@@ -22,11 +22,7 @@
 //import java.util.ArrayList;
 //import java.util.List;
 //
-///**
-// * Author   : D22434
-// * version  : 2018/3/8
-// * function :
-// */
+//
 //
 //
 //public class ColorSeekBar extends View {
@@ -151,10 +147,7 @@
 //        setBackgroundColor(mBackgroundColor);
 //    }
 //
-//    /**
-//     * @param id
-//     * @return
-//     */
+//
 //    private int[] getColorsById(int id) {
 //        if (isInEditMode()) {
 //            String[] s = mContext.getResources().getStringArray(id);
@@ -349,10 +342,7 @@
 //        return true;
 //    }
 //
-//    /***
-//     *
-//     * @param alphaMaxPosition <= 255 && > alphaMinPosition
-//     */
+//
 //    public void setAlphaMaxPosition(int alphaMaxPosition) {
 //        mAlphaMaxPosition = alphaMaxPosition;
 //        if(mAlphaMaxPosition > 255){
@@ -371,10 +361,7 @@
 //        return mAlphaMaxPosition;
 //    }
 //
-//    /***
-//     *
-//     * @param alphaMinPosition >=0 && < alphaMaxPosition
-//     */
+//
 //    public void setAlphaMinPosition(int alphaMinPosition) {
 //        this.mAlphaMinPosition = alphaMinPosition;
 //        if(mAlphaMinPosition >= mAlphaMaxPosition){
@@ -393,12 +380,7 @@
 //        return mAlphaMinPosition;
 //    }
 //
-//    /**
-//     * @param r
-//     * @param x
-//     * @param y
-//     * @return whether MotionEvent is performing on bar or not
-//     */
+//
 //    private boolean isOnBar(Rect r, float x, float y) {
 //        if (r.left - mThumbRadius < x && x < r.right + mThumbRadius && r.top - mThumbRadius < y && y < r.bottom + mThumbRadius) {
 //            return true;
@@ -407,27 +389,18 @@
 //        }
 //    }
 //
-//    /**
-//     * @return
-//     * @deprecated use {@link #setOnInitDoneListener(OnInitDoneListener)} instead.
-//     */
+//
 //    public boolean isFirstDraw() {
 //        return mFirstDraw;
 //    }
 //
 //
-//    /**
-//     * @param value
-//     * @return color
-//     */
+//
 //    private int pickColor(int value) {
 //        return pickColor((float) value / mMaxPosition * mBarWidth);
 //    }
 //
-//    /**
-//     * @param position
-//     * @return color
-//     */
+//
 //    private int pickColor(float position) {
 //        float unit = position / mBarWidth;
 //        if (unit <= 0.0)
@@ -448,12 +421,7 @@
 //        return Color.rgb(mRed, mGreen, mBlue);
 //    }
 //
-//    /**
-//     * @param start
-//     * @param end
-//     * @param position
-//     * @return
-//     */
+//
 //    private int mix(int start, int end, float position) {
 //        return start + Math.round(position * (end - start));
 //    }
@@ -462,10 +430,7 @@
 //        return getColor(mIsShowAlphaBar);
 //    }
 //
-//    /**
-//     * @param withAlpha
-//     * @return
-//     */
+//
 //    public int getColor(boolean withAlpha) {
 //        //pick mode
 //        if (mColorBarPosition >= mColors.size()) {
@@ -495,17 +460,11 @@
 //    }
 //
 //    public interface OnColorChangeListener {
-//        /**
-//         * @param colorBarPosition between 0-maxValue
-//         * @param alphaBarPosition between 0-255
-//         * @param color            return the color contains alpha value whether showAlphaBar is true or without alpha value
-//         */
+//
 //        void onColorChangeListener(int colorBarPosition, int alphaBarPosition, int color);
 //    }
 //
-//    /**
-//     * @param onColorChangeListener
-//     */
+//
 //    public void setOnColorChangeListener(OnColorChangeListener onColorChangeListener) {
 //        this.mOnColorChangeLister = onColorChangeListener;
 //    }
@@ -516,11 +475,7 @@
 //        return (int) (dpValue * scale + 0.5f);
 //    }
 //
-//    /**
-//     * Set colors by resource id. The resource's type must be ArrayRes
-//     *
-//     * @param resId
-//     */
+//
 //    public void setColorSeeds(@ArrayRes int resId) {
 //        setColorSeeds(getColorsById(resId));
 //    }
@@ -533,10 +488,7 @@
 //            mOnColorChangeLister.onColorChangeListener(mColorBarPosition, mAlphaBarPosition, getColor());
 //    }
 //
-//    /**
-//     * @param color
-//     * @return the color's position in the bar, if not in the bar ,return -1;
-//     */
+//
 //    public int getColorIndexPosition(int color) {
 //        return mColors.indexOf(Color.argb(255,Color.red(color),Color.green(color),Color.blue(color)));
 //    }
@@ -571,18 +523,14 @@
 //            mOnColorChangeLister.onColorChangeListener(mColorBarPosition, mAlphaBarPosition, getColor());
 //    }
 //
-//    /**
-//     * @param dp
-//     */
+//
 //    public void setBarHeight(float dp) {
 //        mBarHeight = dp2px(dp);
 //        refreshLayoutParams();
 //        invalidate();
 //    }
 //
-//    /**
-//     * @param px
-//     */
+//
 //    public void setBarHeightPx(int px) {
 //        mBarHeight = px;
 //        refreshLayoutParams();
@@ -609,22 +557,14 @@
 //        cacheColors();
 //    }
 //
-//    /**
-//     * set margin between bars
-//     *
-//     * @param mBarMargin
-//     */
+//
 //    public void setBarMargin(float mBarMargin) {
 //        this.mBarMargin = dp2px(mBarMargin);
 //        refreshLayoutParams();
 //        invalidate();
 //    }
 //
-//    /**
-//     * set margin between bars
-//     *
-//     * @param mBarMargin
-//     */
+//
 //    public void setBarMarginPx(int mBarMargin) {
 //        this.mBarMargin = mBarMargin;
 //        refreshLayoutParams();
@@ -632,10 +572,7 @@
 //    }
 //
 //
-//    /**
-//     * Set the value of color bar, if out of bounds , it will be 0 or maxValue;
-//     * @param value
-//     */
+//
 //    public void setColorBarPosition(int value) {
 //        this.mColorBarPosition = value;
 //        mColorBarPosition = mColorBarPosition > mMaxPosition ? mMaxPosition : mColorBarPosition;
@@ -649,11 +586,7 @@
 //        this.mOnInitDoneListener = listener;
 //    }
 //
-//    /**
-//     * Set color, it must correspond to the value, if not , setColorBarPosition(0);
-//     *
-//     * @paam color
-//     */
+//
 //    public void setColor(int color) {
 //        int withoutAlphaColor = Color.rgb(Color.red(color), Color.green(color), Color.blue(color));
 //
@@ -667,11 +600,7 @@
 //
 //    }
 //
-//    /**
-//     * set thumb's height by dpi
-//     *
-//     * @param dp
-//     */
+//
 //    public void setThumbHeight(float dp) {
 //        this.mThumbHeight = dp2px(dp);
 //        mThumbRadius = mThumbHeight / 2;
@@ -679,11 +608,7 @@
 //        invalidate();
 //    }
 //
-//    /**
-//     * set thumb's height by pixels
-//     *
-//     * @param px
-//     */
+//
 //    public void setThumbHeightPx(int px) {
 //        this.mThumbHeight = px;
 //        mThumbRadius = mThumbHeight / 2;

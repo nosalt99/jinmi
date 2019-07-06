@@ -12,11 +12,7 @@ import com.cyl.musiclake.ui.music.discover.ArtistListAdapter
 import com.cyl.musiclake.utils.LogUtil
 import kotlinx.android.synthetic.main.frag_artist_list.*
 
-/**
- * 功能：在线排行榜
- * 邮箱：643872807@qq.com
- * 版本：4.1.3
- */
+
 class QQArtistListFragment : BaseFragment<ArtistListPresenter>(), ArtistListContract.View {
 
 //    private val areaList = mutableListOf("全部", "内地", "港台", "日本", "韩国", "其他")
@@ -71,9 +67,7 @@ class QQArtistListFragment : BaseFragment<ArtistListPresenter>(), ArtistListCont
 
     }
 
-    /**
-     * 更新歌手分类
-     */
+
     private fun updateArtistList() {
         val area = areaListAdapter?.flagId ?: -100
         val sex = sexListAdapter?.flagId ?: -100
@@ -98,9 +92,7 @@ class QQArtistListFragment : BaseFragment<ArtistListPresenter>(), ArtistListCont
         mPresenter?.loadArtists(0, params)
     }
 
-    /**
-     * 显示歌手歌曲
-     */
+
     override fun showArtistList(artistList: MutableList<Artist>) {
         //适配器
         mArtistAdapter = ArtistListAdapter(artistList)

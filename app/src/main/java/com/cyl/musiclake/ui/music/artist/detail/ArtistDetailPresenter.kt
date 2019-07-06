@@ -23,16 +23,12 @@ import org.jetbrains.anko.uiThread
 import javax.inject.Inject
 
 
-/**
- * Created by yonglong on 2018/1/7.
- */
+
 
 class ArtistDetailPresenter @Inject
 constructor() : BasePresenter<ArtistDetailContract.View>(), ArtistDetailContract.Presenter {
 
-    /**
-     * 加载歌手歌曲列表
-     */
+
     override fun loadArtistSongs(artist: Artist) {
         if (artist.type == null || artist.type == Constants.LOCAL) {
             doAsync {
@@ -80,9 +76,7 @@ constructor() : BasePresenter<ArtistDetailContract.View>(), ArtistDetailContract
         })
     }
 
-    /**
-     * 加载专辑歌曲列表
-     */
+
     override fun loadAlbumSongs(album: Album) {
         if (album.type == null || album.type == Constants.LOCAL) {
             doAsync {
@@ -127,9 +121,7 @@ constructor() : BasePresenter<ArtistDetailContract.View>(), ArtistDetailContract
         })
     }
 
-    /**
-     * 加载歌单歌曲列表
-     */
+
     override fun loadPlaylistSongs(playlist: Playlist) {
         when (playlist.type) {
             Constants.PLAYLIST_LOCAL_ID,
@@ -200,9 +192,7 @@ constructor() : BasePresenter<ArtistDetailContract.View>(), ArtistDetailContract
         }
     }
 
-    /**
-     * 加载每日推荐歌曲（需登录）
-     */
+
     private fun loadRecommendSongs() {
         val observable = NeteaseApiServiceImpl.recommendSongs()
         ApiManager.request(observable, object : RequestCallBack<MutableList<Music>> {
@@ -216,16 +206,12 @@ constructor() : BasePresenter<ArtistDetailContract.View>(), ArtistDetailContract
         })
     }
 
-    /**
-     * 删除歌单
-     */
+
     override fun deletePlaylist(playlist: Playlist) {
 
     }
 
-    /**
-     * 重命名歌单
-     */
+
     override fun renamePlaylist(playlist: Playlist, title: String) {
         if (playlist.type == Constants.PLAYLIST_CUSTOM_ID) {
             ApiManager.request(playlist.pid?.let { PlaylistApiServiceImpl.renamePlaylist(it, title) }, object : RequestCallBack<String> {

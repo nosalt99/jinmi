@@ -19,59 +19,37 @@ import com.rtugeek.android.colorseekbar.ColorSeekBar
 import net.steamcrafted.materialiconlib.MaterialDrawableBuilder
 import net.steamcrafted.materialiconlib.MaterialIconView
 
-/**
- * 桌面歌词View
- */
+
 class FloatLyricView(context: Context) : FrameLayout(context), View.OnClickListener {
 
-    /**
-     * 记录小悬浮窗的宽度
-     */
+
     var viewWidth: Int = 0
 
-    /**
-     * 记录小悬浮窗的高度
-     */
+
     var viewHeight: Int = 0
 
-    /**
-     * 用于更新小悬浮窗的位置
-     */
+
     private val windowManager: WindowManager
 
-    /**
-     * 小悬浮窗的参数
-     */
+
     private var mParams: WindowManager.LayoutParams? = null
 
-    /**
-     * 记录当前手指位置在屏幕上的横坐标值
-     */
+
     private var xInScreen: Float = 0.toFloat()
 
-    /**
-     * 记录当前手指位置在屏幕上的纵坐标值
-     */
+
     private var yInScreen: Float = 0.toFloat()
 
-    /**
-     * 记录手指按下时在屏幕上的横坐标的值
-     */
+
     private var xDownInScreen: Float = 0.toFloat()
 
-    /**
-     * 记录手指按下时在屏幕上的纵坐标的值
-     */
+
     private var yDownInScreen: Float = 0.toFloat()
 
-    /**
-     * 记录手指按下时在小悬浮窗的View上的横坐标的值
-     */
+
     private var xInView: Float = 0.toFloat()
 
-    /**
-     * 记录手指按下时在小悬浮窗的View上的纵坐标的值
-     */
+
     private var yInView: Float = 0.toFloat()
     private val mFontSize: Float
     private val mFontColor: Int
@@ -198,18 +176,12 @@ class FloatLyricView(context: Context) : FrameLayout(context), View.OnClickListe
         return super.onTouchEvent(event)
     }
 
-    /**
-     * 将小悬浮窗的参数传入，用于更新小悬浮窗的位置。
-     *
-     * @param params 小悬浮窗的参数
-     */
+
     fun setParams(params: WindowManager.LayoutParams) {
         mParams = params
     }
 
-    /**
-     * 更新小悬浮窗在屏幕中的位置。
-     */
+
     private fun updateViewPosition() {
         if (!mMovement) return
         mParams!!.x = (xInScreen - xInView).toInt()
@@ -217,9 +189,7 @@ class FloatLyricView(context: Context) : FrameLayout(context), View.OnClickListe
         windowManager.updateViewLayout(this, mParams)
     }
 
-    /**
-     * toggle背景
-     */
+
     private fun toggleLyricView() {
         if (mRootView != null) {
             if (mRelLyricView.visibility == View.INVISIBLE) {
@@ -239,11 +209,7 @@ class FloatLyricView(context: Context) : FrameLayout(context), View.OnClickListe
     }
 
 
-    /**
-     * 用于获取状态栏的高度。
-     *
-     * @return 返回状态栏高度的像素值。
-     */
+
     private fun getStatusBarHeight(): Int {
         if (statusBarHeight == 0) {
             try {
@@ -338,9 +304,7 @@ class FloatLyricView(context: Context) : FrameLayout(context), View.OnClickListe
 
     companion object {
 
-        /**
-         * 记录系统状态栏的高度
-         */
+
         private var statusBarHeight: Int = 0
     }
 

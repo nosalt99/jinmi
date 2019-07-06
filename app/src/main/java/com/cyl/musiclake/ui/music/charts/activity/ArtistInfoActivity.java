@@ -18,9 +18,7 @@
 ////import butterknife.BindView;
 ////import butterknife.OnClick;
 ////
-/////**
-//// * Created by yonglong on 2016/11/30.
-//// */
+////
 ////
 ////public class ArtistInfoActivity extends BaseActivity<ArtistInfoPresenter> implements ArtistInfoContract.View {
 ////

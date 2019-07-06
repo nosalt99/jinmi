@@ -16,9 +16,7 @@ import org.litepal.LitePal
 object DownloadLoader {
     private val TAG = "PlayQueueLoader"
 
-    /**
-     * 获取已下载列表
-     */
+
     fun getDownloadList(isCached: Boolean = false): MutableList<Music> {
         val musicList = mutableListOf<Music>()
         val data = LitePal.where("finish = 1 and cache = ?", if (isCached) "1" else "0").find(TasksManagerModel::class.java)
@@ -41,9 +39,7 @@ object DownloadLoader {
         }
         return musicList
     }
-    /**
-     * 获取已下载列表
-     */
+
     fun getDownloadList(): MutableList<Music> {
         val musicList = mutableListOf<Music>()
         val data = LitePal.where("finish = 1").find(TasksManagerModel::class.java)
@@ -67,16 +63,12 @@ object DownloadLoader {
         return musicList
     }
 
-    /**
-     * 获取下载列表
-     */
+
     fun getDownloadingList(): MutableList<TasksManagerModel> {
         return LitePal.where("finish = 0").find(TasksManagerModel::class.java)
     }
 
-    /**
-     * 是否已在下载列表
-     */
+
     fun isHasMusic(mid: String?): Boolean {
         return LitePal.isExist(TasksManagerModel::class.java, "mid = ?", mid)
     }
@@ -104,9 +96,7 @@ object DownloadLoader {
         return model
     }
 
-    /**
-     * 更新数据库下载任务状态
-     */
+
     fun updateTask(tid: Int) {
         val model = LitePal.where("tid = ?", tid.toString()).findFirst(TasksManagerModel::class.java)
         val music = model.mid?.let { DaoLitepal.getMusicInfo(it) }

@@ -18,14 +18,7 @@ import com.cyl.musiclake.utils.LogUtil;
 
 import java.util.List;
 
-/**
- * 需要在manifest文件中注册
- * Used to control headset playback.
- * Single press: pause/resume
- * Double press: next track
- * Triple press: previous track
- * Long press: voice search
- */
+
 
 public class MediaButtonIntentReceiver extends BroadcastReceiver {
     private static final boolean DEBUG = true;
@@ -45,9 +38,7 @@ public class MediaButtonIntentReceiver extends BroadcastReceiver {
 
     @SuppressLint("HandlerLeak")
     private static Handler mHandler = new Handler() {
-        /**
-         * {@inheritDoc}
-         */
+
         @Override
         public void handleMessage(final Message msg) {
             switch (msg.what) {
@@ -92,12 +83,7 @@ public class MediaButtonIntentReceiver extends BroadcastReceiver {
         }
     };
 
-    /**
-     * 启动musicservice,并拥有wake_lock权限
-     *
-     * @param context
-     * @param command
-     */
+
     private static void startService(Context context, String command) {
         final Intent i = new Intent(context, MusicPlayerService.class);
         i.setAction(MusicPlayerService.SERVICE_CMD);
@@ -120,9 +106,7 @@ public class MediaButtonIntentReceiver extends BroadcastReceiver {
         mHandler.sendMessageDelayed(msg, delay);
     }
 
-    /**
-     * 如果handler的消息队列中没有待处理消息,就释放receiver hold住的wakelog
-     */
+
     private static void releaseWakeLockIfHandlerIdle() {
         if (mHandler.hasMessages(MSG_LONGPRESS_TIMEOUT)
                 || mHandler.hasMessages(MSG_HEADSET_DOUBLE_CLICK_TIMEOUT)) {
@@ -237,12 +221,7 @@ public class MediaButtonIntentReceiver extends BroadcastReceiver {
         }
     }
 
-    /**
-     * M: Check whether Music service is running.
-     *
-     * @param context The context
-     * @return If running, return true, otherwise false.
-     */
+
     private boolean isMusicServiceRunning(Context context) {
         boolean isServiceRuning = false;
         ActivityManager am = (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);

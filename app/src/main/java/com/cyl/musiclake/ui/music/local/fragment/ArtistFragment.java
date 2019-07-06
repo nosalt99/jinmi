@@ -16,12 +16,7 @@ import java.util.List;
 
 import butterknife.BindView;
 
-/**
- * 功能：本地歌曲列表
- * 作者：yonglong on 2016/8/10 20:49
- * 邮箱：643872807@qq.com
- * 版本：2.5
- */
+
 public class ArtistFragment extends BaseLazyFragment<ArtistPresenter> implements ArtistContract.View {
 
     @BindView(R.id.recyclerView)
@@ -38,19 +33,13 @@ public class ArtistFragment extends BaseLazyFragment<ArtistPresenter> implements
     }
 
 
-    /**
-     * 初始化视图
-     *
-     * @return
-     */
+
     @Override
     public int getLayoutId() {
         return R.layout.fragment_recyclerview_notoolbar;
     }
 
-    /**
-     * 初始化控件
-     */
+
     @Override
     public void initViews() {
         mAdapter = new ArtistAdapter(artists);

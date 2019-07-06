@@ -11,16 +11,10 @@ import org.jaudiotagger.tag.id3.framebody.FrameBodyTIT2
 import org.jaudiotagger.tag.id3.framebody.FrameBodyTPE1
 import java.io.IOException
 
-/**
- * Des    :
- * Author : master.
- * Date   : 2018/8/26 .
- */
+
 object Mp3Util {
 
-    /**
-     * 修改音乐名、歌手名和专辑名
-     */
+
     fun updateTagInfo(path: String, music: Music): Boolean {
         try {
             val file = saveInfo(MP3File(path), music.title, music.artist, music.album)
@@ -91,9 +85,7 @@ object Mp3Util {
     }
 
 
-    /**
-     * 通过歌曲地址，jaudiotagger获取音乐名、歌手名和专辑名
-     */
+
     fun getTagInfo(path: String) {
         try {
             val file = MP3File(path)

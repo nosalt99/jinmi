@@ -16,12 +16,7 @@ import java.util.List;
 
 import butterknife.BindView;
 
-/**
- * 功能：在线排行榜
- * 作者：yonglong on 2016/8/11 18:14
- * 邮箱：643872807@qq.com
- * 版本：2.5
- */
+
 public class MvListFragment extends BaseLazyFragment<MvListPresenter> implements MvListContract.View {
 
     private static final String TAG = "ChartsFragment";

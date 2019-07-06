@@ -3,10 +3,7 @@ package com.cyl.musicapi.playlist
 
 import com.google.gson.annotations.SerializedName
 
-/**
- * 数据结构
- * http://rap2.taobao.org/repository/editor?id=9460&itf=52687
- */
+
 
 data class ArtistsItem(@SerializedName("id")
                        val id: String = "",

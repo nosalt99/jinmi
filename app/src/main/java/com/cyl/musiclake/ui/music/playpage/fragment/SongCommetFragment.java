@@ -8,11 +8,7 @@ import com.cyl.musiclake.ui.base.BaseFragment;
 
 import butterknife.BindView;
 
-/**
- * Des    :
- * Author : master.
- * Date   : 2018/6/6 .
- */
+
 public class SongCommetFragment extends BaseFragment {
 
     @BindView(R.id.rv_comment)

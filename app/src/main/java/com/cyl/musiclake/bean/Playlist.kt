@@ -7,12 +7,7 @@ import com.cyl.musiclake.common.Constants
 import org.litepal.crud.LitePalSupport
 
 @SuppressLint("ParcelCreator")
-/**
- * 功能：本地歌单
- * 作者：yonglong on 2016/9/13 21:59
- * 邮箱：643872807@qq.com
- * 版本：2.5
- */
+
 class Playlist() : LitePalSupport(), Parcelable {
     var id: Long = 0
     //歌单id

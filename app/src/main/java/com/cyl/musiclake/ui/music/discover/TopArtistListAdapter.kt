@@ -11,11 +11,7 @@ import com.cyl.musiclake.api.music.MusicUtils.PIC_SIZE_SMALL
 import com.cyl.musiclake.bean.Artist
 import com.cyl.musiclake.utils.CoverLoader
 
-/**
- * 作者：yonglong on 2016/8/10 21:36
- * 邮箱：643872807@qq.com
- * 版本：2.5
- */
+
 class TopArtistListAdapter(list: List<Artist>) : BaseQuickAdapter<Artist, BaseViewHolder>(R.layout.item_discover_artist, list) {
 
     override fun convert(helper: BaseViewHolder, artist: Artist) {
@@ -34,9 +30,7 @@ class ArtistListAdapter(artistList: MutableList<Artist>) : BaseQuickAdapter<Arti
     }
 }
 
-/**
- * 歌手分类适配器
- */
+
 class ArtistCateAdapter(categories: MutableList<SingerCate>) : BaseQuickAdapter<SingerCate, BaseViewHolder>(R.layout.item_artist_cate, categories) {
     var flagId = -100
     var position = 0

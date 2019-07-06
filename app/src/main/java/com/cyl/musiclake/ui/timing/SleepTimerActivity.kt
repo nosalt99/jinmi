@@ -17,9 +17,7 @@ import com.cyl.musiclake.utils.CountDownUtils
 import com.cyl.musiclake.utils.ToastUtils
 import kotlinx.android.synthetic.main.activity_sleep_timer.*
 
-/**
- * 定时关闭
- */
+
 class SleepTimerActivity : BaseActivity<BasePresenter<BaseContract.BaseView>>() {
     private val shiwuTv by lazy { findViewById<TextView>(R.id.sleepTimeShiWuTv) }
     private val sanshiTv by lazy { findViewById<TextView>(R.id.sleepTimeSanShiTv) }

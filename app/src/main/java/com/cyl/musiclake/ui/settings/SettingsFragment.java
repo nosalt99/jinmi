@@ -29,11 +29,7 @@ import com.cyl.musiclake.utils.ToastUtils;
 
 import java.util.Set;
 
-/**
- * Author   : D22434
- * version  : 2018/3/8
- * function :
- */
+
 
 public class SettingsFragment extends PreferenceFragment implements Preference.OnPreferenceClickListener {
 
@@ -90,9 +86,7 @@ public class SettingsFragment extends PreferenceFragment implements Preference.O
         mSocketSwitch.setChecked(MusicApp.isOpenSocket);
     }
 
-    /**
-     * 初始化控件
-     */
+
     private void initView() {
         mPreferenceCache = (PreferenceScreen) findPreference("key_cache");
         mPreferenceDownloadFile = findPreference("key_download_file");
@@ -153,9 +147,7 @@ public class SettingsFragment extends PreferenceFragment implements Preference.O
         initApiSettings();
     }
 
-    /**
-     * 更新主题配置
-     */
+
     private void updateTheme(){
         for (int i = 0; i < MusicApp.activities.size(); i++) {
             if (MusicApp.activities.get(i) instanceof MainActivity) {
@@ -167,9 +159,7 @@ public class SettingsFragment extends PreferenceFragment implements Preference.O
         getActivity().finish();
     }
 
-    /**
-     * 初始化搜索过滤
-     */
+
     private void initSearchFilterSettings(boolean isInit) {
         if (isInit) {
             SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
@@ -188,9 +178,7 @@ public class SettingsFragment extends PreferenceFragment implements Preference.O
         }
     }
 
-    /**
-     * 初始化Api设置
-     */
+
     private void initApiSettings() {
         //获取本地api地址
         musicApi = SPUtils.getAnyByKey(SPUtils.SP_KEY_PLATER_API_URL, Constants.BASE_PLAYER_URL);
@@ -262,9 +250,7 @@ public class SettingsFragment extends PreferenceFragment implements Preference.O
         return true;
     }
 
-    /**
-     * 检查桌面歌词所需的权限
-     */
+
     private void checkLyricPermission() {
         try {
             if (!SystemUtils.isOpenFloatWindow()) {

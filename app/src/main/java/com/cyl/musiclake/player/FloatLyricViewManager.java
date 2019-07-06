@@ -37,23 +37,17 @@ public class FloatLyricViewManager {
     private String mSongName;
     private static boolean isFirstSettingLyric; //第一次设置歌词
 
-    /**
-     * 歌词信息
-     */
+
     public static String lyricInfo;
 
-    /**
-     * 定时器，定时进行检测当前应该创建还是移除悬浮窗。
-     */
+
     private Context mContext;
 
     FloatLyricViewManager(Context context) {
         mContext = context;
     }
 
-    /**
-     * ---------------------------歌词View更新-----------------------------
-     */
+
     private static List<LyricView> lyricViews = new ArrayList<>();
 
     public static void setLyricChangeListener(LyricView lyricView) {
@@ -64,9 +58,7 @@ public class FloatLyricViewManager {
         lyricViews.remove(lyricView);
     }
 
-    /**
-     * -----------------------------------------------------------------
-     */
+
 
     public void updatePlayStatus(boolean isPlaying) {
         if (mFloatLyricView != null)
@@ -74,9 +66,7 @@ public class FloatLyricViewManager {
     }
 
 
-    /**
-     * 加载歌词
-     */
+
     public void loadLyric(Music mPlayingMusic) {
         resetLyric(MusicApp.getAppContext().getString(R.string.lyric_loading));
         if (mPlayingMusic != null) {
@@ -103,11 +93,7 @@ public class FloatLyricViewManager {
         }
     }
 
-    /**
-     * 保存歌词
-     *
-     * @param info 歌词
-     */
+
     public static void saveLyricInfo(String name, String artist, String info) {
         lyricInfo = info;
         MusicApiServiceImpl.INSTANCE.saveLyricInfo(name, artist, info);
@@ -117,11 +103,7 @@ public class FloatLyricViewManager {
         }
     }
 
-    /**
-     * 重置
-     *
-     * @param info 歌词
-     */
+
     private void resetLyric(String info) {
         lyricInfo = info;
         setLyric(lyricInfo);
@@ -130,11 +112,7 @@ public class FloatLyricViewManager {
         }
     }
 
-    /**
-     * 更新歌词
-     *
-     * @param info 歌词
-     */
+
     private void updateLyric(String info) {
         lyricInfo = info;
         setLyric(lyricInfo);
@@ -144,20 +122,14 @@ public class FloatLyricViewManager {
     }
 
 
-    /**
-     * 设置歌词
-     *
-     * @param lyricInfo 歌词信息
-     */
+
     public static void setLyric(String lyricInfo) {
         mLyricInfo = LyricParseUtils.setLyricResource(lyricInfo);
         isFirstSettingLyric = true;
     }
 
 
-    /**
-     * 判断当前界面是否是应用界面
-     */
+
     private boolean isHome() {
         try {
             return MusicApp.count != 0;
@@ -168,11 +140,7 @@ public class FloatLyricViewManager {
     }
 
 
-    /**
-     * 创建一个小悬浮窗。初始位置为屏幕的右部中间位置。
-     *
-     * @param context 必须为应用程序的Context.
-     */
+
     private void createFloatLyricView(Context context) {
         try {
             WindowManager windowManager = getWindowManager();
@@ -210,11 +178,7 @@ public class FloatLyricViewManager {
         }
     }
 
-    /**
-     * 将小悬浮窗从屏幕上移除。
-     *
-     * @param context 必须为应用程序的Context.
-     */
+
     public void removeFloatLyricView(Context context) {
         try {
             if (mFloatLyricView != null) {
@@ -227,9 +191,7 @@ public class FloatLyricViewManager {
         }
     }
 
-    /**
-     * 更新小悬浮窗的TextView上的数据，显示内存使用的百分比。
-     */
+
     public void updateLyric(long positon, long duration) {
         // 当前界面不是本应用界面，且没有悬浮窗显示，则创建悬浮窗。
         if (!isHome() && !isWindowShowing()) {
@@ -252,21 +214,13 @@ public class FloatLyricViewManager {
 
     }
 
-    /**
-     * 是否有悬浮窗(包括小悬浮窗和大悬浮窗)显示在屏幕上。
-     *
-     * @return 有悬浮窗显示在桌面上返回true，没有的话返回false。
-     */
+
 
     private static boolean isWindowShowing() {
         return mFloatLyricView != null;
     }
 
-    /**
-     * 如果WindowManager还未创建，则创建一个新的WindowManager返回。否则返回当前已创建的WindowManager。
-     *
-     * @return WindowManager的实例，用于控制在屏幕上添加或移除悬浮窗。
-     */
+
     private static WindowManager getWindowManager() {
         if (mWindowManager == null) {
             mWindowManager = (WindowManager) MusicApp.getAppContext().getSystemService(Context.WINDOW_SERVICE);

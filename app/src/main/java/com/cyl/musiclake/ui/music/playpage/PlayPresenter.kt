@@ -11,9 +11,7 @@ import org.jetbrains.anko.uiThread
 import javax.inject.Inject
 
 
-/**
- * Created by hefuyi on 2016/11/8.
- */
+
 
 class PlayPresenter @Inject
 constructor() : BasePresenter<PlayContract.View>(), PlayContract.Presenter, PlayProgressListener {

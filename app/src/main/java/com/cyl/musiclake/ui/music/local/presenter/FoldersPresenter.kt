@@ -13,9 +13,7 @@ import org.jetbrains.anko.doAsync
 import org.jetbrains.anko.uiThread
 import javax.inject.Inject
 
-/**
- * Created by D22434 on 2018/1/8.
- */
+
 
 class FoldersPresenter @Inject
 constructor() : BasePresenter<FoldersContract.View>(), FoldersContract.Presenter {

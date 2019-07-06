@@ -9,18 +9,10 @@ import android.view.View
 import com.cyl.musiclake.R
 
 
-/**
- * Created by cyl on 2018/7/26.
- * 向外扩散View，中间白色圆圈不变。四周扩散
- * 1、绘制中间圆圈
- * 2、绘制文字
- * 3、绘制渐变扩散圆圈
- */
+
 class FlipperView : View {
 
-    /**
-     * 初始化画笔
-     */
+
     private val mCirclePaint = Paint()
 
     private var centerX: Float = 0.0f
@@ -72,9 +64,7 @@ class FlipperView : View {
         widths.add(0)
         alphas.add(200)
         colors.add(Color.WHITE)
-        /**
-         * 圆弧画笔
-         */
+
         mCirclePaint.isAntiAlias = true
         mCirclePaint.color = circleColor
         mCirclePaint.style = Paint.Style.FILL

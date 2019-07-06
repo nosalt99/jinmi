@@ -12,11 +12,7 @@ import com.cyl.musiclake.utils.ToastUtils
 import kotlinx.android.synthetic.main.activity_bind_login.*
 import java.util.*
 
-/**
- * 作者：yonglong on 2016/8/11 18:17
- * 邮箱：643872807@qq.com
- * 版本：2.5
- */
+
 class BindLoginActivity : BaseActivity<LoginPresenter>(), LoginContract.View {
 
 
@@ -49,9 +45,7 @@ class BindLoginActivity : BaseActivity<LoginPresenter>(), LoginContract.View {
     }
 
 
-    /**
-     * 点击登录
-     */
+
     fun loginTo() {
         if (isLogining) return
 
@@ -104,9 +98,7 @@ class BindLoginActivity : BaseActivity<LoginPresenter>(), LoginContract.View {
     override fun success(user: User) {
     }
 
-    /**
-     * 保存绑定的账号密码
-     */
+
     override fun bindSuccess(loginInfo: LoginInfo?) {
         SPUtils.putAnyCommit(SPUtils.SP_KEY_NETEASE_UID, loginInfo?.profile?.userId.toString() + "")
         SPUtils.putAnyCommit(SPUtils.SP_KEY_USER_NAME, username)

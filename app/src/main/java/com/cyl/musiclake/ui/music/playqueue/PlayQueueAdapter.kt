@@ -17,9 +17,7 @@ import com.cyl.musiclake.utils.CoverLoader
 import com.cyl.musiclake.utils.ToastUtils
 import org.jetbrains.anko.dip
 
-/**
- * Created by D22434 on 2017/9/26.ß
- */
+
 
 class PlayQueueAdapter(musicList: List<Music>) : BaseItemDraggableAdapter<Music, BaseViewHolder>(R.layout.item_play_queue, musicList) {
 

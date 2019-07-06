@@ -13,9 +13,7 @@ import com.cyl.musiclake.ui.main.PageAdapter;
 
 import butterknife.BindView;
 
-/**
- * Created by yonglong on 2016/11/26.
- */
+
 
 public class DownloadFragment extends BaseLazyFragment {
     @BindView(R.id.m_viewpager)

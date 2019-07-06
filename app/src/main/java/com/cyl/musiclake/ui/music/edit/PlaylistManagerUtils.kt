@@ -20,20 +20,13 @@ import org.greenrobot.eventbus.EventBus
 import org.jetbrains.anko.doAsync
 import org.jetbrains.anko.uiThread
 
-/**
- * Created by master on 2018/4/8.
- * 封装添加到在线歌单功能
- */
+
 
 object PlaylistManagerUtils {
-    /**
-     * 保存当前歌单列表
-     */
+
     var playlists = mutableListOf<Playlist>()
 
-    /**
-     * 删除当前歌单
-     */
+
     fun deletePlaylist(playlist: Playlist, success: (String) -> Unit) {
         if (playlist.type == Constants.PLAYLIST_LOCAL_ID) {
             doAsync {
@@ -59,9 +52,7 @@ object PlaylistManagerUtils {
         })
     }
 
-    /**
-     * 获取最新通知消息
-     */
+
     fun getMusicNoticeInfo(success: (NoticeInfo) -> Unit, fail: (String) -> Unit) {
         ApiManager.request(PlaylistApiServiceImpl.getMusicLakeNotice(), object : RequestCallBack<NoticeInfo> {
             override fun success(result: NoticeInfo) {
@@ -77,9 +68,7 @@ object PlaylistManagerUtils {
         })
     }
 
-    /**
-     * 获取在线歌单
-     */
+
     fun getOnlinePlaylist(success: (MutableList<Playlist>) -> Unit, fail: (String) -> Unit) {
         ApiManager.request(PlaylistApiServiceImpl.getPlaylist(), object : RequestCallBack<MutableList<Playlist>> {
             override fun success(result: MutableList<Playlist>) {
@@ -94,19 +83,14 @@ object PlaylistManagerUtils {
         })
     }
 
-    /**
-     * 添加歌曲到在线歌单
-     */
+
     fun addToPlaylist(activity: AppCompatActivity?, music: Music?) {
         music?.let {
             addToPlaylist(activity, mutableListOf(it))
         }
     }
 
-    /**
-     * 批量歌曲添加到歌单
-     * @param musics 选择的歌曲
-     */
+
     fun addToPlaylist(activity: AppCompatActivity?, musics: MutableList<Music>?) {
         if (activity == null) return
         //选择歌曲为空，则提示
@@ -129,9 +113,7 @@ object PlaylistManagerUtils {
         })
     }
 
-    /**
-     * 批量添加到本地歌单
-     */
+
     private fun addToLocalPlaylist(activity: AppCompatActivity?, musics: MutableList<Music>?) {
         if (activity == null) return
         //选择歌曲为空，则提示
@@ -143,9 +125,7 @@ object PlaylistManagerUtils {
         showLocalPlaylistDialog(activity, musicList = musics)
     }
 
-    /**
-     * 批量添加到在线歌单
-     */
+
     private fun addToOnlinePlaylist(activity: AppCompatActivity?, musics: MutableList<Music>?) {
         if (activity == null) return
         //选择歌曲为空，则提示
@@ -174,9 +154,7 @@ object PlaylistManagerUtils {
         })
     }
 
-    /**
-     * 显示本地歌单列表
-     */
+
     private fun showLocalPlaylistDialog(activity: AppCompatActivity, music: Music? = null, musicList: MutableList<Music>? = null) {
         doAsync {
             val playlist = PlaylistLoader.getAllPlaylist()
@@ -190,9 +168,7 @@ object PlaylistManagerUtils {
         }
     }
 
-    /**
-     * 显示所有的歌单列表
-     */
+
     private fun showSelectDialog(activity: AppCompatActivity, playlists: MutableList<Playlist>, music: Music? = null, musicList: MutableList<Music>? = null) {
         val items = mutableListOf<String>()
         playlists.forEach {
@@ -214,9 +190,7 @@ object PlaylistManagerUtils {
                 .build().show()
     }
 
-    /**
-     * 显示歌单类型选择列表
-     */
+
     private fun showPlaylistSelectDialog(activity: AppCompatActivity, callBack: ((String) -> Unit)) {
         val items = mutableListOf("本地歌单", "在线歌单", "网易云歌单")
         MaterialDialog.Builder(activity)
@@ -228,10 +202,7 @@ object PlaylistManagerUtils {
                 .build().show()
     }
 
-    /**
-     * 歌曲添加到在线歌单，同步
-     * 目前支持网易，虾米，qq
-     */
+
     private fun collectMusic(playlist: Playlist, music: Music?) {
         if (playlist.type == Constants.PLAYLIST_LOCAL_ID) {
             playlist.pid?.let {
@@ -253,11 +224,7 @@ object PlaylistManagerUtils {
         }
     }
 
-    /**
-     *
-     * 歌曲批量添加到在线歌单，同类型
-     * 目前支持网易，虾米，qq
-     */
+
     fun collectBatchMusic(playlist: Playlist, vendor: String, musicList: MutableList<Music>?, success: (() -> Unit)? = null) {
         if (playlist.type == Constants.PLAYLIST_LOCAL_ID) {
             playlist.pid?.let {
@@ -280,11 +247,7 @@ object PlaylistManagerUtils {
         }
     }
 
-    /**
-     * 在线歌单
-     * 歌曲批量添加到在线歌单，不同类型
-     * 目前支持网易，虾米，qq
-     */
+
     private fun collectBatch2Music(playlist: Playlist, musicList: MutableList<Music>?) {
         if (playlist.type == Constants.PLAYLIST_LOCAL_ID) {
             playlist.pid?.let {
@@ -305,13 +268,7 @@ object PlaylistManagerUtils {
         }
     }
 
-    /**
-     *
-     * 在线歌单
-     * 新建歌单
-     * @param name 歌单名
-     * @param type 歌单类型名
-     */
+
     fun createPlaylist(name: String, type: String, success: (Playlist) -> Unit) {
         val mIsLogin = UserStatus.getLoginStatus()
         if (type == Constants.PLAYLIST_CUSTOM_ID) {
@@ -344,9 +301,7 @@ object PlaylistManagerUtils {
         }
     }
 
-    /**
-     * 在线歌单的删除歌单（取消收藏）
-     */
+
     fun disCollectMusic(pid: String?, music: Music?, success: () -> Unit) {
         if (pid == null) return
         if (music == null) return

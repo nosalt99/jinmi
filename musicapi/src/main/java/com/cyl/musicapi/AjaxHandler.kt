@@ -11,9 +11,7 @@ import java.util.concurrent.TimeUnit
 //import wendu.dsbridge.CompletionHandler
 
 
-/**
- * Created by master on 2018/5/12.
- */
+
 
 object AjaxHandler {
     fun onAjaxRequest(requestData: JSONObject, handler: CompletionHandler<String>) {

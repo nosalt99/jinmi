@@ -49,12 +49,7 @@ import io.reactivex.disposables.Disposable;
 import static com.cyl.musiclake.player.PlayManager.mService;
 import static com.cyl.musiclake.utils.AnimationUtils.animateView;
 
-/**
- * 基类
- *
- * @author yonglong
- * @date 2016/8/3
- */
+
 public abstract class BaseActivity<T extends BaseContract.BasePresenter> extends RxAppCompatActivity implements ServiceConnection, BaseContract.BaseView {
 
     @Nullable
@@ -111,9 +106,7 @@ public abstract class BaseActivity<T extends BaseContract.BasePresenter> extends
         initView();
     }
 
-    /**
-     * 初始化Dagger
-     */
+
     private void initActivityComponent() {
         mActivityComponent = DaggerActivityComponent.builder()
                 .applicationComponent(MusicApp.getInstance().getApplicationComponent())
@@ -137,11 +130,7 @@ public abstract class BaseActivity<T extends BaseContract.BasePresenter> extends
         }
     }
 
-    /**
-     * 更新title
-     *
-     * @param title
-     */
+
     protected void updateTitle(String title) {
         if (hasToolbar() && mToolbar != null) {
             if (setToolbarTitle() != null)
@@ -192,18 +181,14 @@ public abstract class BaseActivity<T extends BaseContract.BasePresenter> extends
     }
 
 
-    /**
-     * 贴上view
-     */
+
     private void attachView() {
         if (mPresenter != null) {
             mPresenter.attachView(this);
         }
     }
 
-    /**
-     * 分离view
-     */
+
     private void detachView() {
         if (mPresenter != null) {
             mPresenter.detachView();
@@ -302,10 +287,7 @@ public abstract class BaseActivity<T extends BaseContract.BasePresenter> extends
     }
 
 
-    /**
-     * https://mp.weixin.qq.com/s/d9QCoBP6kV9VSWvVldVVwA
-     * 屏幕适配
-     */
+
     private void setCustomDensity(Activity activity) {
         DisplayMetrics appDisplayMetrics = MusicApp.getAppContext().getResources().getDisplayMetrics();
         //density = px/dp dp值是设计图的宽度

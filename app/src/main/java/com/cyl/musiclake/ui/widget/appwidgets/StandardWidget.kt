@@ -14,9 +14,7 @@ import com.cyl.musiclake.utils.CoverLoader
 import com.cyl.musiclake.utils.LogUtil
 
 
-/**
- * Created by nv95 on 08.07.16.
- */
+
 
 class StandardWidget : BaseWidget() {
 

@@ -16,9 +16,7 @@ import android.view.View;
 
 import com.cyl.musiclake.R;
 
-/**
- * 自定义暂停播放按钮，包括自定义进度条
- */
+
 public class PlayPauseView extends View {
 
     private int mWidth; //View宽度
@@ -123,10 +121,7 @@ public class PlayPauseView extends View {
 //        int rectLT = (int) (mWidth / 2 - radius / Math.sqrt(2));
 //        int rectRB = (int) (mWidth / 2 + radius / Math.sqrt(2));
         mRadius = mWidth / 2;
-        /* if (getPadding() > mRadius / Math.sqrt(2) || mPadding < 0) {
-         *//*throw new IllegalArgumentException("The value of your padding is too large. " +
-                    "The value must not be greater than " + (int) (mRadius / Math.sqrt(2)));*//*
-        }*/
+
         mPadding = getSpacePadding() == 0 ? mRadius / 3f : getSpacePadding();
         if (getSpacePadding() > mRadius / Math.sqrt(2) || mPadding < 0) {
             mPadding = mRadius / 3f; //默认值
@@ -222,11 +217,7 @@ public class PlayPauseView extends View {
     }
 
 
-    /**
-     * 显示Loading 动画
-     *
-     * @return
-     */
+
     public ValueAnimator getLoadingAnim() {
         ValueAnimator valueAnimator = ValueAnimator.ofFloat(0f, 360f);
         valueAnimator.setRepeatCount(ObjectAnimator.INFINITE);
@@ -256,9 +247,7 @@ public class PlayPauseView extends View {
         return valueAnimator;
     }
 
-    /**
-     * 开始Loading
-     */
+
     public void startLoading() {
         if (getLoadingAnim() != null) {
             getLoadingAnim().cancel();
@@ -266,9 +255,7 @@ public class PlayPauseView extends View {
         getLoadingAnim().start();
     }
 
-    /**
-     * 停止Loading
-     */
+
     public void stopLoading() {
         if (getLoadingAnim() != null) {
             getLoadingAnim().cancel();
@@ -320,7 +307,7 @@ public class PlayPauseView extends View {
         void pause();
     }
 
-    /* ------------下方是参数------------- */
+
 
     public boolean isPlaying() {
         return isPlaying;

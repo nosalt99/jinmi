@@ -10,9 +10,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-/**
- * Created by D22434 on 2018/1/5.
- */
+
 public class ApiManagerTest extends TestCase {
 
     public void testQQ() throws Exception {
@@ -101,12 +99,7 @@ public class ApiManagerTest extends TestCase {
     }
 
     class XiamiApiModel {
-        /**
-         * state : 0
-         * message :
-         * request_id : 0a679e4815159457758297833e49b6
-         * data : {"songs":[{"song_id":1769253963,"song_name":"认真的雪","album_id":358513,"album_name":"未完成的歌","album_logo":"http://pic.xiami.net/images/album/img44/7244/3585131260327414_1.jpg","artist_id":7244,"artist_name":"薛之谦","artist_logo":"http://pic.xiami.net/images/artistlogo/24/14688337551624_1.jpg","listen_file":"http://m128.xiami.net/244/7244/358513/1769253963_935996_l.mp3?auth_key=1516503600-0-0-3b37631fea5f216372316a73e70987b0","demo":0,"need_pay_flag":2,"lyric":"http://img.xiami.net/lyric/63/1769253963_1472550789_602.trc","purview_roles":[{"quality":"e","operation_list":[{"purpose":1,"upgrade_role":0},{"purpose":2,"upgrade_role":4}]},{"quality":"f","operation_list":[{"purpose":1,"upgrade_role":0},{"purpose":2,"upgrade_role":4}]},{"quality":"l","operation_list":[{"purpose":1,"upgrade_role":0},{"purpose":2,"upgrade_role":4}]},{"quality":"h","operation_list":[{"purpose":1,"upgrade_role":4},{"purpose":2,"upgrade_role":4}]},{"quality":"s","operation_list":[{"purpose":1,"upgrade_role":4},{"purpose":2,"upgrade_role":4}]}],"is_play":0,"play_counts":0,"singer":""},{"song_id":1771171282,"song_name":"我知道你都知道","album_id":528820,"album_name":"几个薛之谦","album_logo":"http://pic.xiami.net/images/album/img44/7244/5288201472630142_1.jpg","artist_id":7244,"artist_name":"薛之谦","artist_logo":"http://pic.xiami.net/images/artistlogo/24/14688337551624_1.jpg","listen_file":"http://m128.xiami.net/244/7244/528820/1771171282_10440901_l.mp3?auth_key=1516503600-0-0-5f5a4a4daa3ecb71465ba3bf66649c6e","demo":0,"need_pay_flag":0,"lyric":"http://img.xiami.net/lyric/82/1771171282_1490867929_888.trc","purview_roles":[{"quality":"e","operation_list":[{"purpose":1,"upgrade_role":0},{"purpose":2,"upgrade_role":0}]},{"quality":"f","operation_list":[{"purpose":1,"upgrade_role":0},{"purpose":2,"upgrade_role":0}]},{"quality":"l","operation_list":[{"purpose":1,"upgrade_role":0},{"purpose":2,"upgrade_role":0}]},{"quality":"h","operation_list":[{"purpose":1,"upgrade_role":0},{"purpose":2,"upgrade_role":0}]},{"quality":"s","operation_list":[{"purpose":1,"upgrade_role":3},{"purpose":2,"upgrade_role":3}]}],"is_play":0,"play_counts":0,"singer":""},{"song_id":1771115364,"song_name":"几个你","album_id":528820,"album_name":"几个薛之谦","album_logo":"http://pic.xiami.net/images/album/img44/7244/5288201472630142_1.jpg","artist_id":7244,"artist_name":"薛之谦","artist_logo":"http://pic.xiami.net/images/artistlogo/24/14688337551624_1.jpg","listen_file":"http://m128.xiami.net/244/7244/528820/1771115364_10440903_l.mp3?auth_key=1516503600-0-0-715ecc11c1cdf5c5ba0052573b54efcc","demo":0,"need_pay_flag":0,"lyric":"http://img.xiami.net/lyric/trc/64/1771115364_1401253229_6934.lrc","purview_roles":[{"quality":"e","operation_list":[{"purpose":1,"upgrade_role":0},{"purpose":2,"upgrade_role":0}]},{"quality":"f","operation_list":[{"purpose":1,"upgrade_role":0},{"purpose":2,"upgrade_role":0}]},{"quality":"l","operation_list":[{"purpose":1,"upgrade_role":0},{"purpose":2,"upgrade_role":0}]},{"quality":"h","operation_list":[{"purpose":1,"upgrade_role":0},{"purpose":2,"upgrade_role":0}]},{"quality":"s","operation_list":[{"purpose":1,"upgrade_role":3},{"purpose":2,"upgrade_role":3}]}],"is_play":0,"play_counts":0,"singer":""},{"song_id":1776402364,"song_name":"来日方长","album_id":2102411729,"album_name":"来日方长","album_logo":"http://pic.xiami.net/images/album/img11/69/5919262d3896c_3489911_1494820397_1.jpg","artist_id":7236,"artist_name":"黄龄","artist_logo":"http://pic.xiami.net/images/artistlogo/23/14575260612823_1.jpg","listen_file":"http://m128.xiami.net/169/7169/2102411729/1776402364_1506936392997.mp3?auth_key=1516503600-0-0-76d801edb40fadfdae99f23410ad92b4","demo":0,"need_pay_flag":0,"lyric":"http://img.xiami.net/lyric/64/1776402364_1473667551_8739.trc","purview_roles":[{"quality":"e","operation_list":[{"purpose":1,"upgrade_role":0},{"purpose":2,"upgrade_role":0}]},{"quality":"f","operation_list":[{"purpose":1,"upgrade_role":0},{"purpose":2,"upgrade_role":0}]},{"quality":"l","operation_list":[{"purpose":1,"upgrade_role":0},{"purpose":2,"upgrade_role":0}]},{"quality":"h","operation_list":[{"purpose":1,"upgrade_role":0},{"purpose":2,"upgrade_role":0}]},{"quality":"s","operation_list":[{"purpose":1,"upgrade_role":3},{"purpose":2,"upgrade_role":3}]}],"is_play":0,"play_counts":0,"singer":""},{"song_id":1769253951,"song_name":"未完成的歌","album_id":358513,"album_name":"未完成的歌","album_logo":"http://pic.xiami.net/images/album/img44/7244/3585131260327414_1.jpg","artist_id":7244,"artist_name":"薛之谦","artist_logo":"http://pic.xiami.net/images/artistlogo/24/14688337551624_1.jpg","listen_file":"http://m128.xiami.net/244/7244/358513/1769253951_935984_l.mp3?auth_key=1516503600-0-0-a64909ecb914e734f63633def9496b01","demo":0,"need_pay_flag":0,"lyric":"http://img.xiami.net/lyric/trc/51/1769253951_1401249723_976.lrc","purview_roles":[{"quality":"e","operation_list":[{"purpose":1,"upgrade_role":0},{"purpose":2,"upgrade_role":0}]},{"quality":"f","operation_list":[{"purpose":1,"upgrade_role":0},{"purpose":2,"upgrade_role":0}]},{"quality":"l","operation_list":[{"purpose":1,"upgrade_role":0},{"purpose":2,"upgrade_role":0}]},{"quality":"h","operation_list":[{"purpose":1,"upgrade_role":0},{"purpose":2,"upgrade_role":0}]},{"quality":"s","operation_list":[{"purpose":1,"upgrade_role":3},{"purpose":2,"upgrade_role":3}]}],"is_play":0,"play_counts":0,"singer":""},{"song_id":1775713592,"song_name":"演员 (Live)","album_id":2100391706,"album_name":"现场合集","album_logo":"http://pic.xiami.net/images/album/img12/634530812/21003917061474874445_1.jpg","artist_id":634530812,"artist_name":"音乐热搜","artist_logo":"http://pic.xiami.net/images/artistlogo/66/14585696461066_1.jpg","listen_file":"http://m128.xiami.net/812/634530812/2100391706/1775713592_1499053429582.mp3?auth_key=1516503600-0-0-bfe6f39eaa99aa4310ebc1b98e08f9b3","demo":0,"need_pay_flag":0,"lyric":"http://img.xiami.net/lyric/92/1775713592_1505889591_690.trc","purview_roles":[{"quality":"e","operation_list":[{"purpose":1,"upgrade_role":0},{"purpose":2,"upgrade_role":0}]},{"quality":"f","operation_list":[{"purpose":1,"upgrade_role":0},{"purpose":2,"upgrade_role":0}]},{"quality":"l","operation_list":[{"purpose":1,"upgrade_role":0},{"purpose":2,"upgrade_role":0}]},{"quality":"h","operation_list":[{"purpose":1,"upgrade_role":0},{"purpose":2,"upgrade_role":0}]},{"quality":"s","operation_list":[{"purpose":1,"upgrade_role":1},{"purpose":2,"upgrade_role":1}]}],"is_play":0,"play_counts":0,"singer":""},{"song_id":1775713590,"song_name":"丑八怪 (Live)","album_id":2100391706,"album_name":"现场合集","album_logo":"http://pic.xiami.net/images/album/img12/634530812/21003917061474874445_1.jpg","artist_id":634530812,"artist_name":"音乐热搜","artist_logo":"http://pic.xiami.net/images/artistlogo/66/14585696461066_1.jpg","listen_file":"http://m128.xiami.net/197/1964894197/2100285652/1775713590_59789536_l.mp3?auth_key=1516503600-0-0-cf964b3522c5db34476d1e61cfae045d","demo":0,"need_pay_flag":0,"lyric":"http://img.xiami.net/lyric/90/1775713590_1456990566_5410.trc","purview_roles":[{"quality":"e","operation_list":[{"purpose":1,"upgrade_role":0},{"purpose":2,"upgrade_role":0}]},{"quality":"f","operation_list":[{"purpose":1,"upgrade_role":0},{"purpose":2,"upgrade_role":0}]},{"quality":"l","operation_list":[{"purpose":1,"upgrade_role":0},{"purpose":2,"upgrade_role":0}]},{"quality":"h","operation_list":[{"purpose":1,"upgrade_role":0},{"purpose":2,"upgrade_role":0}]},{"quality":"s","operation_list":[{"purpose":1,"upgrade_role":1},{"purpose":2,"upgrade_role":1}]}],"is_play":0,"play_counts":0,"singer":""},{"song_id":1798187260,"song_name":"狐狸","album_id":2102978797,"album_name":"狐狸","album_logo":"http://pic.xiami.net/images/album/img44/7244/21029787971513872302_1.jpg","artist_id":7244,"artist_name":"薛之谦","artist_logo":"http://pic.xiami.net/images/artistlogo/24/14688337551624_1.jpg","listen_file":"http://m128.xiami.net/244/7244/2102978797/1798187260_1513872137618.mp3?auth_key=1516503600-0-0-2c6e1c9fc36df83a8ed969b4c5c36eb7","demo":0,"need_pay_flag":0,"lyric":"http://img.xiami.net/lyric/60/1798187260_1513872224_2049.lrc","purview_roles":[{"quality":"e","operation_list":[{"purpose":1,"upgrade_role":0},{"purpose":2,"upgrade_role":0}]},{"quality":"f","operation_list":[{"purpose":1,"upgrade_role":0},{"purpose":2,"upgrade_role":0}]},{"quality":"l","operation_list":[{"purpose":1,"upgrade_role":0},{"purpose":2,"upgrade_role":0}]},{"quality":"h","operation_list":[{"purpose":1,"upgrade_role":0},{"purpose":2,"upgrade_role":0}]},{"quality":"s","operation_list":[{"purpose":1,"upgrade_role":3},{"purpose":2,"upgrade_role":3}]}],"is_play":0,"play_counts":0,"singer":""},{"song_id":392473,"song_name":"认真的雪","album_id":32883,"album_name":"薛之谦 同名专辑","album_logo":"http://pic.xiami.net/images/album/img44/7244/32883_1.jpg","artist_id":7244,"artist_name":"薛之谦","artist_logo":"http://pic.xiami.net/images/artistlogo/24/14688337551624_1.jpg","listen_file":"http://m128.xiami.net/244/7244/32883/392473_11120453_l.mp3?auth_key=1516503600-0-0-d914ef73c276462ff1b0eccda41377a7","demo":0,"need_pay_flag":2,"lyric":"http://img.xiami.net/lyric/73/392473_1490952844_4175.trc","purview_roles":[{"quality":"e","operation_list":[{"purpose":1,"upgrade_role":0},{"purpose":2,"upgrade_role":4}]},{"quality":"f","operation_list":[{"purpose":1,"upgrade_role":0},{"purpose":2,"upgrade_role":4}]},{"quality":"l","operation_list":[{"purpose":1,"upgrade_role":0},{"purpose":2,"upgrade_role":4}]},{"quality":"h","operation_list":[{"purpose":1,"upgrade_role":4},{"purpose":2,"upgrade_role":4}]},{"quality":"s","operation_list":[{"purpose":1,"upgrade_role":4},{"purpose":2,"upgrade_role":4}]}],"is_play":0,"play_counts":0,"singer":""},{"song_id":1770093948,"song_name":"我终于成了别人的女人","album_id":528820,"album_name":"几个薛之谦","album_logo":"http://pic.xiami.net/images/album/img44/7244/5288201472630142_1.jpg","artist_id":7244,"artist_name":"薛之谦","artist_logo":"http://pic.xiami.net/images/artistlogo/24/14688337551624_1.jpg","listen_file":"http://m128.xiami.net/244/7244/528820/1770093948_1511759142825.mp3?auth_key=1516503600-0-0-7eb02bebff7772d6cebb57af98f7cc7c","demo":0,"need_pay_flag":0,"lyric":"http://img.xiami.net/lyric/48/1770093948_1490867947_1116.trc","purview_roles":[{"quality":"e","operation_list":[{"purpose":1,"upgrade_role":0},{"purpose":2,"upgrade_role":0}]},{"quality":"f","operation_list":[{"purpose":1,"upgrade_role":0},{"purpose":2,"upgrade_role":0}]},{"quality":"l","operation_list":[{"purpose":1,"upgrade_role":0},{"purpose":2,"upgrade_role":0}]},{"quality":"h","operation_list":[{"purpose":1,"upgrade_role":0},{"purpose":2,"upgrade_role":0}]},{"quality":"s","operation_list":[{"purpose":1,"upgrade_role":3},{"purpose":2,"upgrade_role":3}]}],"is_play":0,"play_counts":0,"singer":""}],"total":278,"previous":0,"next":0}
-         */
+
         private int state;
         private String message;
         private String request_id;
@@ -145,12 +138,7 @@ public class ApiManagerTest extends TestCase {
         }
 
         public class DataBean {
-            /**
-             * songs : [{"song_id":1769253963,"song_name":"认真的雪","album_id":358513,"album_name":"未完成的歌","album_logo":"http://pic.xiami.net/images/album/img44/7244/3585131260327414_1.jpg","artist_id":7244,"artist_name":"薛之谦","artist_logo":"http://pic.xiami.net/images/artistlogo/24/14688337551624_1.jpg","listen_file":"http://m128.xiami.net/244/7244/358513/1769253963_935996_l.mp3?auth_key=1516503600-0-0-3b37631fea5f216372316a73e70987b0","demo":0,"need_pay_flag":2,"lyric":"http://img.xiami.net/lyric/63/1769253963_1472550789_602.trc","purview_roles":[{"quality":"e","operation_list":[{"purpose":1,"upgrade_role":0},{"purpose":2,"upgrade_role":4}]},{"quality":"f","operation_list":[{"purpose":1,"upgrade_role":0},{"purpose":2,"upgrade_role":4}]},{"quality":"l","operation_list":[{"purpose":1,"upgrade_role":0},{"purpose":2,"upgrade_role":4}]},{"quality":"h","operation_list":[{"purpose":1,"upgrade_role":4},{"purpose":2,"upgrade_role":4}]},{"quality":"s","operation_list":[{"purpose":1,"upgrade_role":4},{"purpose":2,"upgrade_role":4}]}],"is_play":0,"play_counts":0,"singer":""},{"song_id":1771171282,"song_name":"我知道你都知道","album_id":528820,"album_name":"几个薛之谦","album_logo":"http://pic.xiami.net/images/album/img44/7244/5288201472630142_1.jpg","artist_id":7244,"artist_name":"薛之谦","artist_logo":"http://pic.xiami.net/images/artistlogo/24/14688337551624_1.jpg","listen_file":"http://m128.xiami.net/244/7244/528820/1771171282_10440901_l.mp3?auth_key=1516503600-0-0-5f5a4a4daa3ecb71465ba3bf66649c6e","demo":0,"need_pay_flag":0,"lyric":"http://img.xiami.net/lyric/82/1771171282_1490867929_888.trc","purview_roles":[{"quality":"e","operation_list":[{"purpose":1,"upgrade_role":0},{"purpose":2,"upgrade_role":0}]},{"quality":"f","operation_list":[{"purpose":1,"upgrade_role":0},{"purpose":2,"upgrade_role":0}]},{"quality":"l","operation_list":[{"purpose":1,"upgrade_role":0},{"purpose":2,"upgrade_role":0}]},{"quality":"h","operation_list":[{"purpose":1,"upgrade_role":0},{"purpose":2,"upgrade_role":0}]},{"quality":"s","operation_list":[{"purpose":1,"upgrade_role":3},{"purpose":2,"upgrade_role":3}]}],"is_play":0,"play_counts":0,"singer":""},{"song_id":1771115364,"song_name":"几个你","album_id":528820,"album_name":"几个薛之谦","album_logo":"http://pic.xiami.net/images/album/img44/7244/5288201472630142_1.jpg","artist_id":7244,"artist_name":"薛之谦","artist_logo":"http://pic.xiami.net/images/artistlogo/24/14688337551624_1.jpg","listen_file":"http://m128.xiami.net/244/7244/528820/1771115364_10440903_l.mp3?auth_key=1516503600-0-0-715ecc11c1cdf5c5ba0052573b54efcc","demo":0,"need_pay_flag":0,"lyric":"http://img.xiami.net/lyric/trc/64/1771115364_1401253229_6934.lrc","purview_roles":[{"quality":"e","operation_list":[{"purpose":1,"upgrade_role":0},{"purpose":2,"upgrade_role":0}]},{"quality":"f","operation_list":[{"purpose":1,"upgrade_role":0},{"purpose":2,"upgrade_role":0}]},{"quality":"l","operation_list":[{"purpose":1,"upgrade_role":0},{"purpose":2,"upgrade_role":0}]},{"quality":"h","operation_list":[{"purpose":1,"upgrade_role":0},{"purpose":2,"upgrade_role":0}]},{"quality":"s","operation_list":[{"purpose":1,"upgrade_role":3},{"purpose":2,"upgrade_role":3}]}],"is_play":0,"play_counts":0,"singer":""},{"song_id":1776402364,"song_name":"来日方长","album_id":2102411729,"album_name":"来日方长","album_logo":"http://pic.xiami.net/images/album/img11/69/5919262d3896c_3489911_1494820397_1.jpg","artist_id":7236,"artist_name":"黄龄","artist_logo":"http://pic.xiami.net/images/artistlogo/23/14575260612823_1.jpg","listen_file":"http://m128.xiami.net/169/7169/2102411729/1776402364_1506936392997.mp3?auth_key=1516503600-0-0-76d801edb40fadfdae99f23410ad92b4","demo":0,"need_pay_flag":0,"lyric":"http://img.xiami.net/lyric/64/1776402364_1473667551_8739.trc","purview_roles":[{"quality":"e","operation_list":[{"purpose":1,"upgrade_role":0},{"purpose":2,"upgrade_role":0}]},{"quality":"f","operation_list":[{"purpose":1,"upgrade_role":0},{"purpose":2,"upgrade_role":0}]},{"quality":"l","operation_list":[{"purpose":1,"upgrade_role":0},{"purpose":2,"upgrade_role":0}]},{"quality":"h","operation_list":[{"purpose":1,"upgrade_role":0},{"purpose":2,"upgrade_role":0}]},{"quality":"s","operation_list":[{"purpose":1,"upgrade_role":3},{"purpose":2,"upgrade_role":3}]}],"is_play":0,"play_counts":0,"singer":""},{"song_id":1769253951,"song_name":"未完成的歌","album_id":358513,"album_name":"未完成的歌","album_logo":"http://pic.xiami.net/images/album/img44/7244/3585131260327414_1.jpg","artist_id":7244,"artist_name":"薛之谦","artist_logo":"http://pic.xiami.net/images/artistlogo/24/14688337551624_1.jpg","listen_file":"http://m128.xiami.net/244/7244/358513/1769253951_935984_l.mp3?auth_key=1516503600-0-0-a64909ecb914e734f63633def9496b01","demo":0,"need_pay_flag":0,"lyric":"http://img.xiami.net/lyric/trc/51/1769253951_1401249723_976.lrc","purview_roles":[{"quality":"e","operation_list":[{"purpose":1,"upgrade_role":0},{"purpose":2,"upgrade_role":0}]},{"quality":"f","operation_list":[{"purpose":1,"upgrade_role":0},{"purpose":2,"upgrade_role":0}]},{"quality":"l","operation_list":[{"purpose":1,"upgrade_role":0},{"purpose":2,"upgrade_role":0}]},{"quality":"h","operation_list":[{"purpose":1,"upgrade_role":0},{"purpose":2,"upgrade_role":0}]},{"quality":"s","operation_list":[{"purpose":1,"upgrade_role":3},{"purpose":2,"upgrade_role":3}]}],"is_play":0,"play_counts":0,"singer":""},{"song_id":1775713592,"song_name":"演员 (Live)","album_id":2100391706,"album_name":"现场合集","album_logo":"http://pic.xiami.net/images/album/img12/634530812/21003917061474874445_1.jpg","artist_id":634530812,"artist_name":"音乐热搜","artist_logo":"http://pic.xiami.net/images/artistlogo/66/14585696461066_1.jpg","listen_file":"http://m128.xiami.net/812/634530812/2100391706/1775713592_1499053429582.mp3?auth_key=1516503600-0-0-bfe6f39eaa99aa4310ebc1b98e08f9b3","demo":0,"need_pay_flag":0,"lyric":"http://img.xiami.net/lyric/92/1775713592_1505889591_690.trc","purview_roles":[{"quality":"e","operation_list":[{"purpose":1,"upgrade_role":0},{"purpose":2,"upgrade_role":0}]},{"quality":"f","operation_list":[{"purpose":1,"upgrade_role":0},{"purpose":2,"upgrade_role":0}]},{"quality":"l","operation_list":[{"purpose":1,"upgrade_role":0},{"purpose":2,"upgrade_role":0}]},{"quality":"h","operation_list":[{"purpose":1,"upgrade_role":0},{"purpose":2,"upgrade_role":0}]},{"quality":"s","operation_list":[{"purpose":1,"upgrade_role":1},{"purpose":2,"upgrade_role":1}]}],"is_play":0,"play_counts":0,"singer":""},{"song_id":1775713590,"song_name":"丑八怪 (Live)","album_id":2100391706,"album_name":"现场合集","album_logo":"http://pic.xiami.net/images/album/img12/634530812/21003917061474874445_1.jpg","artist_id":634530812,"artist_name":"音乐热搜","artist_logo":"http://pic.xiami.net/images/artistlogo/66/14585696461066_1.jpg","listen_file":"http://m128.xiami.net/197/1964894197/2100285652/1775713590_59789536_l.mp3?auth_key=1516503600-0-0-cf964b3522c5db34476d1e61cfae045d","demo":0,"need_pay_flag":0,"lyric":"http://img.xiami.net/lyric/90/1775713590_1456990566_5410.trc","purview_roles":[{"quality":"e","operation_list":[{"purpose":1,"upgrade_role":0},{"purpose":2,"upgrade_role":0}]},{"quality":"f","operation_list":[{"purpose":1,"upgrade_role":0},{"purpose":2,"upgrade_role":0}]},{"quality":"l","operation_list":[{"purpose":1,"upgrade_role":0},{"purpose":2,"upgrade_role":0}]},{"quality":"h","operation_list":[{"purpose":1,"upgrade_role":0},{"purpose":2,"upgrade_role":0}]},{"quality":"s","operation_list":[{"purpose":1,"upgrade_role":1},{"purpose":2,"upgrade_role":1}]}],"is_play":0,"play_counts":0,"singer":""},{"song_id":1798187260,"song_name":"狐狸","album_id":2102978797,"album_name":"狐狸","album_logo":"http://pic.xiami.net/images/album/img44/7244/21029787971513872302_1.jpg","artist_id":7244,"artist_name":"薛之谦","artist_logo":"http://pic.xiami.net/images/artistlogo/24/14688337551624_1.jpg","listen_file":"http://m128.xiami.net/244/7244/2102978797/1798187260_1513872137618.mp3?auth_key=1516503600-0-0-2c6e1c9fc36df83a8ed969b4c5c36eb7","demo":0,"need_pay_flag":0,"lyric":"http://img.xiami.net/lyric/60/1798187260_1513872224_2049.lrc","purview_roles":[{"quality":"e","operation_list":[{"purpose":1,"upgrade_role":0},{"purpose":2,"upgrade_role":0}]},{"quality":"f","operation_list":[{"purpose":1,"upgrade_role":0},{"purpose":2,"upgrade_role":0}]},{"quality":"l","operation_list":[{"purpose":1,"upgrade_role":0},{"purpose":2,"upgrade_role":0}]},{"quality":"h","operation_list":[{"purpose":1,"upgrade_role":0},{"purpose":2,"upgrade_role":0}]},{"quality":"s","operation_list":[{"purpose":1,"upgrade_role":3},{"purpose":2,"upgrade_role":3}]}],"is_play":0,"play_counts":0,"singer":""},{"song_id":392473,"song_name":"认真的雪","album_id":32883,"album_name":"薛之谦 同名专辑","album_logo":"http://pic.xiami.net/images/album/img44/7244/32883_1.jpg","artist_id":7244,"artist_name":"薛之谦","artist_logo":"http://pic.xiami.net/images/artistlogo/24/14688337551624_1.jpg","listen_file":"http://m128.xiami.net/244/7244/32883/392473_11120453_l.mp3?auth_key=1516503600-0-0-d914ef73c276462ff1b0eccda41377a7","demo":0,"need_pay_flag":2,"lyric":"http://img.xiami.net/lyric/73/392473_1490952844_4175.trc","purview_roles":[{"quality":"e","operation_list":[{"purpose":1,"upgrade_role":0},{"purpose":2,"upgrade_role":4}]},{"quality":"f","operation_list":[{"purpose":1,"upgrade_role":0},{"purpose":2,"upgrade_role":4}]},{"quality":"l","operation_list":[{"purpose":1,"upgrade_role":0},{"purpose":2,"upgrade_role":4}]},{"quality":"h","operation_list":[{"purpose":1,"upgrade_role":4},{"purpose":2,"upgrade_role":4}]},{"quality":"s","operation_list":[{"purpose":1,"upgrade_role":4},{"purpose":2,"upgrade_role":4}]}],"is_play":0,"play_counts":0,"singer":""},{"song_id":1770093948,"song_name":"我终于成了别人的女人","album_id":528820,"album_name":"几个薛之谦","album_logo":"http://pic.xiami.net/images/album/img44/7244/5288201472630142_1.jpg","artist_id":7244,"artist_name":"薛之谦","artist_logo":"http://pic.xiami.net/images/artistlogo/24/14688337551624_1.jpg","listen_file":"http://m128.xiami.net/244/7244/528820/1770093948_1511759142825.mp3?auth_key=1516503600-0-0-7eb02bebff7772d6cebb57af98f7cc7c","demo":0,"need_pay_flag":0,"lyric":"http://img.xiami.net/lyric/48/1770093948_1490867947_1116.trc","purview_roles":[{"quality":"e","operation_list":[{"purpose":1,"upgrade_role":0},{"purpose":2,"upgrade_role":0}]},{"quality":"f","operation_list":[{"purpose":1,"upgrade_role":0},{"purpose":2,"upgrade_role":0}]},{"quality":"l","operation_list":[{"purpose":1,"upgrade_role":0},{"purpose":2,"upgrade_role":0}]},{"quality":"h","operation_list":[{"purpose":1,"upgrade_role":0},{"purpose":2,"upgrade_role":0}]},{"quality":"s","operation_list":[{"purpose":1,"upgrade_role":3},{"purpose":2,"upgrade_role":3}]}],"is_play":0,"play_counts":0,"singer":""}]
-             * total : 278
-             * previous : 0
-             * next : 0
-             */
+
 
             private int total;
             private int previous;
@@ -212,24 +200,7 @@ public class ApiManagerTest extends TestCase {
                             '}';
                 }
 
-                /**
-                 * song_id : 1769253963
-                 * song_name : 认真的雪
-                 * album_id : 358513
-                 * album_name : 未完成的歌
-                 * album_logo : http://pic.xiami.net/images/album/img44/7244/3585131260327414_1.jpg
-                 * artist_id : 7244
-                 * artist_name : 薛之谦
-                 * artist_logo : http://pic.xiami.net/images/artistlogo/24/14688337551624_1.jpg
-                 * listen_file : http://m128.xiami.net/244/7244/358513/1769253963_935996_l.mp3?auth_key=1516503600-0-0-3b37631fea5f216372316a73e70987b0
-                 * demo : 0
-                 * need_pay_flag : 2
-                 * lyric : http://img.xiami.net/lyric/63/1769253963_1472550789_602.trc
-                 * purview_roles : [{"quality":"e","operation_list":[{"purpose":1,"upgrade_role":0},{"purpose":2,"upgrade_role":4}]},{"quality":"f","operation_list":[{"purpose":1,"upgrade_role":0},{"purpose":2,"upgrade_role":4}]},{"quality":"l","operation_list":[{"purpose":1,"upgrade_role":0},{"purpose":2,"upgrade_role":4}]},{"quality":"h","operation_list":[{"purpose":1,"upgrade_role":4},{"purpose":2,"upgrade_role":4}]},{"quality":"s","operation_list":[{"purpose":1,"upgrade_role":4},{"purpose":2,"upgrade_role":4}]}]
-                 * is_play : 0
-                 * play_counts : 0
-                 * singer :
-                 */
+
 
 
                 private int song_id;
@@ -378,10 +349,7 @@ public class ApiManagerTest extends TestCase {
                 }
 
                 public class PurviewRolesBean {
-                    /**
-                     * quality : e
-                     * operation_list : [{"purpose":1,"upgrade_role":0},{"purpose":2,"upgrade_role":4}]
-                     */
+
 
                     private String quality;
                     private List<OperationListBean> operation_list;
@@ -403,10 +371,7 @@ public class ApiManagerTest extends TestCase {
                     }
 
                     public class OperationListBean {
-                        /**
-                         * purpose : 1
-                         * upgrade_role : 0
-                         */
+
 
                         private int purpose;
                         private int upgrade_role;
@@ -434,12 +399,7 @@ public class ApiManagerTest extends TestCase {
 
     class XiamiLyricInfo {
 
-        /**
-         * status : true
-         * message : null
-         * data : {"trackList":[{"songId":"1769253963","songName":"认真的雪","subName":"","newSubName":"","translation":"","albumId":358513,"artistId":7244,"singers":"薛之谦","mvId":17961,"cdSerial":1,"track":13,"pinyin":"ren zhen de xue ","bakSongId":0,"panFlag":0,"musicType":"NORMAL","bakSong":null,"lyricInfo":{"lyricId":8684504,"lyricType":3,"lyricFile":"http://img.xiami.net/lyric/63/1769253963_1472550789_602.trc","isOfficial":true},"songwriters":"薛之谦","composer":"薛之谦","arrangement":"","boughtCount":0,"pace":208,"albumLanguage":"国语","playCount":39440581,"offline":false,"offlineType":0,"downloadCount":false,"originOffline":false,"exclusive":false,"bizTags":["LOSSLESS","S_PAY","RI_A5YY","X_FREE","XN_BJ9QM"],"recommendCount":17531,"collectCount":429030,"songStringId":"xLp9zz1131b","albumStringId":"jT87d1197","artistStringId":"hf0143fd","singerIds":[7244],"demoCreateTime":1260460800000,"tags":["LOSSLESS","S_PAY","RI_A5YY","X_FREE","XN_BJ9QM"],"offLyric":false,"artist":"薛之谦","songOpt":"NORMAL","purviews":{"LISTEN":{"LOW":"FREE","HIGH":"NEED_PAY"},"DOWNLOAD":{"LOW":"NEED_PAY","HIGH":"NEED_PAY"}},"publishStatus":"PUBLISH","demo":false,"s":39440581,"song_id":"1769253963","album_id":358513,"name":"认真的雪","title":"未完成的歌","album_name":"未完成的歌","sub_title":"","new_sub_title":"","song_sub_title":"","artist_name":"薛之谦","artist_id":7244,"cd_serial":1,"singersSource":[{"artistId":7244,"artistStringId":"hf0143fd","artistName":"薛之谦","artistLogo":"images/artistlogo/24/14688337551624_1.jpg","albumCount":21,"area":"China 中国大陆","alias":"Joker","pinyin":"xuezhiqian","isMusician":false,"isShow":false,"description":""}],"length":261,"recommends":17531,"collects":429030,"key_words":null,"music_type":0,"play_volume":89,"flag":null,"album_logo":"images/album/img44/7244/3585131260327414_1.jpg","needpay":1,"mvUrl":"K66oUt","playstatus":1,"downloadstatus":2,"downloadjson":"%7B%22LOW%22%3A%22NEED_PAY%22%2C%22HIGH%22%3A%22NEED_PAY%22%7D","can_show":1,"can_check":1,"location":"5h3%2ae2F%82965l%ty555-%b1f7a%7tA28mt4725F239.3h%1EE%53f2275bt%F.i%42F115_9mF_363%5E7e133E%p2mx.2%4337396pakD565E-6a61e95%F1inF245%693_3ue1%%E-3353678E","lyric":"http://img.xiami.net/lyric/63/1769253963_1447656414_8420.lrc","lyric_url":"http://img.xiami.net/lyric/63/1769253963_1447656414_8420.lrc","object_id":"1769253963","object_name":"default","insert_type":1,"background":"http://img.xiami.net/res/player/bimg/bg-5.jpg","aritst_type":"","artist_url":"http://www.xiami.com/artist/7244","grade":-1,"tryhq":0,"pic":"http://img.xiami.net/images/album/img44/7244/3585131260327414_1.jpg","album_pic":"http://img.xiami.net/images/album/img44/7244/3585131260327414.jpg","rec_note":""}],"lastSongId":0,"type":"default","type_id":1,"clearlist":null,"vip":0,"vip_role":0,"hqset":0}
-         * jumpurl : null
-         */
+
 
         private boolean status;
         private Object message;
@@ -479,16 +439,7 @@ public class ApiManagerTest extends TestCase {
         }
 
         public class DataBean {
-            /**
-             * trackList : [{"songId":"1769253963","songName":"认真的雪","subName":"","newSubName":"","translation":"","albumId":358513,"artistId":7244,"singers":"薛之谦","mvId":17961,"cdSerial":1,"track":13,"pinyin":"ren zhen de xue ","bakSongId":0,"panFlag":0,"musicType":"NORMAL","bakSong":null,"lyricInfo":{"lyricId":8684504,"lyricType":3,"lyricFile":"http://img.xiami.net/lyric/63/1769253963_1472550789_602.trc","isOfficial":true},"songwriters":"薛之谦","composer":"薛之谦","arrangement":"","boughtCount":0,"pace":208,"albumLanguage":"国语","playCount":39440581,"offline":false,"offlineType":0,"downloadCount":false,"originOffline":false,"exclusive":false,"bizTags":["LOSSLESS","S_PAY","RI_A5YY","X_FREE","XN_BJ9QM"],"recommendCount":17531,"collectCount":429030,"songStringId":"xLp9zz1131b","albumStringId":"jT87d1197","artistStringId":"hf0143fd","singerIds":[7244],"demoCreateTime":1260460800000,"tags":["LOSSLESS","S_PAY","RI_A5YY","X_FREE","XN_BJ9QM"],"offLyric":false,"artist":"薛之谦","songOpt":"NORMAL","purviews":{"LISTEN":{"LOW":"FREE","HIGH":"NEED_PAY"},"DOWNLOAD":{"LOW":"NEED_PAY","HIGH":"NEED_PAY"}},"publishStatus":"PUBLISH","demo":false,"s":39440581,"song_id":"1769253963","album_id":358513,"name":"认真的雪","title":"未完成的歌","album_name":"未完成的歌","sub_title":"","new_sub_title":"","song_sub_title":"","artist_name":"薛之谦","artist_id":7244,"cd_serial":1,"singersSource":[{"artistId":7244,"artistStringId":"hf0143fd","artistName":"薛之谦","artistLogo":"images/artistlogo/24/14688337551624_1.jpg","albumCount":21,"area":"China 中国大陆","alias":"Joker","pinyin":"xuezhiqian","isMusician":false,"isShow":false,"description":""}],"length":261,"recommends":17531,"collects":429030,"key_words":null,"music_type":0,"play_volume":89,"flag":null,"album_logo":"images/album/img44/7244/3585131260327414_1.jpg","needpay":1,"mvUrl":"K66oUt","playstatus":1,"downloadstatus":2,"downloadjson":"%7B%22LOW%22%3A%22NEED_PAY%22%2C%22HIGH%22%3A%22NEED_PAY%22%7D","can_show":1,"can_check":1,"location":"5h3%2ae2F%82965l%ty555-%b1f7a%7tA28mt4725F239.3h%1EE%53f2275bt%F.i%42F115_9mF_363%5E7e133E%p2mx.2%4337396pakD565E-6a61e95%F1inF245%693_3ue1%%E-3353678E","lyric":"http://img.xiami.net/lyric/63/1769253963_1447656414_8420.lrc","lyric_url":"http://img.xiami.net/lyric/63/1769253963_1447656414_8420.lrc","object_id":"1769253963","object_name":"default","insert_type":1,"background":"http://img.xiami.net/res/player/bimg/bg-5.jpg","aritst_type":"","artist_url":"http://www.xiami.com/artist/7244","grade":-1,"tryhq":0,"pic":"http://img.xiami.net/images/album/img44/7244/3585131260327414_1.jpg","album_pic":"http://img.xiami.net/images/album/img44/7244/3585131260327414.jpg","rec_note":""}]
-             * lastSongId : 0
-             * type : default
-             * type_id : 1
-             * clearlist : null
-             * vip : 0
-             * vip_role : 0
-             * hqset : 0
-             */
+
 
             private int lastSongId;
             private String type;
@@ -589,94 +540,7 @@ public class ApiManagerTest extends TestCase {
                             '}';
                 }
 
-                /**
-                 * songId : 1769253963
-                 * songName : 认真的雪
-                 * subName :
-                 * newSubName :
-                 * translation :
-                 * albumId : 358513
-                 * artistId : 7244
-                 * singers : 薛之谦
-                 * mvId : 17961
-                 * cdSerial : 1
-                 * track : 13
-                 * pinyin : ren zhen de xue
-                 * bakSongId : 0
-                 * panFlag : 0
-                 * musicType : NORMAL
-                 * bakSong : null
-                 * lyricInfo : {"lyricId":8684504,"lyricType":3,"lyricFile":"http://img.xiami.net/lyric/63/1769253963_1472550789_602.trc","isOfficial":true}
-                 * songwriters : 薛之谦
-                 * composer : 薛之谦
-                 * arrangement :
-                 * boughtCount : 0
-                 * pace : 208
-                 * albumLanguage : 国语
-                 * playCount : 39440581
-                 * offline : false
-                 * offlineType : 0
-                 * downloadCount : false
-                 * originOffline : false
-                 * exclusive : false
-                 * bizTags : ["LOSSLESS","S_PAY","RI_A5YY","X_FREE","XN_BJ9QM"]
-                 * recommendCount : 17531
-                 * collectCount : 429030
-                 * songStringId : xLp9zz1131b
-                 * albumStringId : jT87d1197
-                 * artistStringId : hf0143fd
-                 * singerIds : [7244]
-                 * demoCreateTime : 1260460800000
-                 * tags : ["LOSSLESS","S_PAY","RI_A5YY","X_FREE","XN_BJ9QM"]
-                 * offLyric : false
-                 * artist : 薛之谦
-                 * songOpt : NORMAL
-                 * purviews : {"LISTEN":{"LOW":"FREE","HIGH":"NEED_PAY"},"DOWNLOAD":{"LOW":"NEED_PAY","HIGH":"NEED_PAY"}}
-                 * publishStatus : PUBLISH
-                 * demo : false
-                 * s : 39440581
-                 * song_id : 1769253963
-                 * album_id : 358513
-                 * name : 认真的雪
-                 * title : 未完成的歌
-                 * album_name : 未完成的歌
-                 * sub_title :
-                 * new_sub_title :
-                 * song_sub_title :
-                 * artist_name : 薛之谦
-                 * artist_id : 7244
-                 * cd_serial : 1
-                 * singersSource : [{"artistId":7244,"artistStringId":"hf0143fd","artistName":"薛之谦","artistLogo":"images/artistlogo/24/14688337551624_1.jpg","albumCount":21,"area":"China 中国大陆","alias":"Joker","pinyin":"xuezhiqian","isMusician":false,"isShow":false,"description":""}]
-                 * length : 261
-                 * recommends : 17531
-                 * collects : 429030
-                 * key_words : null
-                 * music_type : 0
-                 * play_volume : 89
-                 * flag : null
-                 * album_logo : images/album/img44/7244/3585131260327414_1.jpg
-                 * needpay : 1
-                 * mvUrl : K66oUt
-                 * playstatus : 1
-                 * downloadstatus : 2
-                 * downloadjson : %7B%22LOW%22%3A%22NEED_PAY%22%2C%22HIGH%22%3A%22NEED_PAY%22%7D
-                 * can_show : 1
-                 * can_check : 1
-                 * location : 5h3%2ae2F%82965l%ty555-%b1f7a%7tA28mt4725F239.3h%1EE%53f2275bt%F.i%42F115_9mF_363%5E7e133E%p2mx.2%4337396pakD565E-6a61e95%F1inF245%693_3ue1%%E-3353678E
-                 * lyric : http://img.xiami.net/lyric/63/1769253963_1447656414_8420.lrc
-                 * lyric_url : http://img.xiami.net/lyric/63/1769253963_1447656414_8420.lrc
-                 * object_id : 1769253963
-                 * object_name : default
-                 * insert_type : 1
-                 * background : http://img.xiami.net/res/player/bimg/bg-5.jpg
-                 * aritst_type :
-                 * artist_url : http://www.xiami.com/artist/7244
-                 * grade : -1
-                 * tryhq : 0
-                 * pic : http://img.xiami.net/images/album/img44/7244/3585131260327414_1.jpg
-                 * album_pic : http://img.xiami.net/images/album/img44/7244/3585131260327414.jpg
-                 * rec_note :
-                 */
+
 
 
                 private String songId;
@@ -1465,12 +1329,7 @@ public class ApiManagerTest extends TestCase {
                                 '}';
                     }
 
-                    /**
-                     * lyricId : 8684504
-                     * lyricType : 3
-                     * lyricFile : http://img.xiami.net/lyric/63/1769253963_1472550789_602.trc
-                     * isOfficial : true
-                     */
+
 
                     private int lyricId;
                     private int lyricType;
@@ -1511,10 +1370,7 @@ public class ApiManagerTest extends TestCase {
                 }
 
                 public class PurviewsBean {
-                    /**
-                     * LISTEN : {"LOW":"FREE","HIGH":"NEED_PAY"}
-                     * DOWNLOAD : {"LOW":"NEED_PAY","HIGH":"NEED_PAY"}
-                     */
+
 
                     private LISTENBean LISTEN;
                     private DOWNLOADBean DOWNLOAD;
@@ -1536,10 +1392,7 @@ public class ApiManagerTest extends TestCase {
                     }
 
                     public class LISTENBean {
-                        /**
-                         * LOW : FREE
-                         * HIGH : NEED_PAY
-                         */
+
 
                         private String LOW;
                         private String HIGH;
@@ -1562,10 +1415,7 @@ public class ApiManagerTest extends TestCase {
                     }
 
                     public class DOWNLOADBean {
-                        /**
-                         * LOW : NEED_PAY
-                         * HIGH : NEED_PAY
-                         */
+
 
                         private String LOW;
                         private String HIGH;
@@ -1589,19 +1439,7 @@ public class ApiManagerTest extends TestCase {
                 }
 
                 public class SingersSourceBean {
-                    /**
-                     * artistId : 7244
-                     * artistStringId : hf0143fd
-                     * artistName : 薛之谦
-                     * artistLogo : images/artistlogo/24/14688337551624_1.jpg
-                     * albumCount : 21
-                     * area : China 中国大陆
-                     * alias : Joker
-                     * pinyin : xuezhiqian
-                     * isMusician : false
-                     * isShow : false
-                     * description :
-                     */
+
 
                     private int artistId;
                     private String artistStringId;

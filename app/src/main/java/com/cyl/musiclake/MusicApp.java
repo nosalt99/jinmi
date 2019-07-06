@@ -35,9 +35,7 @@ import org.litepal.LitePal;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * tinker热更新需要
- */
+
 public class MusicApp extends Application {
     @SuppressLint("StaticFieldLeak")
     private static MusicApp sInstance;
@@ -52,9 +50,7 @@ public class MusicApp extends Application {
 
     //socket
     public static SocketManager socketManager;
-    /**
-     * socket是否打开
-     */
+
     public static Boolean isOpenSocket = true;
 
     public static Boolean isShowingFloatView = false;
@@ -107,26 +103,20 @@ public class MusicApp extends Application {
         socketManager.initSocket();
     }
 
-    /**
-     * 初始化文件下载
-     */
+
     private void initFileDownload() {
         FileDownloadLog.NEED_LOG = true;
         FileDownloader.setup(this);
     }
 
-    /**
-     * 初始化bugly
-     */
+
     private void initBugly() {
         Bugly.init(getApplicationContext(), Constants.BUG_APP_ID, true);
         Beta.checkUpgrade(false, false);
     }
 
 
-    /**
-     * 初始化ApplicationComponent
-     */
+
     private void initApplicationComponent() {
         mApplicationComponent = DaggerApplicationComponent.builder()
                 .applicationModule(new ApplicationModule(this))
@@ -157,9 +147,7 @@ public class MusicApp extends Application {
     public static int count = 0;
     public static int Activitycount = 0;
 
-    /**
-     * 注册监听
-     */
+
     private void registerListener() {
         this.registerActivityLifecycleCallbacks(new ActivityLifecycleCallbacks() {
             @Override

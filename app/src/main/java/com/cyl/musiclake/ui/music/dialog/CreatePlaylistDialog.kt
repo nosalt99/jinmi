@@ -9,11 +9,7 @@ import com.cyl.musiclake.R
 import com.cyl.musiclake.bean.Music
 import com.cyl.musiclake.utils.LogUtil
 
-/**
- * 作者：yonglong on 2016/9/14 15:56
- * 邮箱：643872807@qq.com
- * 版本：2.5
- */
+
 class CreatePlaylistDialog : DialogFragment() {
     var successListener:((String)->Unit)?=null
 

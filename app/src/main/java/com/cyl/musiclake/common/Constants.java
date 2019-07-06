@@ -1,8 +1,6 @@
 package com.cyl.musiclake.common;
 
-/**
- * Created by yonglong on 2016/5/8.
- */
+
 public class Constants {
     //歌曲操作区分
     public static final int OP_LOCAL = 0; //没有歌曲下载、删除、修改(后续会有)、添加到歌单
@@ -43,9 +41,7 @@ public class Constants {
     public static final String NETEASE_ARITIST_LIST = "netease_artist_list";
 
 
-    /**
-     * 搜索过滤
-     */
+
     public static final String SP_KEY_SEARCH_FILTER_NETEASE = "sp_netease";
     public static final String SP_KEY_SEARCH_FILTER_QQ = "sp_netease";
     public static final String SP_KEY_SEARCH_FILTER_XIAMI = "sp_xiami";
@@ -120,9 +116,7 @@ public class Constants {
 
     public static final String TEXT_PLAIN = "text/plain";
 
-    /**
-     * 悬浮窗权限requestCode
-     */
+
     public static final int REQUEST_CODE_FLOAT_WINDOW = 0x123;
     public static final int REQUEST_CODE_LOGIN = 10001;
 
@@ -146,61 +140,39 @@ public class Constants {
     public static final String DEAULT_NOTIFICATION = "notification";
     public static final String TRANSTITION_ALBUM = "transition_album_art";
 
-    /**
-     * QQ音乐Api*************************************************
-     */
+
     public static final String BASE_URL_QQ_MUSIC_URL = "https://u.y.qq.com";
 
-    /**
-     * 虾米音乐Api*************************************************
-     */
+
     public static final String BASE_XIAMI_URL = "http://api.xiami.com/";
-    /**
-     * 酷狗音乐Api*************************************************
-     */
+
     public static final String BASE_KUGOU_URL = "http://lyrics.kugou.com/";
-    /**
-     * 百度音乐Api*************************************************
-     */
+
     public static final String BASE_URL_BAIDU_MUSIC = "http://musicapi.qianqian.com/";
 
     public static final String URL_GET_SONG_INFO = "http://music.baidu.com/data/music/links?songIds=";
 
-    /**
-     * 在线歌单接口Api*************************************************
-     */
+
     public static final String BASE_PLAYER_URL = "https://player.zzsun.cc/";
-    /**
-     * 网易云音乐接口
-     */
+
     public static final String BASE_NETEASE_URL = "https://neteasemusic.letra.work/";
     //bugly app_id
     public static final String BUG_APP_ID = "fd892b37ea";
 
-    /**
-     * 关于的GitHub地址
-     */
+
     public static final String ABOUT_MUSIC_LAKE = "https://github.com/caiyonglong/MusicLake";
     public static final String ABOUT_MUSIC_LAKE_ISSUES = "https://github.com/caiyonglong/MusicLake/issues/new";
     public static final String ABOUT_MUSIC_LAKE_PC = "https://github.com/sunzongzheng/music/releases";
     public static final String ABOUT_MUSIC_LAKE_URL = "https://github.com/caiyonglong/MusicLake/blob/develop/README.md";
 
 
-    /**
-     * 当前 DEMO 应用的 APP_KEY，第三方应用应该使用自己的 APP_KEY 替换该 APP_KEY
-     */
+
     public static final String APP_KEY = "3338754271";
 
-    /**
-     * 当前 DEMO 应用的回调页，第三方应用可以使用自己的回调页。
-     * 建议使用默认回调页：https://api.weibo.com/oauth2/default.html
-     */
+
     public static final String REDIRECT_URL = "https://api.weibo.com/oauth2/default.html";
 
-    /**
-     * WeiboSDKDemo 应用对应的权限，第三方开发者一般不需要这么多，可直接设置成空即可。
-     * 详情请查看 Demo 中对应的注释。
-     */
+
     public static final String SCOPE = "";
 
     //    public static final String SOCKET_URL = "http://39.108.214.63:15003";

@@ -12,18 +12,14 @@ import com.cyl.musiclake.utils.SPUtils
 import io.reactivex.Observable
 import io.reactivex.ObservableOnSubscribe
 
-/**
- * Created by D22434 on 2018/1/5.
- */
+
 
 object NeteaseApiServiceImpl {
     private val TAG = "NeteaseApiServiceImpl"
 
     val apiService by lazy { ApiManager.getInstance().create(NeteaseApiService::class.java, SPUtils.getAnyByKey(SPUtils.SP_KEY_NETEASE_API_URL, Constants.BASE_NETEASE_URL)) }
 
-    /**
-     * 获取歌单歌曲
-     */
+
     fun getTopArtists(limit: Int, offset: Int): Observable<MutableList<Artist>> {
         return apiService.getTopArtists(offset, limit)
                 .flatMap { it ->
@@ -54,9 +50,7 @@ object NeteaseApiServiceImpl {
                 }
     }
 
-    /**
-     * 获取歌单歌曲数据
-     */
+
     fun getTopPlaylists(cat: String, limit: Int): Observable<MutableList<Playlist>> {
         return apiService.getTopPlaylist(cat, limit)
                 .flatMap { it ->
@@ -88,9 +82,7 @@ object NeteaseApiServiceImpl {
                 }
     }
 
-    /**
-     * 获取歌单歌曲数据
-     */
+
     fun getTopPlaylistsHigh(tag: String, limit: Int, before: Long?): Observable<MutableList<Playlist>> {
         val map = mutableMapOf<String, Any>()
         map["cat"] = tag
@@ -128,9 +120,7 @@ object NeteaseApiServiceImpl {
                 }
     }
 
-    /**
-     * 获取精品歌单歌曲数据
-     */
+
     fun getPlaylistDetail(id: String): Observable<Playlist> {
         return apiService.getPlaylistDetail(id)
                 .flatMap {
@@ -161,44 +151,32 @@ object NeteaseApiServiceImpl {
                 }
     }
 
-    /**
-     * 获取最新mv
-     */
+
     fun getNewestMv(limit: Int): Observable<MvInfo> {
         return apiService.getNewestMv(limit)
     }
 
-    /**
-     * 获取排行榜mv
-     */
+
     fun getTopMv(limit: Int, offset: Int): Observable<MvInfo> {
         return apiService.getTopMv(offset, limit)
     }
 
-    /**
-     * 获取mv信息
-     */
+
     fun getMvDetailInfo(mvid: String): Observable<MvDetailInfo> {
         return apiService.getMvDetailInfo(mvid)
     }
 
-    /**
-     * 获取相似mv
-     */
+
     fun getSimilarMv(mvid: String): Observable<SimilarMvInfo> {
         return apiService.getSimilarMv(mvid)
     }
 
-    /**
-     * 获取mv评论
-     */
+
     fun getMvComment(mvid: String): Observable<MvComment> {
         return apiService.getMvComment(mvid)
     }
 
-    /**
-     * 获取热搜
-     */
+
     fun getHotSearchInfo(): Observable<MutableList<HotSearchBean>> {
         return apiService.getHotSearchInfo()
                 .flatMap { it ->
@@ -221,9 +199,7 @@ object NeteaseApiServiceImpl {
                 }
     }
 
-    /**
-     * 搜索
-     */
+
     fun searchMoreInfo(keywords: String, limit: Int, offset: Int, type: Int): Observable<SearchInfo> {
         val url = SPUtils.getAnyByKey(SPUtils.SP_KEY_NETEASE_API_URL, Constants.BASE_NETEASE_URL) + "search?keywords= $keywords&limit=$limit&offset=$offset&type=$type"
 //        return apiService.searchNetease(url)
@@ -231,23 +207,17 @@ object NeteaseApiServiceImpl {
         return apiService.searchNetease(url)
     }
 
-    /**
-     * 获取风格
-     */
+
     fun getCatList(): Observable<CatListBean> {
         return apiService.getCatList()
     }
 
-    /**
-     * 获取banner
-     */
+
     fun getBanners(): Observable<BannerResult> {
         return apiService.getBanner()
     }
 
-    /**
-     *登录
-     */
+
     fun loginPhone(username: String, pwd: String, isEmail: Boolean): Observable<LoginInfo> {
         return if (isEmail)
             apiService.loginEmail(username, pwd)
@@ -259,9 +229,7 @@ object NeteaseApiServiceImpl {
         return apiService.getLoginStatus()
     }
 
-    /**
-     *推荐歌曲
-     */
+
     fun recommendSongs(): Observable<MutableList<Music>> {
         return apiService.recommendSongs()
                 .flatMap {
@@ -283,9 +251,7 @@ object NeteaseApiServiceImpl {
     }
 
 
-    /**
-     *每日推荐歌单
-     */
+
     fun recommendPlaylist(): Observable<MutableList<Playlist>> {
         return apiService.recommendPlaylist()
                 .flatMap { it ->
@@ -317,9 +283,7 @@ object NeteaseApiServiceImpl {
                 }
     }
 
-    /**
-     *推荐歌单
-     */
+
     fun personalizedPlaylist(): Observable<MutableList<Playlist>> {
         return apiService.personalizedPlaylist()
                 .flatMap { it ->
@@ -350,9 +314,7 @@ object NeteaseApiServiceImpl {
     }
 
 
-    /**
-     *推荐mv
-     */
+
     fun personalizedMv(): Observable<MvInfo> {
         return apiService.personalizedMv()
                 .flatMap { it ->
@@ -388,9 +350,7 @@ object NeteaseApiServiceImpl {
                 }
     }
 
-    /**
-     *获取用户歌单
-     */
+
     fun getUserPlaylist(uid: String): Observable<MutableList<Playlist>> {
         return apiService.getUserPlaylist(uid)
                 .flatMap { it ->

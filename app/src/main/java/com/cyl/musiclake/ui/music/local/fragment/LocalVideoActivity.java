@@ -9,9 +9,7 @@ import com.cyl.musiclake.ui.base.BasePresenter;
 import com.cyl.musiclake.common.Extras;
 import com.cyl.musiclake.common.NavigationHelper;
 
-/**
- * Created by Monkey on 2015/6/29.
- */
+
 public class LocalVideoActivity extends BaseActivity<BasePresenter> {
 
     @Override

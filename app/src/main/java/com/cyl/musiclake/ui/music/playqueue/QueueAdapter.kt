@@ -12,12 +12,7 @@ import com.cyl.musiclake.player.PlayManager
 import com.cyl.musiclake.ui.theme.ThemeStore
 import com.cyl.musiclake.utils.ConvertUtils
 
-/**
- * 功能：本地歌曲item
- * 作者：yonglong on 2016/8/8 19:44
- * 邮箱：643872807@qq.com
- * 版本：2.5
- */
+
 class QueueAdapter(musicList: List<Music>) : BaseQuickAdapter<Music, BaseViewHolder>(R.layout.item_queue, musicList) {
 
     private var mSwatch: Palette.Swatch? = null

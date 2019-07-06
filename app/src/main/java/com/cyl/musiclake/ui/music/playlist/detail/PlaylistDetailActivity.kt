@@ -32,16 +32,9 @@ import kotlinx.android.synthetic.main.fragment_recyclerview_notoolbar.*
 import org.greenrobot.eventbus.EventBus
 import org.jetbrains.anko.startActivity
 
-/**
- * 作者：yonglong on 2016/8/15 19:54
- * 邮箱：643872807@qq.com
- * 版本：2.5
- * 歌单详情页
- */
+
 class PlaylistDetailActivity : BaseActivity<PlaylistDetailPresenter>(), PlaylistDetailContract.View {
-    /**
-     * 显示异常UI
-     */
+
     override fun showErrorTips(msg: String, hasTry: Boolean) {
         showError(msg, hasTry)
     }
@@ -95,9 +88,7 @@ class PlaylistDetailActivity : BaseActivity<PlaylistDetailPresenter>(), Playlist
         }
     }
 
-    /**
-     * 歌单页标题
-     */
+
     override fun setToolbarTitle(): String? {
         mPlaylist = intent.getParcelableExtra(Extras.PLAYLIST)
         mArtist = intent.getParcelableExtra(Extras.ARTIST)
@@ -295,9 +286,7 @@ class PlaylistDetailActivity : BaseActivity<PlaylistDetailPresenter>(), Playlist
         onBackPress()
     }
 
-    /**
-     * 点击重试按钮响应事件
-     */
+
     override fun retryLoading() {
         super.retryLoading()
         showLoading()

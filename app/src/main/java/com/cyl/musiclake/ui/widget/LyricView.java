@@ -44,10 +44,7 @@ import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * 自定义LrcView,可以同步显示歌词，拖动歌词
- * v2.5 对自定义控件添加自定义属性 defStyleAttr
- */
+
 public class LyricView extends View {
 
     private static final String TAG = "LyricView";
@@ -350,11 +347,7 @@ public class LyricView extends View {
         }
     }
 
-    /**
-     * 设置歌词字符串
-     *
-     * @param lyricInfo 歌词字符串
-     */
+
     public void setLyricContent(String lyricInfo) {
         if (lyricInfo != null && lyricInfo.length() >= 1) {
             mLyricInfo = LyricParseUtils.setLyricResource(lyricInfo);
@@ -522,11 +515,7 @@ public class LyricView extends View {
     }
 
 
-    /**
-     * 滑行动画
-     *
-     * @param velocity 滑动速度
-     */
+
     private void doFlingAnimator(float velocity) {
 
         float distance = (velocity / Math.abs(velocity) * (Math.abs(velocity) * SLIDE_COEFFICIENT));
@@ -569,11 +558,7 @@ public class LyricView extends View {
         mFlingAnimator.start();
     }
 
-    /**
-     * 设置用户是否触摸的标记
-     *
-     * @param isUserTouch 标记用户是否触摸屏幕
-     */
+
     private void setUserTouch(boolean isUserTouch) {
         if (isUserTouch) {
             mUserTouch = true;
@@ -674,9 +659,7 @@ public class LyricView extends View {
         mLineHeight = mTextHeight + mLineSpace;
     }
 
-    /**
-     * To measure current showing line number based on the view's scroll Y
-     */
+
     private void measureCurrentLine() {
         float baseScrollY = mScrollY + mLineHeight * 0.5f;
 
@@ -692,11 +675,7 @@ public class LyricView extends View {
         }
     }
 
-    /**
-     * 从当前位置滑动到指定位置上
-     *
-     * @param toY 指定纵坐标位置
-     */
+
     private void smoothScrollTo(float toY) {
         final ValueAnimator animator = ValueAnimator.ofFloat(mScrollY, toY);
         animator.addUpdateListener(valueAnimator -> {
@@ -839,45 +818,27 @@ public class LyricView extends View {
         FloatLyricViewManager.removeLyricChangeListener(this);
     }
 
-    /**
-     * 点击事件接口
-     */
+
     public interface OnPlayerClickListener {
         void onPlayerClicked(long progress, String content);
     }
 
-    /**
-     * 设置歌词是否可触摸
-     *
-     * @param touchable true or false
-     */
+
     public void setTouchable(boolean touchable) {
         mTouchable = touchable;
     }
 
-    /**
-     * 隐藏指示器
-     *
-     * @param show true or false
-     */
+
     public void setIndicatorShow(boolean show) {
         mShowIndicator = show;
     }
 
-    /**
-     * 设置歌词文本内容字体大小
-     *
-     * @param progress 进度条大小0-100
-     */
+
     public void setTextSize(int progress) {
         setRawTextSize((float) (progress * 0.2 + 35));
     }
 
-    /**
-     * 设置高亮显示文本的字体颜色
-     *
-     * @param color 颜色值
-     */
+
     public void setHighLightTextColor(int color) {
         mHighLightColor = color;
         invalidateView();

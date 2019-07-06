@@ -47,9 +47,7 @@ class PlaylistSquareActivity : BaseActivity<BasePresenter<BaseContract.BaseView>
     }
 
 
-    /**
-     * 显示所有分类
-     */
+
     private fun toCatTagAll() {
         AllPlaylistCatFragment().apply {
             curCateList = cateList

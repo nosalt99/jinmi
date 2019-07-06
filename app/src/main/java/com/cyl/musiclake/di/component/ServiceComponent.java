@@ -10,9 +10,7 @@ import com.cyl.musiclake.di.scope.PerService;
 import dagger.Component;
 
 
-/**
- * Created by lw on 2017/1/19.
- */
+
 @PerService
 @Component(dependencies = ApplicationComponent.class, modules = ServiceModule.class)
 public interface ServiceComponent {

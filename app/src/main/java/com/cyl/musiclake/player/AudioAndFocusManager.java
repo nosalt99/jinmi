@@ -14,10 +14,7 @@ import com.cyl.musiclake.utils.SystemUtils;
 
 import static com.cyl.musiclake.player.MusicPlayerService.AUDIO_FOCUS_CHANGE;
 
-/**
- * 音频管理类
- * 主要用来管理音频焦点
- */
+
 
 public class AudioAndFocusManager {
 
@@ -33,11 +30,7 @@ public class AudioAndFocusManager {
         initAudioManager(mContext);
     }
 
-    /**
-     * 初始化AudioManager&Receiver
-     *
-     * @param mContext
-     */
+
     private void initAudioManager(Context mContext) {
         mediaSession = new MediaSession(mContext, "AudioAndFocusManager");
         mAudioManager = (AudioManager) mContext.getSystemService(Context.AUDIO_SERVICE);
@@ -54,9 +47,7 @@ public class AudioAndFocusManager {
         mediaSession.setMediaButtonReceiver(mPendingIntent);
     }
 
-    /**
-     * 请求音频焦点
-     */
+
     public void requestAudioFocus() {
         if (SystemUtils.isO()) {
             AudioFocusRequest mAudioFocusRequest = new AudioFocusRequest.Builder(AudioManager.AUDIOFOCUS_GAIN)
@@ -77,9 +68,7 @@ public class AudioAndFocusManager {
         }
     }
 
-    /**
-     * 关闭音频焦点
-     */
+
     public void abandonAudioFocus() {
         if (audioFocusChangeListener != null) {
             boolean result = AudioManager.AUDIOFOCUS_REQUEST_GRANTED ==
@@ -89,9 +78,7 @@ public class AudioAndFocusManager {
     }
 
 
-    /**
-     * 音频焦点改变监听器
-     */
+
     private AudioManager.OnAudioFocusChangeListener audioFocusChangeListener = new AudioManager.OnAudioFocusChangeListener() {
         @Override
         public void onAudioFocusChange(int focusChange) {

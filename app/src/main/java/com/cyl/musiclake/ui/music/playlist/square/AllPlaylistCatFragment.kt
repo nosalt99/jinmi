@@ -20,11 +20,7 @@ import kotlinx.android.synthetic.main.frag_playlist_category.*
 import org.jetbrains.anko.support.v4.startActivity
 
 
-/**
- * Des    : 精选歌单集分类选择列表
- * Author : master.
- * Date   : 2018/8/23 .
- */
+
 class AllPlaylistCatFragment : DialogFragment(), ChannelView.OnChannelListener {
     private var rootView: View? = null
     private val backIv by lazy { rootView?.findViewById<ImageView>(com.cyl.musiclake.R.id.backIv) }
@@ -67,9 +63,7 @@ class AllPlaylistCatFragment : DialogFragment(), ChannelView.OnChannelListener {
 
         ApiManager.request(NeteaseApiServiceImpl.getCatList(), object : RequestCallBack<CatListBean> {
             override fun success(result: CatListBean?) {
-                /**
-                 * 排序
-                 */
+
                 result?.categories?.let {
                     map[result.categories.c0] = mutableListOf()
                     map[result.categories.c1] = mutableListOf()
@@ -141,17 +135,13 @@ class AllPlaylistCatFragment : DialogFragment(), ChannelView.OnChannelListener {
     }
 
 
-    /**
-     * Item点击监听
-     */
+
     override fun channelItemClick(position: Int, channel: Channel) {
         LogUtil.i(TAG, "$position..$channel")
         startActivity<PlaylistActivity>("curTag" to channel.channelName)
     }
 
-    /**
-     * Item编辑完成
-     */
+
     override fun channelEditFinish(channelList: List<Channel>) {
         LogUtil.i(TAG, channelList.toString())
         LogUtil.i(TAG, channelView.myChannel.toString())
@@ -163,15 +153,11 @@ class AllPlaylistCatFragment : DialogFragment(), ChannelView.OnChannelListener {
         successListener?.invoke("")
     }
 
-    /**
-     * Item开始编辑
-     */
+
     override fun channelEditStart() {
     }
 
-    /**
-     *显示出对话框
-     */
+
     fun showIt(context: FragmentActivity?) {
         if (dialog != null) {
             dialog.dismiss()

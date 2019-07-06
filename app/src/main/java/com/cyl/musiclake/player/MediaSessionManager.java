@@ -11,10 +11,7 @@ import android.support.v4.media.session.PlaybackStateCompat;
 import com.cyl.musiclake.bean.Music;
 import com.cyl.musiclake.utils.CoverLoader;
 
-/**
- * MediaSession管理类
- * 主要管理Android 5.0以后线控和蓝牙远程控制播放
- */
+
 
 @SuppressWarnings("ALL")
 public class MediaSessionManager {
@@ -44,9 +41,7 @@ public class MediaSessionManager {
         setupMediaSession();
     }
 
-    /**
-     * 初始化并激活 MediaSession
-     */
+
     private void setupMediaSession() {
 //        第二个参数 tag: 这个是用于调试用的,随便填写即可
         mMediaSession = new MediaSessionCompat(context, TAG);
@@ -59,9 +54,7 @@ public class MediaSessionManager {
         mMediaSession.setActive(true);
     }
 
-    /**
-     * 更新播放状态， 播放／暂停／拖动进度条时调用
-     */
+
     public void updatePlaybackState() {
         int state = isPlaying() ? PlaybackStateCompat.STATE_PLAYING :
                 PlaybackStateCompat.STATE_PAUSED;
@@ -81,11 +74,7 @@ public class MediaSessionManager {
         }
     }
 
-    /**
-     * 是否在播放
-     *
-     * @return
-     */
+
     protected boolean isPlaying() {
         try {
             return control.isPlaying();
@@ -95,9 +84,7 @@ public class MediaSessionManager {
         }
     }
 
-    /**
-     * 更新正在播放的音乐信息，切换歌曲时调用
-     */
+
     public void updateMetaData(Music songInfo) {
         if (songInfo == null) {
             mMediaSession.setMetadata(null);
@@ -136,9 +123,7 @@ public class MediaSessionManager {
         return mMediaSession.getSessionToken();
     }
 
-    /**
-     * 释放MediaSession，退出播放器时调用
-     */
+
     public void release() {
         mMediaSession.setCallback(null);
         mMediaSession.setActive(false);
@@ -146,9 +131,7 @@ public class MediaSessionManager {
     }
 
 
-    /**
-     * API 21 以上 耳机多媒体按钮监听 MediaSessionCompat.Callback
-     */
+
     private MediaSessionCompat.Callback callback = new MediaSessionCompat.Callback() {
 
 //        接收到监听事件，可以有选择的进行重写相关方法

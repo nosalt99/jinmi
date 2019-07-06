@@ -20,9 +20,7 @@ import com.tbruyelle.rxpermissions2.RxPermissions;
 
 import butterknife.BindView;
 
-/**
- * Created by 永龙 on 2016/3/19.
- */
+
 public class WelcomeActivity extends BaseActivity {
 
     @BindView(R.id.wel_container)
@@ -69,9 +67,7 @@ public class WelcomeActivity extends BaseActivity {
 
     }
 
-    /**
-     * 检查权限
-     */
+
     @SuppressLint("CheckResult")
     private void checkPermissionAndThenLoad() {
         rxPermissions.request(mPermissionList)
@@ -86,9 +82,7 @@ public class WelcomeActivity extends BaseActivity {
                 });
     }
 
-    /**
-     * 检查服务是否运行
-     */
+
     private void initWelcome() {
         boolean isFirst = SPUtils.getAnyByKey(SPUtils.SP_KEY_FIRST_COMING, true);
         if (isFirst) {
@@ -99,9 +93,7 @@ public class WelcomeActivity extends BaseActivity {
         }
     }
 
-    /**
-     * 欢迎界面跳转到主界面
-     */
+
     private void startMainActivity() {
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);

@@ -189,9 +189,7 @@ class PlayControlFragment : BaseFragment<PlayPresenter>(), SeekBar.OnSeekBarChan
         EventBus.getDefault().unregister(this)
     }
 
-    /**
-     * 初始化歌曲列表
-     */
+
     private fun initSongList() {
         if (mAdapter == null) {
             bottomPlayRcv.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)

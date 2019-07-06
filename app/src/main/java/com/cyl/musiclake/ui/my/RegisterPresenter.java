@@ -18,9 +18,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 
-/**
- * Created by D22434 on 2018/1/3.
- */
+
 
 public class RegisterPresenter extends BasePresenter<RegisterContract.View> implements RegisterContract.Presenter {
 
@@ -85,12 +83,7 @@ public class RegisterPresenter extends BasePresenter<RegisterContract.View> impl
                 });
     }
 
-    /**
-     * 验证邮箱输入是否合法
-     *
-     * @param strEmail
-     * @return
-     */
+
     private boolean isEmail(String strEmail) {
         String strPattern = "^\\s*\\w+(?:\\.{0,1}[\\w-]+)*@[a-zA-Z0-9]+(?:[-.][a-zA-Z0-9]+)*\\.[a-zA-Z]+\\s*$";
         Pattern p = Pattern.compile(strPattern);

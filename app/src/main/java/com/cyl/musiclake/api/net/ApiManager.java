@@ -33,9 +33,7 @@ import retrofit2.HttpException;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 
-/**
- * Created by yonglong on 2017/9/11.
- */
+
 
 public class ApiManager {
 
@@ -56,9 +54,7 @@ public class ApiManager {
     private static final String AVOID_HTTP403_FORBIDDEN = "User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.11 (KHTML, like Gecko) Chrome/23.0.1271.95 Safari/537.11";
     private static volatile OkHttpClient mOkHttpClient;
 
-    /**
-     * 日志拦截器
-     */
+
     private static final Interceptor mLoggingInterceptor = chain -> {
         Request request = chain.request();
         if (chain.request().url().toString().contains("https://45.76.48.211")) {
@@ -71,11 +67,7 @@ public class ApiManager {
         return chain.proceed(request);
     };
 
-    /**
-     * 获取OkHttpClient实例
-     *
-     * @return
-     */
+
     private static OkHttpClient getOkHttpClient() {
         if (mOkHttpClient == null) {
             HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
@@ -117,13 +109,7 @@ public class ApiManager {
             .setLenient()
             .create();
 
-    /**
-     * 获取Service
-     *
-     * @param clazz
-     * @param <T>
-     * @return
-     */
+
     public <T> T create(Class<T> clazz, String baseUrl) {
         Retrofit retrofit = new Retrofit.Builder().baseUrl(baseUrl)
                 .client(getOkHttpClient())
@@ -134,9 +120,7 @@ public class ApiManager {
     }
 
 
-    /**
-     * 发送网络请求
-     */
+
     public static <T> void request(Observable<T> service, RequestCallBack<T> result) {
         if (!NetworkUtils.isNetworkAvailable(MusicApp.getInstance())) {
             result.error(MusicApp.getAppContext().getString(R.string.error_connection));

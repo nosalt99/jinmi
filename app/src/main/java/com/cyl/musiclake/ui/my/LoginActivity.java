@@ -25,11 +25,7 @@ import org.greenrobot.eventbus.EventBus;
 import butterknife.BindView;
 import butterknife.OnClick;
 
-/**
- * 作者：yonglong on 2016/8/11 18:17
- * 邮箱：643872807@qq.com
- * 版本：2.5
- */
+
 public class LoginActivity extends BaseActivity<LoginPresenter> implements LoginContract.View {
 
     @BindView(R.id.qqlogin)
@@ -41,14 +37,10 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
     ProgressBar progressBar;
 
     private static final String TAG = "LoginActivity";
-    /** 显示认证后的信息，如 AccessToken */
-    /**
-     * 封装了 "access_token"，"expires_in"，"refresh_token"，并提供了他们的管理功能
-     */
+
+
     private Oauth2AccessToken mAccessToken;
-    /**
-     * 注意：SsoHandler 仅当 SDK 支持 SSO 时有效
-     */
+
     private SsoHandler mSsoHandler;
 
     @Override

@@ -6,11 +6,7 @@ import java.util.List;
 
 import io.reactivex.disposables.Disposable;
 
-/**
- * des : MVP模式 基类P层
- * author   : master
- * update     : 2018/5/19
- */
+
 
 public class BasePresenter<T extends BaseContract.BaseView> implements BaseContract.BasePresenter<T> {
 

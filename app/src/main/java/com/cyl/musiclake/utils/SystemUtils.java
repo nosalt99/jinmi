@@ -15,13 +15,7 @@ import com.cyl.musiclake.utils.rom.FloatUtil;
 
 import java.util.List;
 
-/**
- * android系统工具类
- * 主要功能判断android系统的版本、判断后台Service是否运行
- * 作者：yonglong on 2016/8/12 16:45
- * 邮箱：643872807@qq.com
- * 版本：2.5
- */
+
 public class SystemUtils {
     //判断是否是android 6.0
     public static boolean isJellyBeanMR1() {
@@ -50,30 +44,18 @@ public class SystemUtils {
     }
 
 
-    /**
-     * 判断是否打开“悬浮窗权限”
-     *
-     * @return
-     */
+
     public static boolean isOpenFloatWindow() {
         return FloatUtil.INSTANCE.checkPermission(MusicApp.getAppContext());
     }
 
-    /**
-     * 检查申请打开“悬浮窗权限”
-     *
-     * @return
-     */
+
     public static void applySystemWindow() {
         FloatUtil.INSTANCE.applyOrShowFloatWindow(MusicApp.getAppContext());
     }
 
 
-    /**
-     * 判断是否打开“有权查看使用权限的应用”这个选项
-     *
-     * @return
-     */
+
     public static boolean isOpenUsageAccess() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP && isNoOptions()) {
             return isNoSwitch();
@@ -83,11 +65,7 @@ public class SystemUtils {
     }
 
 
-    /**
-     * 判断当前设备中有没有“有权查看使用权限的应用”这个选项
-     *
-     * @return
-     */
+
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     private static boolean isNoOptions() {
         PackageManager packageManager = MusicApp.getAppContext().getPackageManager();
@@ -97,11 +75,7 @@ public class SystemUtils {
     }
 
 
-    /**
-     * 判断调用该设备中“有权查看使用权限的应用”这个选项的APP有没有打开
-     *
-     * @return
-     */
+
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     private static boolean isNoSwitch() {
         long dujinyang = System.currentTimeMillis();

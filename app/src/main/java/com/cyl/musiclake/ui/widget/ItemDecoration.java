@@ -12,11 +12,7 @@ import android.view.View;
 
 import com.cyl.musiclake.R;
 
-/**
- * 作者：yonglong on 2016/8/25 20:27
- * 邮箱：643872807@qq.com
- * 版本：2.5
- */
+
 public class ItemDecoration extends RecyclerView.ItemDecoration {
 
     public static final int HORIZONTAL_LIST = LinearLayoutManager.HORIZONTAL;

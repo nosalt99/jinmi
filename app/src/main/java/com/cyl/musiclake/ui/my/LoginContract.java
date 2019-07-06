@@ -9,9 +9,7 @@ import com.cyl.musiclake.ui.my.user.User;
 
 import java.util.Map;
 
-/**
- * Created by D22434 on 2018/1/3.
- */
+
 
 public interface LoginContract {
 

@@ -4,9 +4,7 @@ import io.reactivex.Observable
 import okhttp3.ResponseBody
 import retrofit2.http.*
 
-/**
- * Created by yonglong on 2018/1/21.
- */
+
 
 interface BaiduApiService {
     companion object {
@@ -38,9 +36,7 @@ interface BaiduApiService {
     }
 
 
-    /**
-     * 获取电台列表
-     */
+
     @GET("$V1_TING?version=5.6.5.0&method=$GET_CATEGORY_LIST")
     fun getRadioChannels(): Observable<RadioData>
 
@@ -48,23 +44,17 @@ interface BaiduApiService {
     @GET
     fun getBaiduLyric(@Url baseUrl: String): Observable<ResponseBody>
 
-    /**
-     * 获取歌手信息
-     */
+
     @GET("$V1_TING?method=$GET_ARTISTINFO")
     fun getArtistInfo(@Query("tinguid") tinguid: String,
                       @Query("artistid") artistid: String): Observable<BaiduArtistInfo>
 
 
-    /**
-     * 获取音乐榜单
-     */
+
     @GET("$V1_TING?method=$GET_BILLCATEGORY")
     fun getBillPlaylist(): Observable<BaiduList>
 
-    /**
-     * 获取音乐榜单歌曲
-     */
+
     @GET("$V1_TING?method=$GET_BILL_LIST")
     fun getBillMusicList(@Query("type") type: String,
                          @Query("size") size: Int,
@@ -74,26 +64,20 @@ interface BaiduApiService {
     @GET("$V1_TING?method=$SONG_PLAY")
     fun querySong(@Query("songid") songId: String): Observable<SongPlayRes>
 
-    /**
-     * 搜索建议
-     */    //http://musicapi.qianqian.com/v1/restserver/ting?method=baidu.ting.search.suggestion&query=Music
+        //http://musicapi.qianqian.com/v1/restserver/ting?method=baidu.ting.search.suggestion&query=Music
     @GET("$V1_TING?method=$SEARCH_SUGGESTION")
     fun getSearchSuggestion(@Query("query") query: String): Observable<Suggestion>
 
     @GET("$V1_TING?method=$SEARCH_CATALOGSUG")
     fun querySug(@Query("query") query: String): Observable<BaiduSearchSug>
 
-    /**
-     * 搜索
-     */
+
     @GET("$V1_TING?method=$QUERY_MERGE")
     fun queryMerge(@Query("query") query: String,
                    @Query("page_no") pageNo: Int,
                    @Query("page_size") pageSize: Int): Observable<BaiduSearchMergeInfo>
 
-    /**
-     * 获取电台歌曲
-     */
+
     @GET("$V1_TING?version=5.6.5.0&method=$GET_CHANNEL_SONG")
     fun getRadioChannelSongs(
             @Query("channelname") channelName: String,
@@ -101,9 +85,7 @@ interface BaiduApiService {
             @Query("rn") rn: Int = 10
     ): Observable<RadioChannelData>
 
-    /**
-     * 获取mv信息
-     */
+
     @GET("$V1_TING?from=qianqian&method=$GET_PLAY_MV")
     fun getPlayMv(@Query("song_id") songId: String?): Observable<BaiduPlayMv>
 
@@ -117,23 +99,17 @@ interface BaiduApiService {
     @GET
     fun downloadFile(@Url downloadUrl: String, @HeaderMap params: Map<String, String>): Observable<ResponseBody>
 
-    /**
-     * 获取歌手歌曲信息
-     */
+
     @GET("$V1_TING?method=$GET_ARTISTSONGLIST")
     fun getArtistSongList(@Query("tinguid") tinguid: String,
                           @Query("offset") offset: Int,
                           @Query("limits") limits: Int = PAGESIZE): Observable<ArtistMusicList>
 
-    /**
-     * 获取专辑信息
-     */
+
     @GET("$V1_TING?method=$GET_ALBUMINFO")
     fun getAlbumInfo(@Query("album_id") albumId: String): Observable<AlbumSongList>
 
-    /**
-     * 搜索歌词
-     */
+
     @GET("$V1_TING?method=$SONG_LRC")
     fun queryLrc(@Query("songid") songId: String): Observable<BaiduLyric>
 

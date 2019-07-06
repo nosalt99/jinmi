@@ -9,9 +9,7 @@ import com.cyl.musiclake.ui.music.charts.contract.BaiduListContract
 
 import javax.inject.Inject
 
-/**
- * Created by D22434 on 2018/1/4.
- */
+
 
 class BaiduListPresenter @Inject
 constructor() : BasePresenter<BaiduListContract.View>(), BaiduListContract.Presenter {

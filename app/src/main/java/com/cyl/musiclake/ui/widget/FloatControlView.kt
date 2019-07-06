@@ -9,18 +9,12 @@ import com.cyl.musiclake.R
 import kotlinx.android.synthetic.main.float_control_view.view.*
 
 
-/**
- * 悬浮View
- */
+
 class FloatControlView(context: Context) : FrameLayout(context) {
     companion object {
-        /**
-         * 记录悬浮窗的宽度
-         */
+
         var viewWidth: Int = 0
-        /**
-         * 记录悬浮窗的高度
-         */
+
         var viewHeight: Int = 0
         var topHeight: Int = 0
     }
@@ -37,11 +31,7 @@ class FloatControlView(context: Context) : FrameLayout(context) {
         topHeight = context.resources.getDimensionPixelOffset(R.dimen.dp_56)
     }
 
-    /**
-     * 更新顶部按钮样式
-     * topm
-     *
-     */
+
     fun updateViewStatus(params: WindowManager.LayoutParams) {
         //屏幕尺寸
         val size = MusicApp.screenSize
@@ -84,9 +74,7 @@ class FloatControlView(context: Context) : FrameLayout(context) {
 
     }
 
-    /**
-     * 获取状态码
-     */
+
     fun getControlViewStatus(): Int {
         return when {
             topSelected -> 1

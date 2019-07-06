@@ -11,11 +11,7 @@ import com.cyl.musiclake.bean.Music
 import com.cyl.musiclake.common.Extras
 import kotlinx.android.synthetic.main.activity_song_comment.*
 
-/**
- * Des    :
- * Author : master.
- * Date   : 2018/9/8 .
- */
+
 class SongCommentActivity : BaseActivity<BasePresenter<BaseContract.BaseView>>() {
 
     private var commentAdapter: SongCommentAdapter? = null

@@ -21,11 +21,7 @@ import java.util.List;
 
 import butterknife.BindView;
 
-/**
- * 作者：yonglong on 2016/8/14 16:15
- * 邮箱：643872807@qq.com
- * 版本：2.5
- */
+
 public class PlaylistManagerActivity extends BaseActivity {
 
     @BindView(R.id.recyclerView)

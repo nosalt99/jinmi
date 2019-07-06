@@ -16,9 +16,7 @@ import com.google.gson.reflect.TypeToken
 import io.reactivex.Observable
 import io.reactivex.ObservableOnSubscribe
 
-/**
- * Created by master on 2018/4/5.
- */
+
 
 object PlaylistApiServiceImpl {
     private val TAG = "PlaylistApiServiceImpl"
@@ -27,16 +25,12 @@ object PlaylistApiServiceImpl {
     val token: String?
         get() = UserStatus.getUserInfo()?.token
 
-    /**
-     * 获取全部歌单
-     */
+
     fun getMusicLakeNotice(): Observable<NoticeInfo> {
         val url = "https://music-lake-android.zzsun.cc/notice.json"
         return playlistApiService.checkMusicLakeNotice(url)
     }
-    /**
-     * 获取全部歌单
-     */
+
     fun getPlaylist(): Observable<MutableList<Playlist>> {
         return playlistApiService.getOnlinePlaylist(token)
                 .flatMap { it ->
@@ -65,9 +59,7 @@ object PlaylistApiServiceImpl {
                 }
     }
 
-    /**
-     * 获取歌单歌曲列表(仅从服务器获取)
-     */
+
     fun getMusicList(pid: String): Observable<MutableList<Music>> {
         return playlistApiService.getMusicList(token, pid)
                 .flatMap { it ->
@@ -91,22 +83,13 @@ object PlaylistApiServiceImpl {
                 }
     }
 
-    /**
-     * 获取歌单歌曲列表(刷新歌单列表)
-     */
+
     fun getPlayListMusic(data: MutableList<Music>): Observable<MutableList<Music>> {
         return MusicApiServiceImpl.getAnyVendorSongDetail(data)
     }
 
 
-    /**
-     * 新建歌单
-     * 调用接口成功返回{"id": "","name": ""}
-     * 调用接口失败返回{"msg":""}
-     *
-     * @param name
-     * @return
-     */
+
     fun createPlaylist(name: String): Observable<Playlist> {
         val newPlaylistInfo = PlaylistInfo(name)
         return playlistApiService.createPlaylist(token, newPlaylistInfo)
@@ -126,11 +109,7 @@ object PlaylistApiServiceImpl {
                 }
     }
 
-    /**
-     * 删除歌单
-     * 调用接口成功返回{}
-     * 调用接口失败返回{"msg":""}
-     */
+
     fun deletePlaylist(pid: String): Observable<String> {
         return playlistApiService.deleteMusic(token, pid)
                 .flatMap { it ->
@@ -147,11 +126,7 @@ object PlaylistApiServiceImpl {
                 }
     }
 
-    /**
-     * 重命名歌单
-     * 调用接口成功返回{}
-     * 调用接口失败返回{"msg":""}
-     */
+
     fun renamePlaylist(pid: String, name: String): Observable<String> {
         val playlist = PlaylistInfo(name = name)
         return playlistApiService.renameMusic(token, pid, playlist)
@@ -169,11 +144,7 @@ object PlaylistApiServiceImpl {
                 }
     }
 
-    /**
-     * 收藏歌曲
-     * 调用接口成功返回{}
-     * 调用接口失败返回{"msg":""}
-     */
+
     fun collectMusic(pid: String, music: Music): Observable<String>? {
         val musicInfo = MusicUtils.getMusicInfo(music)
         return playlistApiService.collectMusic(token, pid, musicInfo)
@@ -196,14 +167,7 @@ object PlaylistApiServiceImpl {
                 }
     }
 
-    /**
-     * 批量收藏歌曲（同一歌单）
-     * 调用接口成功返回{}
-     * 调用接口失败返回{"msg":""}
-     * @param pid 歌单ID
-     * @param vendor 歌曲来源
-     * @param musics 歌曲
-     */
+
     fun collectBatchMusic(pid: String, vendor: String, musics: MutableList<Music>?): Observable<String>? {
         val ids = mutableListOf<String>()
         musics?.forEach {
@@ -223,11 +187,7 @@ object PlaylistApiServiceImpl {
     }
 
 
-    /**
-     * 批量收藏歌曲（不同歌单）
-     * 调用接口成功返回{}
-     * 调用接口失败返回{"msg":""}
-     */
+
     fun collectBatch2Music(pid: String, musicList: MutableList<Music>?): Observable<String>? {
         val collects = mutableListOf<CollectDetail>()
         musicList?.forEach {
@@ -246,11 +206,7 @@ object PlaylistApiServiceImpl {
                 }
     }
 
-    /**
-     * 取消收藏
-     * 调用接口成功返回{}
-     * 调用接口失败返回{"msg":""}
-     */
+
     fun disCollectMusic(pid: String, music: Music): Observable<String> {
         return playlistApiService.disCollectMusic(token, pid, music.collectId.toString())
                 .flatMap { it ->
@@ -268,9 +224,7 @@ object PlaylistApiServiceImpl {
     }
 
 
-    /**
-     * 用户登录
-     */
+
     fun login(token: String, openid: String, method: String): Observable<User> {
         val observable = if (method == Constants.QQ) playlistApiService.loginByQQ(token, openid)
         else playlistApiService.loginByWeiBo(token, openid)
@@ -292,9 +246,7 @@ object PlaylistApiServiceImpl {
     }
 
 
-    /**
-     * 获取用户信息，如果token有效，则代表登录有效，反之无效
-     */
+
     fun checkLoginStatus(): Observable<User> {
         return playlistApiService.checkLoginStatus(token)
                 .flatMap { data ->
@@ -313,17 +265,13 @@ object PlaylistApiServiceImpl {
                 }
     }
 
-    /**
-     * 获取榜单详情
-     */
+
     fun getRankDetailInfo(ids: IntArray, limit: Int? = null, type: String?): Observable<MutableList<Playlist>> {
         return if (type == Constants.PLAYLIST_WY_ID) getNeteaseRank(ids, limit)
         else getQQRank(limit, ids)
     }
 
-    /**
-     * 网易云排行榜
-     */
+
     fun getNeteaseRank(ids: IntArray, limit: Int? = null): Observable<MutableList<Playlist>> {
         return playlistApiService.getNeteaseRank(ids, limit)
                 .flatMap { data ->
@@ -346,9 +294,7 @@ object PlaylistApiServiceImpl {
                 }
     }
 
-    /**
-     * 网易云排行榜
-     */
+
     fun getQQRank(limit: Int? = null, ids: IntArray? = null): Observable<MutableList<Playlist>> {
         return playlistApiService.getQQRank(limit, ids)
                 .flatMap { data ->

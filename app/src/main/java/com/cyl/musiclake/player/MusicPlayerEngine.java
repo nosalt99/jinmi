@@ -18,9 +18,7 @@ import static com.cyl.musiclake.player.MusicPlayerService.TRACK_PLAY_ENDED;
 import static com.cyl.musiclake.player.MusicPlayerService.TRACK_PLAY_ERROR;
 import static com.cyl.musiclake.player.MusicPlayerService.TRACK_WENT_TO_NEXT;
 
-/**
- * Created by D22434 on 2018/1/16.
- */
+
 
 public class MusicPlayerEngine implements MediaPlayer.OnErrorListener,
         MediaPlayer.OnCompletionListener, MediaPlayer.OnBufferingUpdateListener, MediaPlayer.OnPreparedListener {
@@ -112,11 +110,7 @@ public class MusicPlayerEngine implements MediaPlayer.OnErrorListener,
     }
 
 
-    /**
-     * getDuration 只能在prepared之后才能调用，不然会报-38错误
-     *
-     * @return
-     */
+
     public long duration() {
         if (mIsPrepared) {
             return mCurrentMediaPlayer.getDuration();

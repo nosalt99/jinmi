@@ -16,11 +16,7 @@ import org.json.JSONObject
 import java.util.*
 
 
-/**
- * Created by master on 2018/5/15.
- * 调用js方法请求数据
- * 原理js拼接url,接收返回参数，然后数据处理再返回到java中。
- */
+
 object BaseApiImpl {
 
     private val gson = Gson()
@@ -49,17 +45,11 @@ object BaseApiImpl {
         }
     }
 
-    /**
-     * 初始化js文件
-     */
+
     private fun initAssets() {
     }
 
-    /**
-     * 搜索
-     *
-     * @param query
-     */
+
     fun searchSong(query: String, limit: Int, offset: Int, success: (result: SearchData) -> Unit, fail: ((String?) -> Unit)? = null) {
         mWebView?.callHandler("api.searchSong", arrayOf(query, limit, offset)) { retValue: JSONObject ->
             try {
@@ -73,9 +63,7 @@ object BaseApiImpl {
         }
     }
 
-    /**
-     * 独立请求
-     */
+
     fun searchSongSingle(query: String, type: String, limit: Int, offset: Int, success: (result: SearchSingleData) -> Unit) {
         val params = mapOf("keyword" to query, "limit" to limit, "offset" to offset)
         Log.e("searchSongSingle", params.toString())
@@ -105,9 +93,7 @@ object BaseApiImpl {
     }
 
 
-    /**
-     * 获取歌曲详情
-     */
+
     fun getSongDetail(vendor: String, id: String, success: (result: SongDetail) -> Unit, fail: (() -> Unit)? = null) {
         mWebView?.callHandler("api.getSongDetail", arrayOf<Any>(vendor, id)) { retValue: JSONObject ->
             try {
@@ -119,10 +105,7 @@ object BaseApiImpl {
         }
     }
 
-    /**
-     * 批量获取歌曲详情
-     * [101126,16435051,139808]
-     */
+
     fun getBatchSongDetail(query: String, ids: Array<String>, success: (result: BatchSongDetail) -> Unit) {
         mWebView?.callHandler("api.getBatchSongDetail", arrayOf<Any>(query, ids)) { retValue: JSONObject ->
             val result = gson.fromJson<BatchSongDetail>(retValue.toString(), BatchSongDetail::class.java)
@@ -180,9 +163,7 @@ object BaseApiImpl {
         }
     }
 
-    /**
-     * 获取播放地址
-     */
+
     fun getSongUrl(vendor: String, id: String, br: Int = 128000, success: (result: SongBean) -> Unit, fail: (() -> Unit)? = null) {
         mWebView?.callHandler("api.getSongUrl", arrayOf<Any>(vendor, id, br)) { retValue: JSONObject ->
             try {
@@ -194,10 +175,7 @@ object BaseApiImpl {
         }
     }
 
-    /**
-     * 获取歌手单曲
-     * id，歌手ID
-     */
+
     fun getArtistSongs(vendor: String, id: String, offset: Int, limit: Int, success: (result: ArtistSongsData) -> Unit, fail: ((String) -> Unit)? = null) {
         mWebView?.callHandler("api.getArtistSongs", arrayOf<Any>(vendor, id)) { retValue: JSONObject ->
             try {
@@ -209,10 +187,7 @@ object BaseApiImpl {
         }
     }
 
-    /**
-     * 获取歌单信息
-     * id，专辑ID
-     */
+
     fun getAlbumSongs(vendor: String, id: String, success: (result: ArtistSongsData) -> Unit, fail: ((String) -> Unit)? = null) {
         mWebView?.callHandler("api.getAlbumSongs", arrayOf<Any>(vendor, id)) { retValue: JSONObject ->
             try {
@@ -224,10 +199,7 @@ object BaseApiImpl {
         }
     }
 
-    /**
-     * 获取专辑详情
-     * id，专辑ID
-     */
+
     fun getAlbumDetail(vendor: String, id: String, success: (result: AlbumData) -> Unit, fail: ((String) -> Unit)? = null) {
         mWebView?.callHandler("api.getAlbumDetail", arrayOf<Any>(vendor, id)) { retValue: JSONObject ->
             try {
@@ -239,9 +211,7 @@ object BaseApiImpl {
         }
     }
 
-    /**
-     * 获取歌手列表
-     */
+
     fun getArtists(offset: Int, params: Any, success: (result: ArtistsData) -> Unit, fail: ((String) -> Unit)? = null) {
         mWebView?.callHandler("musicApi.qq.getArtists", arrayOf(offset, params)) { retValue: JSONObject ->
             try {
@@ -254,10 +224,7 @@ object BaseApiImpl {
         }
     }
 
-    /**
-     * 获取歌手详情
-     * id，专辑ID
-     */
+
     fun getAnyVendorSongDetail(ids: MutableList<Map<String, String?>>, success: (result: MutableList<MusicInfo>) -> Unit, fail: ((String) -> Unit)? = null) {
         mWebView?.callHandler("api.getAnyVendorSongDetail", arrayOf<Any>(ids)) { retValue: JSONArray ->
             try {

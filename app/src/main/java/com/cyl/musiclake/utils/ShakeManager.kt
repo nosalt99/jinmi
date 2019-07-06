@@ -6,12 +6,7 @@ import android.hardware.SensorEvent
 import android.hardware.SensorEventListener
 import android.hardware.SensorManager
 
-/**
- * * * * * * * * * * * * * * * * * * * * * * *
- * Created by zhaoyiding
- * Date: 15/9/23
- * * * * * * * * * * * * * * * * * * * * * * *
- */
+
 class ShakeManager(private val mContext: Context?) {
     private var mLastTime: Long = 0
     private var lastX: Float = 0.toFloat()

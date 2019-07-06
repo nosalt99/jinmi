@@ -26,20 +26,14 @@ import org.greenrobot.eventbus.Subscribe
 
 
 @SuppressLint("ViewConstructor")
-/**
- * 悬浮View
- */
+
 class FloatPlayerView(context: Context) : FrameLayout(context), View.OnTouchListener {
 
     companion object {
         private var statusBarHeight: Int = 0
-        /**
-         * 记录悬浮窗的宽度
-         */
+
         var viewWidth: Int = 0
-        /**
-         * 记录悬浮窗的高度
-         */
+
         var viewHeight: Int = 0
         var isFirstLoading: Boolean = true
     }
@@ -181,9 +175,7 @@ class FloatPlayerView(context: Context) : FrameLayout(context), View.OnTouchList
         }
     }
 
-    /**
-     * 延时隐藏控制View
-     */
+
     private fun delayHide() {
         if (isAnimating) return
         controllerView.animate()
@@ -206,9 +198,7 @@ class FloatPlayerView(context: Context) : FrameLayout(context), View.OnTouchList
         delayHide()
     }
 
-    /**
-     * 更新界面歌曲信息
-     */
+
     @Subscribe
     fun updateSongInfo(event: MetaChangedEvent) {
         event.music?.let {
@@ -220,9 +210,7 @@ class FloatPlayerView(context: Context) : FrameLayout(context), View.OnTouchList
         }
     }
 
-    /**
-     * 更新播放状态
-     */
+
     @Subscribe
     fun updatePlayStatus(event: StatusChangedEvent) {
         if (event.isPlaying) {
@@ -243,9 +231,7 @@ class FloatPlayerView(context: Context) : FrameLayout(context), View.OnTouchList
         }
     }
 
-    /**
-     * 自动靠边
-     */
+
     private fun moveToEdge() {
         //获取屏幕宽度
         val size = FloatWindowManager.getWindowSize(context).x / 2
@@ -267,9 +253,7 @@ class FloatPlayerView(context: Context) : FrameLayout(context), View.OnTouchList
         moveAnimator.start()
     }
 
-    /**
-     * 响应自定义事件
-    //     */
+
     private fun responseEvent() {
         val state = FloatWindowManager.getControlViewStatus()
         when (state) {
@@ -291,9 +275,7 @@ class FloatPlayerView(context: Context) : FrameLayout(context), View.OnTouchList
         }
     }
 
-    /**
-     * 设置是否可触摸，固定位置，不能移动
-     */
+
     fun setTouchEnable(enableTouch: Boolean) {
         exoPlayerView.isEnabled = enableTouch
         if (enableTouch) {

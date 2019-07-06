@@ -11,11 +11,7 @@ import org.jaudiotagger.tag.id3.framebody.*
 import java.io.IOException
 
 
-/**
- * Author   : D22434
- * version  : 2018/3/20
- * function :
- */
+
 
 class Test {
     @org.junit.Test
@@ -83,13 +79,7 @@ class Test {
         }
     }
 
-    /**
-     *
-    Text="关不上的窗";
-    Text="周传雄";
-    Text="恋人创世纪";
 
-     */
     private fun saveMusicInfo(path: String) {
         try {
             var file = MP3File(path)
@@ -130,9 +120,7 @@ class Test {
         return file
     }
 
-    /**
-     * 根据分享链接获取歌单Id
-     */
+
     private fun getPlaylistId(link: String) {
         when {
             link.contains("http://music.163.com") -> {

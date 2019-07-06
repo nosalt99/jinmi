@@ -24,7 +24,7 @@ public class LyricTextView extends View {
     private float mShaderWidth = 0;  // 渐变过渡的距离
     private int mCurrentPlayLine = 0;  // 当前播放位置对应的行数
 
-    /***/
+
     private int mDefaultMargin = 12;
     private int mDefaultSize = 35; //默认歌词大小
     private int lyricMaxWidth = 0; //默认歌词大小
@@ -35,24 +35,16 @@ public class LyricTextView extends View {
     private String mDefaultHint = "静谧";
     private Paint mTextPaint, mHighLightPaint;//默认画笔、已读歌词画笔
 
-    /**
-     * 是否有歌词
-     */
+
     private boolean hasLyric = false;
 
-    /**
-     * 当前歌词的第几个字
-     */
+
     private int lyricsWordIndex = -1;
 
-    /**
-     * 当前歌词第几个字 已经播放的时间
-     */
+
     private int lyricsWordHLEDTime = 0;
 
-    /**
-     * 当前歌词第几个字 已经播放的长度
-     */
+
     private float lineLyricsHLWidth = 0;
 
     private Context context;
@@ -236,11 +228,7 @@ public class LyricTextView extends View {
         invalidateView();
     }
 
-    /**
-     * 设置歌词文件
-     *
-     * @param lyricInfo 歌词文件
-     */
+
     public void setLyricInfo(LyricInfo lyricInfo) {
         if (lyricInfo != null) {
             mLyricInfo = lyricInfo;
@@ -254,9 +242,7 @@ public class LyricTextView extends View {
         invalidateView();
     }
 
-    /**
-     * 刷新View
-     */
+
     private void invalidateView() {
         if (Looper.getMainLooper() == Looper.myLooper()) {
             //  当前线程是主UI线程，直接刷新。
@@ -267,11 +253,7 @@ public class LyricTextView extends View {
         }
     }
 
-    /**
-     * 根据当前给定的时间戳滑动到指定位置
-     *
-     * @param time 时间戳
-     */
+
     private void scrollToCurrentTimeMillis(long time) {
         int position = 0;
         for (int i = 0, size = mLineCount; i < size; i++) {
@@ -291,11 +273,7 @@ public class LyricTextView extends View {
         }
     }
 
-    /**
-     * 设置当前时间显示位置
-     *
-     * @param current 时间戳
-     */
+
     public void setCurrentTimeMillis(long current) {
         if (mLyricInfo == null) return;
         mCurrentMillis = current;
@@ -303,21 +281,13 @@ public class LyricTextView extends View {
         invalidateView();
     }
 
-    /**
-     * 设置当前时间显示位置
-     *
-     * @param current 时间戳
-     */
+
     public void setDurationMillis(long current) {
         if (current == 0) return;
         mDuration = current;
     }
 
-    /**
-     * 设置文本最大宽度，过长则滚动显示
-     *
-     * @param textMaxWidth
-     */
+
     private void setTextMaxWidth(int textMaxWidth) {
         this.lyricMaxWidth = textMaxWidth;
     }

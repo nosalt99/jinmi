@@ -30,9 +30,7 @@ import java.util.List;
 
 import butterknife.BindView;
 
-/**
- * Created by Monkey on 2015/6/29.
- */
+
 public class PlayQueueFragment extends BaseFragment<PlayQueuePresenter> implements PlayQueueContract.View {
 
     @BindView(R.id.recyclerView)

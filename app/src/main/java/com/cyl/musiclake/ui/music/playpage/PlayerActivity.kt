@@ -49,9 +49,7 @@ class PlayerActivity : BaseActivity<PlayPresenter>(), PlayContract.View {
     private var lyricFragment: LyricFragment? = null
     private val fragments = mutableListOf<Fragment>()
 
-    /***
-     * 显示当前正在播放
-     */
+
     override fun showNowPlaying(music: Music?) {
         if (music == null) finish()
 
@@ -154,9 +152,7 @@ class PlayerActivity : BaseActivity<PlayPresenter>(), PlayContract.View {
             PlayManager.playPause()
         }
 
-        /**
-         * 歌曲操作
-         */
+
         operateSongIv.setOnClickListener {
             BottomDialogFragment.newInstance(playingMusic)
                     .show(this)
@@ -182,37 +178,27 @@ class PlayerActivity : BaseActivity<PlayPresenter>(), PlayContract.View {
         UIUtils.updatePlayMode(view as ImageView, true)
     }
 
-    /**
-     * 打开播放队列
-     */
+
     fun openPlayQueue(view: View?) {
         PlayQueueDialog.newInstance().showIt(this)
     }
 
-    /**
-     * 歌曲收藏
-     */
+
     fun collectMusic(view: View?) {
         UIUtils.collectMusic(view as ImageView, playingMusic)
     }
 
-    /**
-     * 添加到歌單
-     */
+
     fun addToPlaylist(view: View?) {
         PlaylistManagerUtils.addToPlaylist(this, playingMusic)
     }
 
-    /**
-     * 添加到歌單
-     */
+
     fun showSongComment(view: View?) {
         startActivity<SongCommentActivity>(Extras.SONG to playingMusic)
     }
 
-    /**
-     * 分享歌曲
-     */
+
     fun shareMusic(view: View?) {
         Tools.qqShare(this, PlayManager.getPlayingMusic())
     }

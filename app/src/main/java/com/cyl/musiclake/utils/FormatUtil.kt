@@ -9,19 +9,11 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 @SuppressLint("SimpleDateFormat")
-/**
- * <br></br>
- * **进行一些转换工作**
- */
+
 object FormatUtil {
 
 
-    /**
-     * 格式化时间
-     *
-     * @param time 时间值 (00:00 -23:59:59)
-     * @return 时间
-     */
+
     fun formatTime(time: Long): String {
         var temp = time
         // TODO Auto-generated method stub
@@ -39,10 +31,7 @@ object FormatUtil {
         }
     }
 
-    /**
-     * 格式化播放次数
-     *
-     */
+
     fun formatPlayCount(count: Int): String {
         return when {
             count < 10000 -> "$count"
@@ -52,12 +41,7 @@ object FormatUtil {
         }
     }
 
-    /**
-     * 格式化时间
-     *
-     * @param time 时间值 (00:00 -23:59:59)
-     * @return 时间
-     */
+
     fun formatDate(time: Long): String {
         val duration = System.currentTimeMillis() - time
         return when {
@@ -74,12 +58,7 @@ object FormatUtil {
 
 
     @SuppressLint("SimpleDateFormat")
-            /**
-             * 格式化时间
-             *
-             * @param time 时间值 (00:00 -23:59:59)
-             * @return 时间
-             */
+
     fun formatDate(time: String): String {
         val dateFormat = SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
         val parse = dateFormat.parse(time)
@@ -95,12 +74,7 @@ object FormatUtil {
     }
 
 
-    /**
-     * 格式化文件大小
-     *
-     * @param size 文件大小值
-     * @return 文件大小
-     */
+
     fun formatSize(size: Long): String {
         // TODO Auto-generated method stub
         val df = DecimalFormat("#.00")
@@ -117,12 +91,7 @@ object FormatUtil {
         return fileSize
     }
 
-    /**
-     * 对乱码的处理
-     *
-     * @param s 原字符串
-     * @return GBK处理后的数据
-     */
+
     fun formatGBKStr(s: String): String {
         var str: String? = null
         try {
@@ -200,11 +169,7 @@ object FormatUtil {
 
     }
 
-    /**
-     * 毫秒转化成时间
-     *
-     * @return 时间
-     */
+
     fun distime(time: Long): String {
         val dfs = SimpleDateFormat("yyyy-MM-dd")
         val date = Date(time)
@@ -213,19 +178,13 @@ object FormatUtil {
 
     private val dfs by lazy { SimpleDateFormat("yyyy-MM-dd HH:mm:ss") }
 
-    /**
-     * 获取当前时间
-     * @return 时间 yyyy-MM-dd HH:mm:ss
-     */
+
     fun getChatDateTime(time: Long): String {
         return dfs.format(Date(time))
     }
 
 
-    /**
-     * 根据字符串获取当前时间
-     * @return 时间 yyyy-MM-dd HH:mm:ss
-     */
+
     fun getChatParseDateTime(time: String): Long {
         return dfs.parse(time).time
     }

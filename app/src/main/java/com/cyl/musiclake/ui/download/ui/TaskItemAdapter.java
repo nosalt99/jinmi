@@ -23,9 +23,7 @@ import com.liulishuo.filedownloader.util.FileDownloadUtils;
 import java.io.File;
 import java.util.List;
 
-/**
- * Created by yonglong on 2018/1/23.
- */
+
 
 public class TaskItemAdapter extends RecyclerView.Adapter<TaskItemAdapter.TaskItemViewHolder> {
     private static final String TAG = "TaskItemAdapter";
@@ -142,13 +140,9 @@ public class TaskItemAdapter extends RecyclerView.Adapter<TaskItemAdapter.TaskIt
             return itemView.findViewById(id);
         }
 
-        /**
-         * viewHolder position
-         */
+
         private int position;
-        /**
-         * download id
-         */
+
         public int id;
 
         public void update(final int id, final int position) {

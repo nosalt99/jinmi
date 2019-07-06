@@ -23,11 +23,7 @@ import kotlinx.android.synthetic.main.activity_register.*
 import kotlinx.android.synthetic.main.activity_video.video_view
 import kotlinx.android.synthetic.main.exomedia_default_controls_mobile.*
 
-/**
- * 作者：yonglong on 2016/8/24 10:43
- * 邮箱：643872807@qq.com
- * 版本：2.5
- */
+
 class BaiduMvDetailActivity : BaseActivity<MvDetailPresenter>(), MvDetailContract.View, OnPreparedListener {
 
 
@@ -205,21 +201,13 @@ class BaiduMvDetailActivity : BaseActivity<MvDetailPresenter>(), MvDetailContrac
         video_view.setRepeatMode(Player.REPEAT_MODE_ONE)
     }
 
-    /**
-     * Correctly sets up the fullscreen flags to avoid popping when we switch
-     * between fullscreen and not
-     */
+
     private fun initUiFlags() {
         window.decorView.systemUiVisibility = stableUiFlags
         window.decorView.setOnSystemUiVisibilityChangeListener(fullScreenListener)
     }
 
-    /**
-     * Applies the correct flags to the windows decor view to enter
-     * or exit fullscreen mode
-     *
-     * @param fullscreen True if entering fullscreen mode
-     */
+
     private fun setUiFlags(fullscreen: Boolean) {
 //        window.decorView.systemUiVisibility = if (fullscreen) fullscreenUiFlags else stableUiFlags
     }
@@ -238,10 +226,7 @@ class BaiduMvDetailActivity : BaseActivity<MvDetailPresenter>(), MvDetailContrac
     }
 
 
-    /**
-     * Listens to the system to determine when to show the default controls
-     * for the [VideoView]
-     */
+
     private inner class FullScreenListener : View.OnSystemUiVisibilityChangeListener {
         var lastVisibility = 0
             private set
@@ -259,10 +244,7 @@ class BaiduMvDetailActivity : BaseActivity<MvDetailPresenter>(), MvDetailContrac
         }
     }
 
-    /**
-     * A Listener for the [VideoControls]
-     * so that we can re-enter fullscreen mode when the controls are hidden.
-     */
+
     private inner class ControlsVisibilityListener : VideoControlsVisibilityListener {
         override fun onControlsShown() {
             if (fullScreenListener.lastVisibility != View.SYSTEM_UI_FLAG_VISIBLE) {

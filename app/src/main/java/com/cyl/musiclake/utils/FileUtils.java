@@ -22,17 +22,9 @@ import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
 
-/**
- * 作者：yonglong on 2016/9/9 04:02
- * 邮箱：643872807@qq.com
- * 版本：2.5
- */
+
 public class FileUtils {
-    /**
-     * 获取APP根目录
-     *
-     * @return
-     */
+
     private static String getAppDir() {
         return Environment.getExternalStorageDirectory() + "/musicLake/";
     }
@@ -82,20 +74,13 @@ public class FileUtils {
     }
 
 
-    /**
-     * 判断外部存储是否可用
-     *
-     * @return true: 可用
-     */
+
     public static boolean isSDcardAvailable() {
         String state = Environment.getExternalStorageState();
         return Environment.MEDIA_MOUNTED.equals(state);
     }
 
-    /**
-     * 可创建多个文件夹
-     * dirPath 文件路径
-     */
+
     public static boolean mkDir(String dirPath) {
         String[] dirArray = dirPath.split("/");
         String pathTemp = "";
@@ -111,12 +96,7 @@ public class FileUtils {
     }
 
 
-    /**
-     * 创建文件
-     * <p>
-     * dirpath 文件目录
-     * fileName 文件名称
-     */
+
     public static boolean creatFile(String dirPath, String fileName) {
         File file = new File(dirPath, fileName);
         boolean newFile = false;
@@ -130,10 +110,7 @@ public class FileUtils {
         return newFile;
     }
 
-    /**
-     * 创建文件
-     * filePath 文件路径
-     */
+
     public static boolean creatFile(String filePath) {
         File file = new File(filePath);
         boolean newFile = false;
@@ -147,10 +124,7 @@ public class FileUtils {
         return newFile;
     }
 
-    /**
-     * 创建文件
-     * file 文件
-     */
+
     public static boolean creatFile(File file) {
         boolean newFile = false;
         if (!file.exists()) {
@@ -164,11 +138,7 @@ public class FileUtils {
         return newFile;
     }
 
-    /**
-     * 删除文件
-     * dirpath 文件目录
-     * fileName 文件名称
-     */
+
     public static boolean delFile(String dirpath, String fileName) {
         File file = new File(dirpath, fileName);
         boolean delete = false;
@@ -180,10 +150,7 @@ public class FileUtils {
         return delete;
     }
 
-    /**
-     * 删除文件
-     * filepath 文件路径
-     */
+
     public static boolean delFile(String filepath) {
         File file = new File(filepath);
         boolean delete = false;
@@ -195,10 +162,7 @@ public class FileUtils {
         return delete;
     }
 
-    /**
-     * 删除文件
-     * filepath 文件路径
-     */
+
     public static boolean delFile(File filepath) {
         boolean delete = false;
         if (filepath == null || !filepath.exists() || filepath.isDirectory()) {
@@ -209,10 +173,7 @@ public class FileUtils {
         return delete;
     }
 
-    /**
-     * 删除文件夹
-     * dirPath 文件路径
-     */
+
     public static boolean delDir(String dirpath) {
         File dir = new File(dirpath);
         return deleteDirWihtFile(dir);
@@ -237,11 +198,7 @@ public class FileUtils {
     }
 
 
-    /**
-     * 修改SD卡上的文件或目录名
-     * oldFilePath 旧文件或文件夹路径
-     * newFilePath 新文件或文件夹路径
-     */
+
     public static boolean renameFile(String oldFilePath, String newFilePath) {
         File oldFile = new File(oldFilePath);
         File newFile = new File(newFilePath);
@@ -253,11 +210,7 @@ public class FileUtils {
 
     }
 
-    /**
-     * 拷贝一个文件
-     * srcFile源文件
-     * destFile目标文件
-     */
+
     public static boolean copyFileTo(File srcFile, File destFile) {
         boolean copyFile = false;
         if (!srcFile.exists() || srcFile.isDirectory() || destFile.isDirectory()) {
@@ -297,11 +250,7 @@ public class FileUtils {
         return copyFile;
     }
 
-    /**
-     * 拷贝目录下的所有文件到指定目录
-     * srcDir 原目录
-     * destDir 目标目录
-     */
+
     public static boolean copyFilesTo(File srcDir, File destDir) {
         if (!srcDir.exists() || !srcDir.isDirectory() || !destDir.isDirectory()) {
             return false;
@@ -321,11 +270,7 @@ public class FileUtils {
         return true;
     }
 
-    /**
-     * 移动一个文件
-     * srcFile源文件
-     * destFile目标文件
-     */
+
     public static boolean moveFileTo(File srcFile, File destFile) {
         if (!srcFile.exists() || srcFile.isDirectory() || destFile.isDirectory()) {
             return false;
@@ -339,11 +284,7 @@ public class FileUtils {
         }
     }
 
-    /**
-     * 移动目录下的所有文件到指定目录
-     * srcDir 原路径
-     * destDir 目标路径
-     */
+
     public static boolean moveFilesTo(File srcDir, File destDir) {
         if (!srcDir.exists() || !srcDir.isDirectory() || !destDir.isDirectory()) {
             return false;
@@ -362,10 +303,7 @@ public class FileUtils {
         return true;
     }
 
-    /**
-     * 文件转byte数组
-     * file 文件路径
-     */
+
 
     public static byte[] file2byte(File file) throws IOException {
         byte[] bytes = null;
@@ -394,10 +332,7 @@ public class FileUtils {
     }
 
 
-    /**
-     * 文件读取
-     * filePath 文件路径
-     */
+
     public static String readFile(File filePath) {
 
         BufferedReader bufferedReader = null;
@@ -429,17 +364,12 @@ public class FileUtils {
 
     }
 
-    /**
-     * 文件读取
-     * strPath 文件路径
-     */
+
     public static String readFile(String strPath) {
         return readFile(new File(strPath));
     }
 
-    /**
-     * InputStream 转字符串
-     */
+
     public static String readInp(InputStream inputStream) {
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
         byte[] buf = new byte[1024];
@@ -456,12 +386,7 @@ public class FileUtils {
         return outputStream.toString();
     }
 
-    /**
-     * InputStream转byte数组
-     *
-     * @param inputStream
-     * @return
-     */
+
     public static byte[] inputStreamToByteArray(InputStream inputStream) {
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
         byte[] buf = new byte[1024];
@@ -478,9 +403,7 @@ public class FileUtils {
         return outputStream.toByteArray();
     }
 
-    /**
-     * BufferedReader 转字符串
-     */
+
     public static String readBuff(BufferedReader bufferedReader) {
         String readerstr = "";
         try {
@@ -503,12 +426,7 @@ public class FileUtils {
         }
     }
 
-    /**
-     * InputStream转文件
-     *
-     * @param inputStream
-     * @param absPath
-     */
+
     public static boolean inputStreamToFile(InputStream inputStream, String absPath) {
         FileOutputStream fos = null;
         try {
@@ -530,12 +448,7 @@ public class FileUtils {
 
     }
 
-    /**
-     * 文件转InputStream
-     *
-     * @param absPath
-     * @return
-     */
+
     public static InputStream file2Inp(String absPath) {
         File file = new File(absPath);
 //        FLogUtils.getInstance().e(file.length());
@@ -554,13 +467,7 @@ public class FileUtils {
 
     }
 
-    /**
-     * 写入数据到文件
-     *
-     * @param filePath
-     * @param content
-     * @return
-     */
+
     public static boolean writeText(File filePath, String content) {
         creatFile(filePath);
         BufferedWriter bufferedWriter = null;
@@ -587,12 +494,7 @@ public class FileUtils {
     }
 
 
-    /**
-     * byte数组转文件
-     *
-     * @param content
-     * @param file_path
-     */
+
     public static boolean writeByteArrayToFile(byte[] content, String file_path) {
         try {
             File file = new File(file_path);
@@ -606,13 +508,7 @@ public class FileUtils {
     }
 
 
-    /**
-     * 追加数据
-     *
-     * @param filePath
-     * @param content
-     * @return
-     */
+
     public static boolean appendText(File filePath, String content) {
         creatFile(filePath);
         FileWriter writer = null;
@@ -637,13 +533,7 @@ public class FileUtils {
     }
 
 
-    /**
-     * 追加数据
-     *
-     * @param filePath
-     * @param content
-     * @param header   是否在头部追加数据
-     */
+
     public static void appendText(String filePath, String content, boolean header) {
         RandomAccessFile raf = null;
         FileOutputStream tmpOut = null;
@@ -661,7 +551,7 @@ public class FileUtils {
                 fileLength = raf.length();
             }
             raf.seek(fileLength);
-            /**将插入点后的内容读入临时文件夹**/
+
 
             byte[] buff = new byte[1024];
             //用于保存临时读取的字节数
@@ -707,12 +597,7 @@ public class FileUtils {
         }
     }
 
-    /**
-     * 获取文件大小
-     *
-     * @param filePath
-     * @return
-     */
+
     public static long getLength(File filePath) {
         if (!filePath.exists()) {
             return -1;
@@ -721,22 +606,12 @@ public class FileUtils {
         }
     }
 
-    /**
-     * 获取文件大小
-     *
-     * @param filePath
-     * @return
-     */
+
     public static long getLength(String filePath) {
         return getLength(new File(filePath));
     }
 
-    /**
-     * 获取文件名
-     *
-     * @param filePath
-     * @return
-     */
+
     public static String getFileName(String filePath) {
         File file = new File(filePath);
         if (!file.exists()) {
@@ -746,12 +621,7 @@ public class FileUtils {
 
     }
 
-    /**
-     * 判断文件是否存在
-     *
-     * @param filePath
-     * @return
-     */
+
     public static boolean exists(String filePath) {
         if (new File(filePath).exists()) {
             return true;
@@ -760,13 +630,7 @@ public class FileUtils {
     }
 
 
-    /**
-     * 按文件时间排序
-     *
-     * @param fliePath
-     * @param desc
-     * @return
-     */
+
     public static File[] orderByDate(File fliePath, boolean desc) {
         File[] fs = fliePath.listFiles();
         Arrays.sort(fs, new Comparator<File>() {
@@ -796,13 +660,7 @@ public class FileUtils {
         }
     }
 
-    /**
-     * 按照文件名称排序
-     *
-     * @param fliePath
-     * @param desc
-     * @return
-     */
+
     public static File[] orderByName(File fliePath, boolean desc) {
         File[] files = fliePath.listFiles();
         Arrays.sort(files, new Comparator<File>() {
@@ -828,11 +686,7 @@ public class FileUtils {
 
     }
 
-    /**
-     * 按照文件大小排序
-     *
-     * @param fliePath
-     */
+
     public static File[] orderByLength(File fliePath, boolean desc) {
         File[] files = fliePath.listFiles();
         Arrays.sort(files, new Comparator<File>() {
@@ -863,13 +717,7 @@ public class FileUtils {
     }
 
 
-    /**
-     * 文件筛选
-     *
-     * @param files
-     * @param filter
-     * @return
-     */
+
     public static List<File> filter(File[] files, String filter) {
         List<File> filels = new ArrayList<>();
         if (files != null) {
@@ -882,13 +730,7 @@ public class FileUtils {
         return filels;
     }
 
-    /**
-     * 文件筛选
-     *
-     * @param file
-     * @param filterName 筛选名
-     * @return
-     */
+
     public static File[] fileNameFilter(File file, final String filterName) {
         if (!file.isDirectory()) {
             return null;
@@ -907,20 +749,12 @@ public class FileUtils {
 
     }
 
-    /**
-     * 获取文件列表
-     *
-     * @param fileDir 文件目录
-     */
+
     public static File[] getFiles(String fileDir) {
         return getFiles(new File(fileDir));
     }
 
-    /**
-     * 获取文件列表
-     *
-     * @param fileDir 文件目录
-     */
+
     public static File[] getFiles(File fileDir) {
         if (!fileDir.isDirectory()) {
             return null;

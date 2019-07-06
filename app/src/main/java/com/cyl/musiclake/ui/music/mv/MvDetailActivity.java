@@ -41,11 +41,7 @@ import java.util.Map;
 import butterknife.BindView;
 import butterknife.OnClick;
 
-/**
- * 作者：yonglong on 2016/8/24 10:43
- * 邮箱：643872807@qq.com
- * 版本：2.5
- */
+
 @SuppressWarnings("ConstantConditions")
 public class MvDetailActivity extends BaseActivity<MvDetailPresenter> implements MvDetailContract.View, OnPreparedListener {
 
@@ -355,10 +351,7 @@ public class MvDetailActivity extends BaseActivity<MvDetailPresenter> implements
     }
 
 
-    /**
-     * Listens to the system to determine when to show the default controls
-     * for the [VideoView]
-     */
+
     private class FullScreenListener implements View.OnSystemUiVisibilityChangeListener {
         int lastVisibility = 0;
 
@@ -378,10 +371,7 @@ public class MvDetailActivity extends BaseActivity<MvDetailPresenter> implements
 
     private FullScreenListener fullScreenListener = new FullScreenListener();
 
-    /**
-     * Correctly sets up the fullscreen flags to avoid popping when we switch
-     * between fullscreen and not
-     */
+
     private void initUiFlags() {
         getWindow().getDecorView().setSystemUiVisibility(getStableUiFlags());
         getWindow().getDecorView().setOnSystemUiVisibilityChangeListener(fullScreenListener);

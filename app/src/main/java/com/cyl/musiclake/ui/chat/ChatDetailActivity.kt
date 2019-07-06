@@ -8,9 +8,7 @@ import com.cyl.musiclake.ui.base.BaseActivity
 import kotlinx.android.synthetic.main.card_chat_detail.*
 
 
-/**
- * 消息中心，收发消息
- */
+
 class ChatDetailActivity : BaseActivity<ChatPresenter>() {
 
 

@@ -11,21 +11,12 @@ import retrofit2.http.QueryMap;
 import retrofit2.http.Streaming;
 import retrofit2.http.Url;
 
-/**
- * Created by yonglong on 2018/1/15.
- */
+
 
 public interface XiamiService {
 
     //http://c.y.qq.com/soso/fcgi-bin/search_cp?
-    /*
-        'p': page,
-        'n': limit,
-        'w': key,
-        'aggr': 1,
-        'lossless': 1,
-        'cr': 1
-     */
+
     @GET
     Observable<String> getSongUrl(@Url String baseUrl);
 

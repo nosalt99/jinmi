@@ -15,21 +15,14 @@ import com.cyl.musiclake.ui.music.charts.PlaylistPresenter
 import com.cyl.musiclake.ui.music.discover.TopPlaylistAdapter
 import kotlinx.android.synthetic.main.frag_top_playlist.*
 
-/**
- * Created by Monkey on 2015/6/29.
- * 精品歌单列表
- */
+
 class TopPlaylistFragment : BaseFragment<PlaylistPresenter>(), PlaylistContract.View {
 
-    /**
-     * 适配器
-     */
+
     private var mNeteaseAdapter: TopPlaylistAdapter? = null
     private var mTag: String = "全部"
 
-    /**
-     * 数据集合
-     */
+
     private var playlist = mutableListOf<Playlist>()
 
     override fun showNeteaseCharts(playlistList: MutableList<Playlist>) {
@@ -76,9 +69,7 @@ class TopPlaylistFragment : BaseFragment<PlaylistPresenter>(), PlaylistContract.
         }
     }
 
-    /**
-     * 更新Tag分类
-     */
+
     private fun updateTag(newTag: String) {
         mTag = newTag
         cateTagTv.text = mTag

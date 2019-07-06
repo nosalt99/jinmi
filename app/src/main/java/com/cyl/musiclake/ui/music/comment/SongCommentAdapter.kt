@@ -8,11 +8,7 @@ import com.cyl.musiclake.R
 import com.cyl.musiclake.utils.CoverLoader
 import com.cyl.musiclake.utils.FormatUtil
 
-/**
- * 作者：yonglong on 2016/8/10 21:36
- * 邮箱：643872807@qq.com
- * 版本：2.5
- */
+
 class SongCommentAdapter(list: List<SongComment>) : BaseQuickAdapter<SongComment, BaseViewHolder>(R.layout.item_comment, list) {
 
     override fun convert(helper: BaseViewHolder, item: SongComment) {

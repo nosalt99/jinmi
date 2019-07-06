@@ -9,11 +9,7 @@ import com.cyl.musiclake.api.net.ApiManager
 import com.cyl.musiclake.api.net.RequestCallBack
 import javax.inject.Inject
 
-/**
- * Des    :
- * Author : master.
- * Date   : 2018/5/20 .
- */
+
 class ArtistListPresenter @Inject
 constructor() : BasePresenter<ArtistListContract.View>(), ArtistListContract.Presenter {
 

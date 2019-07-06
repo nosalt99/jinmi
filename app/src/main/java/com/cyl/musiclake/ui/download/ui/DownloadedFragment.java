@@ -19,9 +19,7 @@ import java.util.List;
 
 import butterknife.BindView;
 
-/**
- * Created by yonglong on 2016/11/26.
- */
+
 
 public class DownloadedFragment extends BaseFragment<DownloadPresenter> implements DownloadContract.View {
 

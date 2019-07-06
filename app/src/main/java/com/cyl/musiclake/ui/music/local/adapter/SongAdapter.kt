@@ -27,12 +27,7 @@ import org.greenrobot.eventbus.ThreadMode
 import org.jetbrains.anko.dip
 
 
-/**
- * 功能：本地歌曲item
- * 作者：yonglong on 2016/8/8 19:44
- * 邮箱：643872807@qq.com
- * 版本：2.5
- */
+
 class SongAdapter(val musicList: List<Music>) : BaseQuickAdapter<Music, BaseViewHolder>(R.layout.item_music, musicList), FastScrollRecyclerView.SectionedAdapter {
     override fun convert(holder: BaseViewHolder, item: Music) {
         CoverLoader.loadImageView(mContext, item.coverUri, holder.getView(R.id.iv_cover))

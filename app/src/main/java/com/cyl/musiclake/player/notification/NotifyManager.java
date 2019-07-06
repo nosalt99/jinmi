@@ -19,10 +19,7 @@ import static com.cyl.musiclake.player.MusicPlayerService.ACTION_PLAY_PAUSE;
 import static com.cyl.musiclake.player.MusicPlayerService.ACTION_PREV;
 import static com.liulishuo.filedownloader.util.DownloadServiceNotConnectedHelper.stopForeground;
 
-/**
- * Created by master on 2018/5/14.
- * 通知栏管理类
- */
+
 
 public class NotifyManager {
 
@@ -41,9 +38,7 @@ public class NotifyManager {
         this.mContext = mContext;
     }
 
- /*//////////////////////////////////////////////////////////////////////////
-    // Notification
-    //////////////////////////////////////////////////////////////////////////*/
+
 
     private void resetNotification() {
         mNotificationBuilder = createNotification();
@@ -96,12 +91,7 @@ public class NotifyManager {
 
     }
 
-    /**
-     * Updates the notification, and the play/pause button in it.
-     * Used for changes on the remoteView
-     *
-     * @param drawableId if != -1, sets the drawable with that id on the play/pause button
-     */
+
     private synchronized void updateNotification(int drawableId) {
         //if (DEBUG) LogUtil.d(TAG, "updateNotification() called with: drawableId = [" + drawableId + "]");
         if (mNotificationBuilder == null) return;

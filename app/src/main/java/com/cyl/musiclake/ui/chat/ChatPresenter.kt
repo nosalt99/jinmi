@@ -13,11 +13,7 @@ import org.jetbrains.anko.doAsync
 import org.jetbrains.anko.uiThread
 import javax.inject.Inject
 
-/**
- * Des    :
- * Author : master.
- * Date   : 2018/9/27 .
- */
+
 class ChatPresenter @Inject
 constructor() : BasePresenter<ChatContract.View>(), ChatContract.Presenter {
 
@@ -31,9 +27,7 @@ constructor() : BasePresenter<ChatContract.View>(), ChatContract.Presenter {
         }
     }
 
-    /**
-     * 加载云消息,默认加载云消息
-     */
+
     override fun loadMessages(end: String?) {
         var endTime: String? = null
         val start = end?.let {
@@ -49,9 +43,7 @@ constructor() : BasePresenter<ChatContract.View>(), ChatContract.Presenter {
         })
     }
 
-    /**
-     * 加载本地消息
-     */
+
     override fun loadLocalMessages() {
         doAsync {
             val data = model.loadHistoryMessages()
@@ -61,9 +53,7 @@ constructor() : BasePresenter<ChatContract.View>(), ChatContract.Presenter {
         }
     }
 
-    /**
-     * 发送正在播放的音乐
-     */
+
     override fun sendMusicMessage() {
         val music = PlayManager.getPlayingMusic()
         when {

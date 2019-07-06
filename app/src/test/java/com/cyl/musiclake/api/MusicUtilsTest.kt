@@ -4,9 +4,7 @@ import com.cyl.musiclake.api.music.MusicUtils
 import com.cyl.musiclake.common.Constants
 import org.junit.Test
 
-/**
- * Created by cyl on 2018/9/29.
- */
+
 class MusicUtilsTest {
     @Test
     fun testPicUrl() {
@@ -22,10 +20,7 @@ class MusicUtilsTest {
         println(getAlbumPic(test5, Constants.QQ, MusicUtils.PIC_SIZE_SMALL))
     }
 
-    /**
-     * 根据不同的歌曲类型生成不同的图片
-     * @param size
-     */
+
     fun getAlbumPic(url: String?, type: String?, size: Int): String? {
         println(url)
         return when (type) {

@@ -7,11 +7,7 @@ import com.cyl.musiclake.api.net.RequestCallBack
 import org.litepal.LitePal
 
 
-/**
- * Des    :
- * Author : master.
- * Date   : 2018/9/27 .
- */
+
 class ChatModel {
 
 
@@ -25,10 +21,7 @@ class ChatModel {
         return LitePal.deleteAll(MessageInfoBean::class.java)
     }
 
-    /**
-     * 获取历史聊天记录
-     *
-     */
+
     fun getChatHistory(start: String? = null, end: String? = null, success: (MutableList<MessageInfoBean>?) -> Unit?, fail: (String?) -> Unit?) {
         ApiManager.request(PlaylistApiServiceImpl.playlistApiService.getChatHistory(PlaylistApiServiceImpl.token, start, end), object : RequestCallBack<MutableList<MessageInfoBean>> {
             override fun success(result: MutableList<MessageInfoBean>?) {

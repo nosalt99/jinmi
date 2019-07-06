@@ -35,47 +35,29 @@ import kotlinx.android.synthetic.main.acitvity_search.*
 import kotlinx.android.synthetic.main.toolbar_search_layout.*
 import java.util.*
 
-/**
- * 作者：yonglong on 2016/9/15 12:32
- * 邮箱：643872807@qq.com
- * 版本：2.5
- */
+
 class SearchActivity : BaseActivity<SearchPresenter>(), SearchContract.View {
-    /**
-     * 搜索信息
-     */
+
     private var queryString: String? = null
-    /**
-     * 搜索结果
-     */
+
     private val searchResults = mutableListOf<Music>()
-    /**
-     * 歌曲列表
-     */
+
     private var songList = mutableListOf<Music>()
 
-    /**
-     * 适配器
-     */
+
     private var historyAdapter: SearchHistoryAdapter? = null
     private var hotSearchAdapter: HotSearchAdapter? = null
     private var mAdapter: SongAdapter = SongAdapter(searchResults)
-    /**
-     * 搜索历史
-     */
+
     private var searchHistory: MutableList<SearchHistoryBean> = ArrayList()
 
-    /**
-     * 分页偏移量
-     */
+
     private var mCurrentCounter = 10
     private val limit = 10
     private var mOffset = 0
     private var isSearchOnline = false
 
-    /**
-     * 过滤
-     */
+
     var filter = mutableMapOf(SearchEngine.Filter.QQ to true,
             SearchEngine.Filter.XIAMI to true,
             SearchEngine.Filter.NETEASE to true,
@@ -134,9 +116,7 @@ class SearchActivity : BaseActivity<SearchPresenter>(), SearchContract.View {
         mActivityComponent.inject(this)
     }
 
-    /**
-     * 监听事件
-     */
+
     override fun listener() {
         clearAllIv.setOnClickListener {
             DaoLitepal.clearAllSearch()
@@ -237,9 +217,7 @@ class SearchActivity : BaseActivity<SearchPresenter>(), SearchContract.View {
         return true
     }
 
-    /**
-     * 改变过滤设置
-     */
+
     private fun changeFilter(item: MenuItem, filterType: SearchEngine.Filter) {
         filter.put(key = filterType, value = !(filter[filterType] ?: true))
         item.isChecked = filter[filterType] ?: true
@@ -267,11 +245,7 @@ class SearchActivity : BaseActivity<SearchPresenter>(), SearchContract.View {
     }
 
 
-    /**
-     * 本地搜索
-     *
-     * @param query
-     */
+
     private fun searchLocal(query: String?) {
         if (query != null && query.isNotEmpty()) {
             searchResults.clear()
@@ -282,11 +256,7 @@ class SearchActivity : BaseActivity<SearchPresenter>(), SearchContract.View {
         }
     }
 
-    /**
-     * 歌单搜索
-     *
-     * @param query
-     */
+
     private fun searchPlaylistSong(query: String?) {
         if (query != null && query.isNotEmpty()) {
             searchResults.clear()
@@ -297,9 +267,7 @@ class SearchActivity : BaseActivity<SearchPresenter>(), SearchContract.View {
         }
     }
 
-    /**
-     * 在线搜索
-     */
+
     private fun search(query: String?) {
         if (query != null && query.isNotEmpty()) {
             showLoading()
@@ -316,9 +284,7 @@ class SearchActivity : BaseActivity<SearchPresenter>(), SearchContract.View {
         }
     }
 
-    /**
-     * 显示搜索记录
-     */
+
     override fun showSearchResult(list: MutableList<Music>) {
         if (list.size != 0) {
             mOffset++
@@ -338,9 +304,7 @@ class SearchActivity : BaseActivity<SearchPresenter>(), SearchContract.View {
         LogUtil.e("search", mCurrentCounter.toString() + "--" + mCurrentCounter + "--" + mOffset)
     }
 
-    /**
-     * 显示过滤后的搜索结果
-     */
+
     private fun showFilterResult() {
         songList.clear()
         searchResults.forEach {
@@ -381,9 +345,7 @@ class SearchActivity : BaseActivity<SearchPresenter>(), SearchContract.View {
         mAdapter.loadMoreComplete()
     }
 
-    /**
-     * 初始化过滤条件
-     */
+
     private fun initSearchFilter(menu: Menu) {
         val prefs = PreferenceManager.getDefaultSharedPreferences(this)
         val options = prefs.getStringSet("key_search_filter", null)
@@ -412,9 +374,7 @@ class SearchActivity : BaseActivity<SearchPresenter>(), SearchContract.View {
                 ?: true
     }
 
-    /**
-     * 移除重复歌曲
-     */
+
     private fun removeDuplicate(list: MutableList<Music>): MutableList<Music> {
         for (i in 0 until list.size - 1) {
             for (j in list.size - 1 downTo i + 1) {
@@ -426,9 +386,7 @@ class SearchActivity : BaseActivity<SearchPresenter>(), SearchContract.View {
         return list
     }
 
-    /**
-     * 设置热搜
-     */
+
     override fun showHotSearchInfo(result: MutableList<HotSearchBean>) {
         if (result.size > 0) {
             hotSearchView.visibility = View.VISIBLE
@@ -457,9 +415,7 @@ class SearchActivity : BaseActivity<SearchPresenter>(), SearchContract.View {
         }
     }
 
-    /**
-     * 显示历史
-     */
+
     override fun showSearchHistory(result: MutableList<SearchHistoryBean>) {
         searchHistory = result
         if (historyAdapter == null) {

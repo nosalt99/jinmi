@@ -19,23 +19,12 @@ import com.cyl.musiclake.utils.ToastUtils
 import io.reactivex.Observable
 import io.reactivex.Observable.create
 
-/**
- * Author   : D22434
- * version  : 2018/3/9
- * function : 接口数据集中到一个类中管理。
- */
+
 
 object MusicApiServiceImpl {
     private val TAG = "MusicApiServiceImpl"
 
-    /**
-     * 搜索音乐
-     *
-     * @param key
-     * @param limit
-     * @param page
-     * @return
-     */
+
     fun searchMusic(key: String, type: SearchEngine.Filter, limit: Int, page: Int): Observable<MutableList<Music>> {
         return create { result ->
             if (type == SearchEngine.Filter.ANY) {
@@ -110,18 +99,13 @@ object MusicApiServiceImpl {
     }
 
 
-    /**
-     * 获取豆瓣背景图片
-     */
+
     fun getAlbumUrl(info: String): Observable<String> {
         return DoubanApiServiceImpl.getDoubanPic(info)
     }
 
 
-    /**
-     * 批量獲取歌曲信息
-     *
-     */
+
     fun getBatchMusic(vendor: String, ids: Array<String>): Observable<MutableList<Music>> {
         return create { result ->
             BaseApiImpl.getBatchSongDetail(vendor, ids) {
@@ -141,11 +125,7 @@ object MusicApiServiceImpl {
         }
     }
 
-    /**
-     * 获取歌曲url信息
-     * @param br 音乐品质
-     *
-     */
+
     fun getMusicUrl(vendor: String, mid: String, br: Int = 128000): Observable<String> {
         LogUtil.d("getMusicUrl $vendor $mid $br")
         return create { result ->
@@ -165,10 +145,7 @@ object MusicApiServiceImpl {
         }
     }
 
-    /**
-     * 获取歌曲详细信息
-     *
-     */
+
     fun getSongDetail(vendor: String, mid: String): Observable<Music> {
         return create { result ->
             BaseApiImpl.getSongDetail(vendor, mid, {
@@ -184,10 +161,7 @@ object MusicApiServiceImpl {
         }
     }
 
-    /**
-     * 获取歌曲url信息
-     *
-     */
+
     fun getMusicComment(vendor: String, mid: String): Observable<MutableList<SongComment>>? {
         return when (vendor) {
             Constants.NETEASE -> create { result ->
@@ -275,10 +249,7 @@ object MusicApiServiceImpl {
     }
 
 
-    /**
-     * 获取歌手单曲
-     *
-     */
+
     fun getArtistSongs(vendor: String, id: String, offset: Int = 0, limit: Int = 50): Observable<Artist> {
         return create { result ->
             BaseApiImpl
@@ -308,12 +279,7 @@ object MusicApiServiceImpl {
     }
 
 
-    /**
-     * 获取专辑信息单曲
-     * @param vendor 专辑类型
-     * @param id 专辑id
-     * @return
-     */
+
     fun getAlbumSongs(vendor: String, id: String): Observable<Album> {
         return create { result ->
             BaseApiImpl.getAlbumDetail(vendor, id, {
@@ -341,10 +307,7 @@ object MusicApiServiceImpl {
         }
     }
 
-    /**
-     * 获取专辑单曲
-     *
-     */
+
     fun getPlaylistSongs(vendor: String, id: String): Observable<Playlist> {
         return create { result ->
             BaseApiImpl
@@ -370,9 +333,7 @@ object MusicApiServiceImpl {
     }
 
 
-    /**
-     * 获取详细信息
-     */
+
     fun getAnyVendorSongDetail(list: MutableList<Music>): Observable<MutableList<Music>> {
         return create { result ->
             val array = mutableListOf<Map<String, String?>>()
@@ -396,19 +357,13 @@ object MusicApiServiceImpl {
 
     }
 
-    /**
-     * 获取歌手列表
-     *
-     */
+
     fun getArtists(offset: Int, params: Map<String, Int>): Observable<Artists> {
         return QQMusicApiServiceImpl.getArtists(offset, params)
     }
 
 
-    /**
-     * 获取歌词
-     *
-     */
+
     fun getLyricInfo(music: Music): Observable<String>? {
         try {
             val mLyricPath = FileUtils.getLrcDir() + "${music.title}-${music.artist}" + ".lrc"
@@ -447,9 +402,7 @@ object MusicApiServiceImpl {
         }
     }
 
-    /**
-     * 获取本地歌词
-     */
+
     fun getLocalLyricInfo(music: Music): Observable<String> {
         val mLyricPath = FileUtils.getLrcDir() + music.title + "-" + music.artist + ".lrc"
         //网络歌词
@@ -457,9 +410,7 @@ object MusicApiServiceImpl {
     }
 
 
-    /**
-     * 保存歌词
-     */
+
     fun saveLyricInfo(name: String, artist: String, lyricInfo: String) {
         val mLyricPath = FileUtils.getLrcDir() + "$name-$artist.lrc"
         val save = FileUtils.writeText(mLyricPath, lyricInfo)

@@ -7,11 +7,7 @@ import junit.framework.TestCase;
 
 import org.junit.Test;
 
-/**
- * Author   : D22434
- * version  : 2018/1/26
- * function :
- */
+
 public class LyricViewTest extends TestCase {
 
     String source = "\n" +

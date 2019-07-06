@@ -11,11 +11,7 @@ import com.cyl.musiclake.api.net.ApiManager
 import com.cyl.musiclake.api.net.RequestCallBack
 import javax.inject.Inject
 
-/**
- * Des    :
- * Author : master.
- * Date   : 2018/5/20 .
- */
+
 class DiscoverPresenter @Inject
 constructor() : BasePresenter<DiscoverContract.View>(), DiscoverContract.Presenter {
 
@@ -32,9 +28,7 @@ constructor() : BasePresenter<DiscoverContract.View>(), DiscoverContract.Present
         })
     }
 
-    /**
-     * 加载网易排行榜（0歌曲）
-     */
+
     override fun loadNetease(tag: String) {
         val observable = NeteaseApiServiceImpl.getTopPlaylists(tag, 30)
         ApiManager.request(observable, object : RequestCallBack<MutableList<Playlist>> {
@@ -95,9 +89,7 @@ constructor() : BasePresenter<DiscoverContract.View>(), DiscoverContract.Present
         })
     }
 
-    /**
-     * 获取每日推荐（需登录）
-     */
+
     fun loadRecommendPlaylist() {
         val observable = NeteaseApiServiceImpl.recommendPlaylist()
         ApiManager.request(observable, object : RequestCallBack<MutableList<Playlist>> {
@@ -112,9 +104,7 @@ constructor() : BasePresenter<DiscoverContract.View>(), DiscoverContract.Present
         })
     }
 
-    /**
-     * 获取推荐歌单
-     */
+
     fun loadPersonalizedPlaylist() {
         val observable = NeteaseApiServiceImpl.personalizedPlaylist()
         ApiManager.request(observable, object : RequestCallBack<MutableList<Playlist>> {

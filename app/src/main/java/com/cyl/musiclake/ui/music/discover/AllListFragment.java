@@ -20,11 +20,7 @@ import java.util.List;
 
 import butterknife.BindView;
 
-/**
- * 功能：在线排行榜
- * 邮箱：643872807@qq.com
- * 版本：4.1.3
- */
+
 public class AllListFragment extends BaseFragment {
 
     private static final String TAG = "ChartsDetailFragment";

@@ -10,11 +10,7 @@ import com.cyl.musiclake.R;
 import com.cyl.musiclake.common.Constants;
 import com.cyl.musiclake.bean.Music;
 
-/**
- * 作者：yonglong on 2016/9/14 15:24
- * 邮箱：643872807@qq.com
- * 版本：2.5
- */
+
 @SuppressWarnings("ALL")
 public class AddPlaylistDialog extends DialogFragment {
 

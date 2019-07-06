@@ -11,9 +11,7 @@ import dagger.Module;
 import dagger.Provides;
 
 
-/**
- * Created by lw on 2017/1/19.
- */
+
 @Module
 public class ApplicationModule {
     private MusicApp mApplication;

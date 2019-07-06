@@ -10,11 +10,7 @@ import java.io.File
 import java.util.*
 
 object FolderLoader {
-    /**
-     * 检索包含音频文件的文件夹, 并统计该文件夹下的歌曲数目
-     *
-     * @return
-     */
+
     fun getFoldersWithSong(context: Context): Observable<List<FolderInfo>> {
         val folderInfos = ArrayList<FolderInfo>()
         val num_of_songs = "num_of_songs"

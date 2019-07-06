@@ -35,11 +35,7 @@
 //import java.io.File;
 //import java.text.DecimalFormat;
 //
-///**
-// * Author   : cyl
-// * version  : 2018/01/17
-// * function : 歌词解析显示
-// */
+//
 //
 //public class LyricView extends View {
 //
@@ -67,7 +63,7 @@
 //    private boolean mIsMoved = false;//判断用户触摸时是否发生move事件
 //    private boolean mPlayerClick = false; //判断当前用户是否点击指示器
 //
-//    /***/
+//
 //    private int mBtnWidth = 0;  // Btn 按钮的宽度
 //    private int mDefaultMargin = 12;
 //    private int maximumFlingVelocity;  // 最大纵向滑动速度
@@ -115,9 +111,7 @@
 //    }
 //
 //
-//    /**
-//     * 初始化需要的尺寸
-//     */
+//
 //    private void initAllBounds() {
 //        setTextSize(15);
 //        setLineSpace(12);
@@ -128,9 +122,7 @@
 //        measureLineHeight();
 //    }
 //
-//    /**
-//     * 初始化画笔
-//     */
+//
 //    private void initAllPaints() {
 //        mTextPaint = new Paint();
 //        mTextPaint.setDither(true);
@@ -215,9 +207,7 @@
 //            mTextPaint.setTextAlign(Paint.Align.CENTER);
 //            canvas.drawText(mDefaultHint, getMeasuredWidth() * 0.5f, (getMeasuredHeight() + mLineHeight - 6) * 0.5f, mTextPaint);
 //        }
-//        /**
-//         * 滑动提示部分内容绘制
-//         * */
+//
 //        if (mIndicatorShow && scrollable()) {
 //            if (mPlayable) {
 //                drawPlayer(canvas);
@@ -226,11 +216,7 @@
 //        }
 //    }
 //
-//    /**
-//     * 绘制右侧的播放按钮
-//     *
-//     * @param canvas
-//     */
+//
 //
 //    private void drawPlayer(Canvas canvas) {
 //        try {
@@ -245,11 +231,7 @@
 //
 //    }
 //
-//    /**
-//     * 绘制指示器
-//     *
-//     * @param canvas
-//     */
+//
 //    private void drawIndicator(Canvas canvas) {
 //        //绘制当前时间
 //        mIndicatorPaint.setColor(Color.WHITE);
@@ -274,18 +256,14 @@
 //        canvas.drawPath(path, mIndicatorPaint);
 //    }
 //
-//    /**
-//     * 计算行高度
-//     */
+//
 //    private void measureLineHeight() {
 //        Rect lineBound = new Rect();
 //        mTextPaint.getTextBounds(mDefaultHint, 0, mDefaultHint.length(), lineBound);
 //        mLineHeight = lineBound.height() + mLineSpace;
 //    }
 //
-//    /**
-//     * 获取当前滑动到的位置的当前时间
-//     */
+//
 //    private String measureCurrentTime() {
 //        DecimalFormat format = new DecimalFormat("00");
 //        if (mLyricInfo != null && mLineCount > 0 && mCurrentShowLine - 1 < mLineCount && mCurrentShowLine > 0) {
@@ -375,20 +353,12 @@
 //        }
 //    }
 //
-//    /**
-//     * 手势取消执行事件
-//     *
-//     * @param event
-//     */
+//
 //    private void actionCancel(MotionEvent event) {
 //        releaseVelocityTracker();
 //    }
 //
-//    /**
-//     * 手势按下执行事件
-//     *
-//     * @param event
-//     */
+//
 //    private void actionDown(MotionEvent event) {
 //        postman.removeMessages(MSG_PLAYER_SLIDE);
 //        postman.removeMessages(MSG_PLAYER_HIDE);
@@ -403,11 +373,7 @@
 //        mPlayerClick = false;
 //    }
 //
-//    /**
-//     * 手势移动执行事件
-//     *
-//     * @param event
-//     */
+//
 //    private void actionMove(MotionEvent event) {
 //        LogUtil.e("actionMove", scrollable() + "----");
 //        if (scrollable()) {
@@ -425,18 +391,14 @@
 //        }
 //    }
 //
-//    /**
-//     * 计算阻尼效果的大小
-//     */
+//
 //    private final int mMaxDampingDistance = 360;
 //
 //    private float measureDampingDistance(float value02) {
 //        return value02 > mMaxDampingDistance ? (mMaxDampingDistance * 0.6f + (value02 - mMaxDampingDistance) * 0.72f) : value02 * 0.6f;
 //    }
 //
-//    /**
-//     * 手势抬起执行事件
-//     */
+//
 //    private void actionUp(MotionEvent event) {
 //        releaseVelocityTracker();
 //        // 2.4s 后发送一个指示器隐藏的请求
@@ -469,9 +431,7 @@
 //        }
 //    }
 //
-//    /**
-//     * 刷新View
-//     */
+//
 //    private void invalidateView() {
 //        if (Looper.getMainLooper() == Looper.myLooper()) {
 //            //  当前线程是主UI线程，直接刷新。
@@ -482,11 +442,7 @@
 //        }
 //    }
 //
-//    /**
-//     * 设置用户是否触摸的标记
-//     *
-//     * @param isUserTouch 标记用户是否触摸屏幕
-//     */
+//
 //    private void setUserTouch(boolean isUserTouch) {
 //        if (mUserTouch == isUserTouch) {
 //            return;
@@ -497,9 +453,7 @@
 //        }
 //    }
 //
-//    /**
-//     * 释放速度追踪器
-//     */
+//
 //    private void releaseVelocityTracker() {
 //        if (null != mVelocityTracker) {
 //            mVelocityTracker.clear();
@@ -508,11 +462,7 @@
 //        }
 //    }
 //
-//    /**
-//     * 滑行动画
-//     *
-//     * @param velocity 滑动速度
-//     */
+//
 //    private void doFlingAnimator(float velocity) {
 //        //注：     Math.abs(velocity)  < =  16000
 //        float distance = (velocity / Math.abs(velocity) * Math.min((Math.abs(velocity) * 0.050f), 640));   // 计算就已当前的滑动速度理论上的滑行距离是多少
@@ -551,28 +501,18 @@
 //        mFlingAnimator.start();
 //    }
 //
-//    /**
-//     * To measure current showing line number based on the view's scroll Y
-//     */
+//
 //    private void measureCurrentLine() {
 //        float baseScrollY = mScrollY + mLineHeight * 0.5f;
 //        mCurrentShowLine = (int) (baseScrollY / mLineHeight + 1);
 //    }
 //
-//    /**
-//     * Input current showing line to measure the view's current scroll Y
-//     *
-//     * @param line 当前指定行号
-//     */
+//
 //    private float measureCurrentScrollY(int line) {
 //        return (line - 1) * mLineHeight;
 //    }
 //
-//    /**
-//     * 判断当前点击事件是否落在播放按钮触摸区域范围内
-//     *
-//     * @param event 触摸事件
-//     */
+//
 //    private boolean clickPlayer(MotionEvent event) {
 //        if (mBtnBound != null && mDownX > (mBtnBound.left - mDefaultMargin) && mDownX < (mBtnBound.right + mDefaultMargin) && mDownY > (mBtnBound.top - mDefaultMargin) && mDownY < (mBtnBound.bottom + mDefaultMargin)) {
 //            float upX = event.getX();
@@ -582,11 +522,7 @@
 //        return false;
 //    }
 //
-//    /**
-//     * 从当前位置滑动到指定位置上
-//     *
-//     * @param toY 指定纵坐标位置
-//     */
+//
 //    private void smoothScrollTo(float toY) {
 //        final ValueAnimator animator = ValueAnimator.ofFloat(mScrollY, toY);
 //        animator.addUpdateListener(animation -> {
@@ -620,16 +556,12 @@
 //        animator.start();
 //    }
 //
-//    /**
-//     * 判断是否可以进行滑动
-//     */
+//
 //    private boolean scrollable() {
 //        return mLyricInfo != null && mLyricInfo.songLines != null && mLyricInfo.songLines.size() > 0;
 //    }
 //
-//    /**
-//     * 判断当前View是否已经滑动到歌词的内容区域之外
-//     */
+//
 //    private boolean overScrolled() {
 //        return scrollable() && (mScrollY > mLineHeight * (mLineCount - 1) || mScrollY < 0);
 //    }
@@ -652,11 +584,7 @@
 //        }
 //    };
 //
-//    /**
-//     * 根据当前给定的时间戳滑动到指定位置
-//     *
-//     * @param time 时间戳
-//     */
+//
 //    private void scrollToCurrentTimeMillis(long time) {
 //        int position = 0;
 //        if (scrollable()) {
@@ -682,9 +610,7 @@
 //        }
 //    }
 //
-//    /**
-//     * 初始化控件
-//     */
+//
 //    private void resetView() {
 //        mCurrentPlayLine = mCurrentShowLine = 0;
 //        mLyricInfo = null;
@@ -718,29 +644,14 @@
 //    }
 //
 //
-//    /**
-//     *
-//     * ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ *
-//     *                                                                                             对外API                                                                                        *
-//     * ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ *
-//     *
-//     *  */
 //
-//    /**
-//     * 设置当前时间显示位置
-//     *
-//     * @param current 时间戳
-//     */
+//
+//
 //    public void setCurrentTimeMillis(long current) {
 //        scrollToCurrentTimeMillis(current);
 //    }
 //
-//    /**
-//     * 设置歌词文件
-//     *
-//     * @param file        歌词文件
-//     * @param charsetName 解析字符集
-//     */
+//
 //    public void setLyricFile(File file, String charsetName) {
 //        mLyricInfo = LyricParseUtils.setLyricResource(file);
 //        if (mLyricInfo != null && mLyricInfo.getSongLines() != null)
@@ -748,12 +659,7 @@
 //        invalidateView();
 //    }
 //
-//    /**
-//     * 设置歌词字符串
-//     *
-//     * @param lyricInfo   歌词字符串
-//     * @param charsetName 解析字符集
-//     */
+//
 //    public void setLyricContent(String lyricInfo, String charsetName) {
 //        LogUtil.e("LyricView ", lyricInfo);
 //        mLyricInfo = LyricParseUtils.setLyricResource(lyricInfo);
@@ -762,30 +668,18 @@
 //        invalidateView();
 //    }
 //
-//    /**
-//     * 设置播放按钮点击监听事件
-//     *
-//     * @param mClickListener 监听器
-//     */
+//
 //    public void setOnPlayerClickListener(OnPlayerClickListener mClickListener) {
 //        this.mClickListener = mClickListener;
 //    }
 //
-//    /**
-//     * 重置、设置歌词内容被重置后的提示内容
-//     *
-//     * @param message 提示内容
-//     */
+//
 //    public void reset(String message) {
 //        mDefaultHint = message;
 //        resetView();
 //    }
 //
-//    /**
-//     * 设置高亮显示文本的字体颜色
-//     *
-//     * @param color 颜色值
-//     */
+//
 //    public void setHighLightTextColor(int color) {
 //        if (mHighLightColor != color) {
 //            mHighLightColor = color;
@@ -804,11 +698,7 @@
 //        return mDefaultColor;
 //    }
 //
-//    /**
-//     * 设置歌词内容行间距
-//     *
-//     * @param lineSpace 行间距大小
-//     */
+//
 //    public void setLineSpace(float lineSpace) {
 //        if (mLineSpace != lineSpace) {
 //            mLineSpace = getRawSize(TypedValue.COMPLEX_UNIT_SP, lineSpace);
@@ -818,21 +708,12 @@
 //        }
 //    }
 //
-//    /**
-//     * 设置歌词文本内容字体大小
-//     *
-//     * @param unit
-//     * @param size
-//     */
+//
 //    public void setTextSize(int unit, float size) {
 //        setRawTextSize(getRawSize(unit, size));
 //    }
 //
-//    /**
-//     * 设置歌词文本内容字体大小
-//     *
-//     * @param size
-//     */
+//
 //    public void setTextSize(float size) {
 //        setTextSize(TypedValue.COMPLEX_UNIT_SP, size);
 //    }

@@ -25,12 +25,7 @@ import com.cyl.musiclake.utils.ToastUtils
 import com.rtugeek.android.colorseekbar.ColorSeekBar
 import org.jetbrains.anko.support.v4.toast
 
-/**
- * 作者：yonglong on 2016/9/14 15:24
- * 邮箱：643872807@qq.com
- * 版本：2.5
- * 歌词搜索
- */
+
 class MusicLyricDialog : DialogFragment() {
 
     private val rootView by lazy { LayoutInflater.from(context).inflate(R.layout.dialog_lyric_manager, null) }
@@ -69,9 +64,7 @@ class MusicLyricDialog : DialogFragment() {
         return rootView
     }
 
-    /**
-     * 初始化歌词列表
-     */
+
     private fun initLyricList(candidates: MutableList<Candidates>?) {
         lyricRecyclerView.adapter = candidates?.let { ItemAdapter(it) }
         lyricRecyclerView.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
@@ -80,9 +73,7 @@ class MusicLyricDialog : DialogFragment() {
         controlsView.visibility = View.GONE
     }
 
-    /**
-     *初始化监听事件
-     */
+
     private fun initListener() {
         closeIv.setOnClickListener {
             dismiss()
@@ -115,9 +106,7 @@ class MusicLyricDialog : DialogFragment() {
         })
     }
 
-    /**
-     * 搜索歌词
-     */
+
     private fun searchLyric(title: String, duration: Long) {
         ApiManager.request(KuGouApiServiceImpl.searchLyric(title, duration), object : RequestCallBack<KugouLyric> {
             override fun success(result: KugouLyric?) {

@@ -12,12 +12,7 @@ import android.support.v4.app.NotificationCompat
 import com.cyl.musiclake.MusicApp
 import com.cyl.musiclake.R
 
-/**
- * 作者：yonglong
- * 包名：com.cyl.musiclake.player
- * 时间：2019/5/7 23:49
- * 描述：
- */
+
 class UnLockNotify {
     private val mContext: Context = MusicApp.getAppContext()
     private val mNotificationManager: NotificationManager
@@ -39,9 +34,7 @@ class UnLockNotify {
         mNotificationManager.createNotificationChannel(notificationChannel)
     }
 
-    /**
-     * 显示解锁通知栏
-     */
+
     fun notifyToUnlock() {
         val notification = NotificationCompat.Builder(mContext, UNLOCK_NOTIFICATION_CHANNEL_ID)
                 .setContentText(mContext.getString(R.string.float_lock))

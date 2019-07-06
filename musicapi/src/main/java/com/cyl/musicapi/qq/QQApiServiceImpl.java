@@ -16,9 +16,7 @@
 //
 //import io.reactivex.Observable;
 //
-///**
-// * Created by D22434 on 2018/1/5.
-// */
+//
 //
 //public class QQApiServiceImpl {
 //    private static final String TAG = "QQApiServiceImpl";
@@ -27,10 +25,7 @@
 //        return ApiManager.getInstance().create(QQApiService.class, "http://c.y.qq.com/");
 //    }
 //
-//    /**
-//     * @param
-//     * @return
-//     */
+//
 //    @SuppressWarnings({"unchecked", "varargs"})
 //    public static Observable<List<Music>> search(String key, int limit, int page) {
 //        Map<String, String> params = new HashMap<>();

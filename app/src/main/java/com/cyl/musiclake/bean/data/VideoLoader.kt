@@ -13,12 +13,7 @@ import org.litepal.LitePal
 
 
 object VideoLoader {
-    /**
-     * 获取所有艺术家
-     *
-     * @param context
-     * @return
-     */
+
     fun getAllArtists(): MutableList<Artist> {
         val result = DaoLitepal.getAllArtist()
         if (result.size == 0) {
@@ -27,32 +22,17 @@ object VideoLoader {
         return result
     }
 
-    /**
-     * 获取艺术家所有歌曲
-     *
-     * @param context
-     * @return
-     */
+
     fun getVideosForArtist(artistName: String?): MutableList<Music> {
         return LitePal.where("isonline =0 and artist like ?", "%$artistName%").find(Music::class.java)
     }
 
-    /**
-     * 获取专辑所有歌曲
-     *
-     * @param context
-     * @return
-     */
+
     fun getVideosForAlbum(albumName: String?): MutableList<Music> {
         return LitePal.where("isonline =0 and album like ?", "%$albumName%").find(Music::class.java)
     }
 
-    /**
-     * 获取所有专辑
-     *
-     * @param context
-     * @return
-     */
+
     fun getAllAlbums(): MutableList<Album> {
         val result = DaoLitepal.getAllAlbum()
         if (result.size == 0) {
@@ -62,13 +42,7 @@ object VideoLoader {
     }
 
 
-    /**
-     * Android 扫描获取到的数据
-     *
-     * @param context
-     * @param cursor
-     * @return
-     */
+
     private fun getVideosForMedia(context: Context, cursor: Cursor?): MutableList<Music> {
         val results = mutableListOf<Music>()
         try {
@@ -104,12 +78,7 @@ object VideoLoader {
     }
 
 
-    /**
-     * 获取所有收藏的歌曲
-     *
-     * @param context
-     * @return
-     */
+
     fun getFavoriteVideo(): MutableList<Music> {
         return DaoLitepal.getMusicList(Constants.PLAYLIST_LOVE_ID)
     }
@@ -145,24 +114,16 @@ object VideoLoader {
         return music.isLove
     }
 
-    /**
-     * 本地歌曲
-     * 添加歌曲
-     */
+
     private fun insertVideos(musics: List<Music>) {
     }
 
-    /**
-     * 本地歌曲
-     * 添加歌曲
-     */
+
     fun updateMusic(music: Music) {
         DaoLitepal.saveOrUpdateMusic(music)
     }
 
-    /**
-     * 删除歌曲
-     */
+
     fun removeVideo(music: Music) {
         DaoLitepal.deleteMusic(music)
     }
@@ -192,10 +153,7 @@ object VideoLoader {
         return makeVideoCursor(context, selection, paramArrayOfString, VideoSortOrder)
     }
 
-    /**
-     * arrayOf("_id", "title", "artist", "album", "duration", "track", "artist_id", "album_id", MediaStore.Audio.Media.DATA, "is_music")
-     * 搜素本地音乐
-     */
+
     private fun makeVideoCursor(context: Context, selection: String?, paramArrayOfString: Array<String>?, sortOrder: String?): Cursor? {
 //        var selectionStatement = "duration>60000 AND is_music=1 AND title != ''"
 //

@@ -13,9 +13,7 @@
 //
 //import io.reactivex.Observable;
 //
-///**
-// * Created by yonglong on 2018/1/15.
-// */
+//
 //
 //public class XiamiServiceImpl {
 //
@@ -25,14 +23,7 @@
 //        return ApiManager.getInstance().create(XiamiService.class, Constants.BASE_XIAMI_URL);
 //    }
 //
-//    /**
-//     * 搜索虾米音乐
-//     *
-//     * @param key   关键字
-//     * @param limit
-//     * @param page
-//     * @return
-//     */
+//
 //    @SuppressWarnings({"unchecked", "varargs"})
 //    public static Observable<List<Music>> search(String key, int limit, int page) {
 //        Map<String, String> params = new HashMap<>();

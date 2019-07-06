@@ -2,11 +2,7 @@ package com.cyl.musiclake.ui.widget.lyric;
 
 import java.util.List;
 
-/**
- * Author   : D22434
- * version  : 2018/3/7
- * function :
- */
+
 
 public class LyricInfo {
 

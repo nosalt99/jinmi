@@ -15,10 +15,7 @@ import com.cyl.musiclake.api.music.MusicUtils
 import com.cyl.musiclake.bean.Music
 
 
-/**
- * 专辑封面图片加载器
- * Glide加载异常处理
- */
+
 object CoverLoader {
     private val TAG = "CoverLoader"
     val coverUriByRandom: Int = R.drawable.default_cover
@@ -44,13 +41,7 @@ object CoverLoader {
         return uri
     }
 
-    /**
-     * 获取专辑图url，
-     *
-     * @param music 音乐
-     * @param isBig 是否是大图
-     * @return
-     */
+
     private fun getCoverUriByMusic(music: Music, isBig: Boolean): String? {
         return if (music.coverBig != null && isBig) {
             music.coverBig
@@ -62,24 +53,14 @@ object CoverLoader {
     }
 
 
-    /**
-     * 显示小图
-     *
-     * @param mContext
-     * @param music
-     * @param callBack
-     */
+
     fun loadImageViewByMusic(mContext: Context, music: Music?, callBack: ((Bitmap) -> Unit)?) {
         if (music == null) return
         val url = getCoverUriByMusic(music, false)
         loadBitmap(mContext, url, callBack)
     }
 
-    /**
-     * 显示播放页大图
-     *
-     * @param mContext
-     */
+
     fun loadBigImageView(mContext: Context?, music: Music?, callBack: ((Bitmap) -> Unit)?) {
         if (music == null) return
         if (mContext == null) return
@@ -120,13 +101,7 @@ object CoverLoader {
                 .into(imageView)
     }
 
-    /**
-     * 显示图片
-     *
-     * @param mContext
-     * @param url
-     * @param imageView
-     */
+
     fun loadImageView(mContext: Context?, url: String?, imageView: ImageView?) {
         if (mContext == null) return
         if (imageView == null) return
@@ -148,24 +123,12 @@ object CoverLoader {
                 .into(imageView)
     }
 
-    /**
-     * 根据id显示
-     *
-     * @param mContext
-     * @param albumId
-     * @param callBack
-     */
+
     fun loadBitmapById(mContext: Context, albumId: String, callBack: ((Bitmap) -> Unit)?) {
         loadBitmap(mContext, getCoverUri(mContext, albumId), callBack)
     }
 
-    /**
-     * 返回bitmap
-     *
-     * @param mContext
-     * @param url
-     * @param callBack
-     */
+
     fun loadBitmap(mContext: Context?, url: String?, callBack: ((Bitmap) -> Unit)?) {
         if (mContext == null) return
         GlideApp.with(mContext)
@@ -180,13 +143,7 @@ object CoverLoader {
                 })
     }
 
-    /**
-     * 返回Drawable
-     *
-     * @param mContext
-     * @param url
-     * @param callBack
-     */
+
     fun loadDrawable(mContext: Context?, url: String?, callBack: ((Drawable) -> Unit)?) {
         if (mContext == null) return
         GlideApp.with(mContext)

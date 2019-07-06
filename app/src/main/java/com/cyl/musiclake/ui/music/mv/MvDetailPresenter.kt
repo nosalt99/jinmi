@@ -9,11 +9,7 @@ import com.cyl.musiclake.ui.base.BasePresenter
 import com.cyl.musiclake.api.net.RequestCallBack
 import javax.inject.Inject
 
-/**
- * Des    :
- * Author : master.
- * Date   : 2018/5/20 .
- */
+
 class MvDetailPresenter @Inject
 constructor() : BasePresenter<MvDetailContract.View>(), MvDetailContract.Presenter {
     override fun loadBaiduMvInfo(songId: String?) {

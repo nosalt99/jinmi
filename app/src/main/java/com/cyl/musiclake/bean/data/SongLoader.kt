@@ -14,12 +14,7 @@ import org.litepal.LitePal
 
 
 object SongLoader {
-    /**
-     * 获取所有艺术家
-     *
-     * @param context
-     * @return
-     */
+
     fun getAllArtists(): MutableList<Artist> {
         val result = DaoLitepal.getAllArtist()
         if (result.size == 0) {
@@ -28,32 +23,17 @@ object SongLoader {
         return result
     }
 
-    /**
-     * 获取艺术家所有歌曲
-     *
-     * @param context
-     * @return
-     */
+
     fun getSongsForArtist(artistName: String?): MutableList<Music> {
         return LitePal.where("isonline =0 and artist like ?", "%$artistName%").find(Music::class.java)
     }
 
-    /**
-     * 获取专辑所有歌曲
-     *
-     * @param context
-     * @return
-     */
+
     fun getSongsForAlbum(albumName: String?): MutableList<Music> {
         return LitePal.where("isonline =0 and album like ?", "%$albumName%").find(Music::class.java)
     }
 
-    /**
-     * 获取所有专辑
-     *
-     * @param context
-     * @return
-     */
+
     fun getAllAlbums(): MutableList<Album> {
         val result = DaoLitepal.getAllAlbum()
         if (result.size == 0) {
@@ -63,13 +43,7 @@ object SongLoader {
     }
 
 
-    /**
-     * Android 扫描获取到的数据
-     *
-     * @param context
-     * @param cursor
-     * @return
-     */
+
     private fun getSongsForMedia(context: Context, cursor: Cursor?): MutableList<Music> {
         val results = mutableListOf<Music>()
         try {
@@ -111,12 +85,7 @@ object SongLoader {
     }
 
 
-    /**
-     * 获取所有收藏的歌曲
-     *
-     * @param context
-     * @return
-     */
+
     fun getFavoriteSong(): MutableList<Music> {
         return DaoLitepal.getMusicList(Constants.PLAYLIST_LOVE_ID)
     }
@@ -152,24 +121,16 @@ object SongLoader {
         return music.isLove
     }
 
-    /**
-     * 本地歌曲
-     * 添加歌曲
-     */
+
     private fun insertSongs(musics: List<Music>) {
     }
 
-    /**
-     * 本地歌曲
-     * 添加歌曲
-     */
+
     fun updateMusic(music: Music) {
         DaoLitepal.saveOrUpdateMusic(music)
     }
 
-    /**
-     * 删除歌曲
-     */
+
     fun removeSong(music: Music) {
         DaoLitepal.deleteMusic(music)
     }
@@ -199,9 +160,7 @@ object SongLoader {
         return makeSongCursor(context, selection, paramArrayOfString, songSortOrder)
     }
 
-    /**
-     * 搜素本地音乐
-     */
+
     private fun makeSongCursor(context: Context, selection: String?, paramArrayOfString: Array<String>?, sortOrder: String?): Cursor? {
         var selectionStatement = "duration>60000 AND is_music=1 AND title != ''"
 

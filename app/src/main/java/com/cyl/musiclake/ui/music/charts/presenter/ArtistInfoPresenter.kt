@@ -6,9 +6,7 @@ import com.cyl.musiclake.ui.music.charts.contract.ArtistInfoContract
 
 import javax.inject.Inject
 
-/**
- * Created by D22434 on 2018/1/4.
- */
+
 
 class ArtistInfoPresenter @Inject
 constructor() : BasePresenter<ArtistInfoContract.View>(), ArtistInfoContract.Presenter {

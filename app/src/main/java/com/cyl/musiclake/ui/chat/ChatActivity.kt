@@ -25,9 +25,7 @@ import kotlinx.android.synthetic.main.content_chat.*
 import org.jetbrains.anko.startActivity
 
 
-/**
- * 消息中心，收发消息
- */
+
 class ChatActivity : BaseActivity<ChatPresenter>(), ChatContract.View {
 
     private var messages = mutableListOf<MessageInfoBean>()
@@ -60,9 +58,7 @@ class ChatActivity : BaseActivity<ChatPresenter>(), ChatContract.View {
         }
     }
 
-    /**
-     * 处理接收分享的信息
-     */
+
     private fun dealTextMessage(intent: Intent?) {
         val title = intent?.getStringExtra(Intent.EXTRA_TEXT)
         messageInputView?.setText(title)
@@ -72,9 +68,7 @@ class ChatActivity : BaseActivity<ChatPresenter>(), ChatContract.View {
         mActivityComponent.inject(this)
     }
 
-    /**
-     * socket监听事件
-     */
+
     val listener = object : SocketListener {
         override fun onMessage(msgInfo: MessageInfoBean) {
             runOnUiThread {
@@ -110,9 +104,7 @@ class ChatActivity : BaseActivity<ChatPresenter>(), ChatContract.View {
         }
     }
 
-    /**
-     * 更新用户状态（上下线）
-     */
+
     fun updateUserStatus(userInfo: UserInfoBean, isLeave: Boolean) {
         val noticeView = NoticeView(this)
         noticeView.setNewData(userInfo, isLeave)
@@ -124,9 +116,7 @@ class ChatActivity : BaseActivity<ChatPresenter>(), ChatContract.View {
         }
     }
 
-    /**
-     * 设置监听
-     */
+
     override fun listener() {
         super.listener()
         sendBtn.setOnClickListener {
@@ -172,17 +162,11 @@ class ChatActivity : BaseActivity<ChatPresenter>(), ChatContract.View {
         MusicApp.socketManager.addSocketListener(listener)
     }
 
-    /**
-     * 下拉加载更多
-     */
+
     private fun startUpFetch() {
-        /**
-         * set fetching on when start network request.
-         */
+
         mAdapter?.isUpFetching = true
-        /**
-         * get data from internet.
-         */
+
         mSwipeRefreshLayout?.isRefreshing = true
         messageRsv.postDelayed({
             if (messages.size > 0) {
@@ -192,9 +176,7 @@ class ChatActivity : BaseActivity<ChatPresenter>(), ChatContract.View {
     }
 
 
-    /**
-     * 发送消息（普通）
-     */
+
     private fun sendMessage() {
         val content = messageInputView?.text.toString()
         if (content.isNotEmpty()) {
@@ -203,9 +185,7 @@ class ChatActivity : BaseActivity<ChatPresenter>(), ChatContract.View {
         }
     }
 
-    /**
-     * 发送消息(当前正在播放的音乐)
-     */
+
     private fun sendMusicMessage() {
         mPresenter?.sendMusicMessage()
     }
@@ -229,18 +209,14 @@ class ChatActivity : BaseActivity<ChatPresenter>(), ChatContract.View {
     }
 
 
-    /**
-     * 显示消息
-     */
+
     override fun showMessages(msgList: MutableList<MessageInfoBean>) {
         messages = msgList
         mAdapter?.setNewData(messages)
         messageRsv?.smoothScrollToPosition(messages.size)
     }
 
-    /**
-     * 显示历史消息
-     */
+
     override fun showHistortMessages(msgList: MutableList<MessageInfoBean>) {
         LogUtil.e("showHistortMessages =" + msgList.size)
         messages.addAll(0, msgList)

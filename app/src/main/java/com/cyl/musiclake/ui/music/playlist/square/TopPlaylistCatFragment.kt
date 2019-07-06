@@ -15,11 +15,7 @@ import android.widget.TextView
 import com.cyl.musiclake.R
 import kotlinx.android.synthetic.main.all_category_dialog.*
 
-/**
- * Des    : 精品歌单分类选择列表
- * Author : master.
- * Date   : 2018/8/23 .
- */
+
 class TopPlaylistCatFragment : BottomSheetDialogFragment() {
     private var rootView: View? = null
     private val allChipTv by lazy { rootView?.findViewById<TextView>(R.id.allTagTv) }
@@ -29,9 +25,7 @@ class TopPlaylistCatFragment : BottomSheetDialogFragment() {
     var isHighQuality: Boolean = false
     var successListener: ((String) -> Unit?)? = null
 
-    /**
-     *显示出对话框
-     */
+
     fun showIt(context: FragmentActivity?) {
         if (dialog != null) {
             dialog.dismiss()
@@ -78,9 +72,7 @@ class TopPlaylistCatFragment : BottomSheetDialogFragment() {
         }
     }
 
-    /**
-     * 标签适配器
-     */
+
     class AllCateAdapter(val context: Context, val list: MutableList<Any>) : RecyclerView.Adapter<AllCateAdapter.TagViewHolder>() {
 
         var clickListener: ((Int) -> Unit)? = null

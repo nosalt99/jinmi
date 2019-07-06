@@ -1,21 +1,4 @@
-/*
- * Copyright 2018 Mauricio Colli <mauriciocolli@outlook.com>
- * AnimationUtils.java is part of NewPipe
- *
- * License: GPL-3.0+
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program. If not, see <http://www.gnu.org/licenses/>.
- */
+
 
 package com.cyl.musiclake.utils;
 
@@ -63,16 +46,7 @@ public class AnimationUtils {
         animateView(view, animationType, enterOrExit, duration, delay, null);
     }
 
-    /**
-     * Animate the view
-     *
-     * @param view          view that will be animated
-     * @param animationType {@link Type} of the animation
-     * @param enterOrExit   true to enter, false to exit
-     * @param duration      how long the animation will take, in milliseconds
-     * @param delay         how long the animation will wait to start, in milliseconds
-     * @param execOnEnd     runnable that will be executed when the animation ends
-     */
+
     public static void animateView(final View view, Type animationType, boolean enterOrExit, long duration, long delay, Runnable execOnEnd) {
         if (DEBUG) {
             String id;
@@ -126,9 +100,7 @@ public class AnimationUtils {
     }
 
 
-    /**
-     * Animate the background color of a view
-     */
+
     public static void animateBackgroundColor(final View view, long duration, @ColorInt final int colorStart, @ColorInt final int colorEnd) {
         if (DEBUG) {
             Log.d(TAG, "animateBackgroundColor() called with: view = [" + view + "], duration = [" + duration + "], colorStart = [" + colorStart + "], colorEnd = [" + colorEnd + "]");
@@ -158,9 +130,7 @@ public class AnimationUtils {
         viewPropertyAnimator.start();
     }
 
-    /**
-     * Animate the text color of any view that extends {@link TextView} (Buttons, EditText...)
-     */
+
     public static void animateTextColor(final TextView view, long duration, @ColorInt final int colorStart, @ColorInt final int colorEnd) {
         if (DEBUG) {
             Log.d(TAG, "animateTextColor() called with: view = [" + view + "], duration = [" + duration + "], colorStart = [" + colorStart + "], colorEnd = [" + colorEnd + "]");
@@ -241,9 +211,7 @@ public class AnimationUtils {
                 }).start();
     }
 
-    /*//////////////////////////////////////////////////////////////////////////
-    // Internals
-    //////////////////////////////////////////////////////////////////////////*/
+
 
     private static void animateAlpha(final View view, boolean enterOrExit, long duration, long delay, final Runnable execOnEnd) {
         if (enterOrExit) {

@@ -6,9 +6,7 @@ import android.widget.Toast;
 import com.cyl.musiclake.MusicApp;
 
 
-/**
- * 提示工具类
- */
+
 public class ToastUtils {
     private static Toast toast;
 

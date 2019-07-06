@@ -3,12 +3,9 @@ package com.cyl.musiclake.utils;
 
 import android.util.Log;
 
-/**
- */
+
 public class LogUtil {
-    /**
-     * 默认的tag
-     */
+
     private static final boolean IS_DEBUG = true;
     public static final String defaultTag = "MusicLake";
     public static final int VERBOSE = 1;
@@ -17,9 +14,7 @@ public class LogUtil {
     public static final int WARN = 4;
     public static final int ERROR = 5;
     public static final int NOTHING = 6;
-    /**
-     * 下面这个变量定义日志级别
-     */
+
     public static final int LEVEL = VERBOSE;
 
 

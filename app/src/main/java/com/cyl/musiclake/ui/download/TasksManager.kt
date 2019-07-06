@@ -15,10 +15,7 @@ import org.jetbrains.anko.uiThread
 import java.lang.ref.WeakReference
 
 
-/**
- * Created by yonglong on 2018/1/23.
- * 下载任务管理、新增缓存下载
- */
+
 object TasksManager {
     private var modelList = DownloadLoader.getDownloadingList()
 
@@ -46,9 +43,7 @@ object TasksManager {
         taskSparseArray.clear()
     }
 
-    /**
-     * 注册监听
-     */
+
     private fun registerServiceConnectionListener(activityWeakReference: WeakReference<DownloadManagerFragment>?) {
         if (listener != null) {
             FileDownloader.getImpl().removeServiceConnectListener(listener)
@@ -93,16 +88,12 @@ object TasksManager {
         releaseTask()
     }
 
-    /**
-     * 根据位置获取
-     */
+
     operator fun get(position: Int): TasksManagerModel {
         return modelList[position]
     }
 
-    /**
-     * 根据model id获取对象
-     */
+
     private fun getById(id: Int): TasksManagerModel? {
         for (model in modelList) {
             if (model.tid == id) {
@@ -112,11 +103,7 @@ object TasksManager {
         return null
     }
 
-    /**
-     * @param status Download Status
-     * @return has already downloaded
-     * @see FileDownloadStatus
-     */
+
     fun isDownloaded(status: Int): Boolean {
         return status == FileDownloadStatus.completed.toInt()
     }
@@ -139,9 +126,7 @@ object TasksManager {
     }
 
 
-    /**
-     * @param tid :下载任务唯一ID
-     */
+
     fun finishTask(tid: Int) {
         doAsync {
             DownloadLoader.updateTask(tid)
@@ -153,9 +138,7 @@ object TasksManager {
         }
     }
 
-    /**
-     * @param tid :下载任务唯一ID
-     */
+
     fun addTask(tid: Int, mid: String?, name: String?, url: String?, path: String, isCached: Boolean): TasksManagerModel? {
         if (TextUtils.isEmpty(url) || TextUtils.isEmpty(mid) || TextUtils.isEmpty(path)) {
             return null

@@ -25,9 +25,7 @@ class LyricFragment : BaseFragment<BasePresenter<BaseContract.BaseView>>() {
 
     }
 
-    /**
-     *显示歌词
-     */
+
     fun showLyric(lyric: String?, init: Boolean) {
         if (init) {
             //初始化歌词配置

@@ -33,9 +33,7 @@ import static com.cyl.musiclake.common.Constants.ABOUT_MUSIC_LAKE_ISSUES;
 import static com.cyl.musiclake.common.Constants.ABOUT_MUSIC_LAKE_PC;
 import static com.cyl.musiclake.common.Constants.ABOUT_MUSIC_LAKE_URL;
 
-/**
- * Created by lw on 2018/2/12.
- */
+
 public class AboutActivity extends BaseActivity {
     @BindView(R.id.tv_about_version)
     TextView mVersion;

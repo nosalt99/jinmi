@@ -12,11 +12,7 @@ import com.cyl.musiclake.R
 import com.cyl.musiclake.bean.Music
 
 
-/**
- * Des    : 分享、反馈工具类
- * Author : master.
- * Date   : 2018/5/19 .
- */
+
 object Tools {
 
     fun getString(context: Context?, resourceId: Int): String {
@@ -33,9 +29,7 @@ object Tools {
                 context.getString(R.string.about_feedback)))
     }
 
-    /**
-     * 分享到QQ
-     */
+
     fun qqShare(activity: Activity, music: Music?) {
         if (music == null) {
             ToastUtils.show(MusicApp.getAppContext(), "暂无音乐播放!")
@@ -54,9 +48,7 @@ object Tools {
         activity.startActivity(Intent.createChooser(textIntent, "歌曲分享"))
     }
 
-    /**
-     *分享链接
-     */
+
     fun share(context: Context?) {
         val intent = Intent(Intent.ACTION_SEND)
         intent.putExtra(Intent.EXTRA_TEXT, context?.getString(R.string.share_content))
@@ -64,9 +56,7 @@ object Tools {
         context?.startActivity(Intent.createChooser(intent, context.getString(R.string.share_title)))
     }
 
-    /**
-     *分享链接
-     */
+
     fun openBrowser(context: Context?, url: String) {
         val uri = Uri.parse(url)
         val intent = Intent(Intent.ACTION_VIEW, uri)
@@ -74,9 +64,7 @@ object Tools {
         context?.startActivity(intent)
     }
 
-    /**
-     * 强制隐藏输入法
-     */
+
     fun hideInputView(view: View) {
         val inputMethodManager = MusicApp.getAppContext().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
         inputMethodManager.hideSoftInputFromWindow(view.windowToken, 0)

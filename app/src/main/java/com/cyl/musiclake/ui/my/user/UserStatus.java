@@ -7,9 +7,7 @@ import com.cyl.musiclake.MusicApp;
 import com.cyl.musiclake.common.Constants;
 import com.cyl.musiclake.utils.SPUtils;
 
-/**
- * Created by 永龙 on 2015/12/22.
- */
+
 public class UserStatus {
     //保存个人信息到user.xml文件中
     public static void saveUserInfo(User userInfo) {

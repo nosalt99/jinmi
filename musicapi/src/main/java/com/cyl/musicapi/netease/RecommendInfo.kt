@@ -2,9 +2,7 @@ package com.cyl.musicapi.netease
 
 import com.google.gson.annotations.SerializedName
 
-/**
- * Created by cyl on 2018/11/6.
- */
+
 
 data class RecommendSongsInfo(@SerializedName("code")
                               val code: Int = 0,

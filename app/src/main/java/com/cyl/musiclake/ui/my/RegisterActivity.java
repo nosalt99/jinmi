@@ -17,11 +17,7 @@ import com.getbase.floatingactionbutton.FloatingActionButton;
 import butterknife.BindView;
 import butterknife.OnClick;
 
-/**
- * 作者：yonglong on 2016/8/11 18:38
- * 邮箱：643872807@qq.com
- * 版本：2.5
- */
+
 public class RegisterActivity extends BaseActivity<RegisterPresenter> implements RegisterContract.View {
 
     @BindView(R.id.fab)

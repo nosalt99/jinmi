@@ -8,11 +8,7 @@ import android.support.v4.app.DialogFragment;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.cyl.musiclake.bean.Music;
 
-/**
- * 作者：yonglong on 2016/9/14 15:24
- * 邮箱：643872807@qq.com
- * 版本：2.5
- */
+
 @SuppressWarnings("ALL")
 public class ShowDetailDialog extends DialogFragment {
 

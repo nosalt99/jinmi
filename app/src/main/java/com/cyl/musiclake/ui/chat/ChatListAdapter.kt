@@ -18,11 +18,7 @@ import com.cyl.musiclake.ui.music.dialog.BottomDialogFragment
 import com.cyl.musiclake.utils.ConvertUtils
 import com.cyl.musiclake.utils.CoverLoader
 
-/**
- * 作者：yonglong on 2016/8/10 21:36
- * 邮箱：643872807@qq.com
- * 版本：2.5
- */
+
 class ChatListAdapter(val list: List<MessageInfoBean>) : BaseQuickAdapter<MessageInfoBean, BaseViewHolder>(R.layout.item_chat, list) {
 
     override fun convert(holder: BaseViewHolder, item: MessageInfoBean) {

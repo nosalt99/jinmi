@@ -14,9 +14,7 @@ import com.cyl.musiclake.utils.LogUtil
 import io.reactivex.Observable
 import io.reactivex.ObservableOnSubscribe
 
-/**
- * Created by yonglong on 2018/1/21.
- */
+
 
 object BaiduApiServiceImpl {
     private val TAG = "BaiduApiServiceImpl"
@@ -55,9 +53,7 @@ object BaiduApiServiceImpl {
         }
     }
 
-    /**
-     * 获取歌单歌曲
-     */
+
     fun getOnlineSongs(type: String, limit: Int, mOffset: Int): Observable<MutableList<Music>> {
         return apiService.getBillMusicList(type, limit, mOffset)
                 .flatMap { baiduSongList ->
@@ -90,9 +86,7 @@ object BaiduApiServiceImpl {
                 }
     }
 
-    /**
-     * 搜索建议
-     */
+
     fun getSearchSuggestion(query: String): Observable<List<String>> {
         return apiService.getSearchSuggestion(query)
                 .flatMap {
@@ -107,9 +101,7 @@ object BaiduApiServiceImpl {
                 }
     }
 
-    /**
-     * 通过百度搜索,获取MusicInfo
-     */
+
     fun getSearchMusicInfo(query: String, limit: Int, offset: Int): Observable<MutableList<Music>> {
         return apiService.queryMerge(query, offset, limit)
                 .flatMap {
@@ -140,10 +132,7 @@ object BaiduApiServiceImpl {
                 }
     }
 
-    /**
-     * 获取歌曲详情
-     * "http://music.baidu.com/data/music/links?songIds=$mid"
-     */
+
     fun getTingSongInfo(music: Music): Observable<Music> {
         val url = Constants.URL_GET_SONG_INFO + music.mid
         return apiService.getTingSongInfo(url)
@@ -178,9 +167,7 @@ object BaiduApiServiceImpl {
                 }
     }
 
-    /**
-     * 获取歌词
-     */
+
     fun getBaiduLyric(music: Music): Observable<String>? {
         //本地歌词路径
         val mLyricPath = FileUtils.getLrcDir() + music.title + "-" + music.artist + ".lrc"
@@ -210,12 +197,8 @@ object BaiduApiServiceImpl {
         }
     }
 
-    /**
-     * 获取电台列表
-     */
-    /**
-     * 搜索建议
-     */
+
+
     fun getRadioChannel(): Observable<MutableList<Playlist>> {
         return apiService.getRadioChannels()
                 .flatMap {
@@ -244,9 +227,7 @@ object BaiduApiServiceImpl {
                 }
     }
 
-    /**
-     * 电台歌单列表
-     */
+
     fun getRadioChannelInfo(playlist: Playlist): Observable<Playlist> {
         return apiService.getRadioChannelSongs(playlist.pid!!)
                 .flatMap {
@@ -279,9 +260,7 @@ object BaiduApiServiceImpl {
                 }
     }
 
-    /**
-     * 获取歌手列表
-     */
+
     fun getArtistSongList(artistId: String, offset: Int): Observable<Artist> {
         return apiService.getArtistSongList(artistId, offset)
                 .flatMap {
@@ -318,9 +297,7 @@ object BaiduApiServiceImpl {
                 }
     }
 
-    /**
-     * 获取专辑信息
-     */
+
     fun getAlbumSongList(albumId: String): Observable<Album> {
         return apiService.getAlbumInfo(albumId)
                 .flatMap {

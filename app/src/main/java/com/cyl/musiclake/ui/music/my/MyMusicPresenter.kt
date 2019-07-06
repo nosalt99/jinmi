@@ -18,15 +18,11 @@ import org.jetbrains.anko.doAsync
 import org.jetbrains.anko.uiThread
 import javax.inject.Inject
 
-/**
- * Created by yonglong on 2018/1/6.
- */
+
 
 class MyMusicPresenter @Inject
 constructor() : BasePresenter<MyMusicContract.View>(), MyMusicContract.Presenter {
-    /**
-     * 更新播放历史
-     */
+
     fun updateHistory() {
         doAsync {
             val data = PlayHistoryLoader.getPlayHistory()
@@ -36,9 +32,7 @@ constructor() : BasePresenter<MyMusicContract.View>(), MyMusicContract.Presenter
         }
     }
 
-    /**
-     * 更新播放历史
-     */
+
     private fun updateLocal() {
         doAsync {
             val data = SongLoader.getLocalMusic(mView.context)
@@ -48,9 +42,7 @@ constructor() : BasePresenter<MyMusicContract.View>(), MyMusicContract.Presenter
         }
     }
 
-    /**
-     * 更新本地歌单
-     */
+
     fun updateFavorite() {
         doAsync {
             val data = SongLoader.getFavoriteSong()
@@ -61,9 +53,7 @@ constructor() : BasePresenter<MyMusicContract.View>(), MyMusicContract.Presenter
     }
 
 
-    /**
-     * 更新本地歌单
-     */
+
     fun updateDownload() {
         doAsync {
             val data = DownloadLoader.getDownloadList()

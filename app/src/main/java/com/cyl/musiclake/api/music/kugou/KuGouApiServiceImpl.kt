@@ -8,9 +8,7 @@ import com.cyl.musiclake.api.net.ApiManager
 import com.cyl.musiclake.utils.LyricUtil
 import io.reactivex.Observable
 
-/**
- * Created by master on 2018/4/30.
- */
+
 
 object KuGouApiServiceImpl {
 
@@ -18,16 +16,12 @@ object KuGouApiServiceImpl {
 
     val apiService by lazy { ApiManager.getInstance().create(KuGouApiService::class.java, Constants.BASE_KUGOU_URL) }
 
-    /**
-     * 搜索歌词
-     */
+
     fun searchLyric(title: String, duration: Long): Observable<KugouLyric> {
         return apiService.searchLyric(title, duration.toString())
     }
 
-    /**
-     * 获取歌词
-     */
+
     fun getKugouLyricInfo(candidates: Candidates?): Observable<String>? {
         if (candidates?.id == null) {
             return null
@@ -45,9 +39,7 @@ object KuGouApiServiceImpl {
         }
     }
 
-    /**
-     * 获取歌词
-     */
+
 //    fun getKugouLyric(music: Music): Observable<String>? {
 //        val mLyricPath = FileUtils.getLrcDir() + music.title + "-" + music.artist + ".lrc"
 //        //网络歌词

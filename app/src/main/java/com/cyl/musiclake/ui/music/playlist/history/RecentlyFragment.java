@@ -27,9 +27,7 @@ import java.util.List;
 
 import butterknife.BindView;
 
-/**
- * Created by Monkey on 2015/6/29.
- */
+
 public class RecentlyFragment extends BaseFragment<RecentlyPresenter> implements RecentlyContract.View {
 
     @BindView(R.id.recyclerView)

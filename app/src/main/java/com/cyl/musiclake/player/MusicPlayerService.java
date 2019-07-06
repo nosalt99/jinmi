@@ -74,11 +74,7 @@ import io.reactivex.schedulers.Schedulers;
 
 import static android.support.v4.app.NotificationCompat.Builder;
 
-/**
- * 作者：yonglong on 2016/8/11 19:16
- * 邮箱：643872807@qq.com
- * 版本：2.5 播放service
- */
+
 public class MusicPlayerService extends Service {
     private static final String TAG = "MusicPlayerService";
 
@@ -139,9 +135,7 @@ public class MusicPlayerService extends Service {
     private long mNotificationPostTime = 0;
     private int mServiceStartId = -1;
 
-    /**
-     * 错误次数，超过最大错误次数，自动停止播放
-     */
+
     private int playErrorTimes = 0;
     private int MAX_ERROR_TIMES = 1;
 
@@ -345,9 +339,7 @@ public class MusicPlayerService extends Service {
         initMediaPlayer();
     }
 
-    /**
-     * 参数配置，AudioManager、锁屏
-     */
+
     @SuppressLint("InvalidWakeLockTag")
     private void initConfig() {
 
@@ -373,9 +365,7 @@ public class MusicPlayerService extends Service {
     }
 
 
-    /**
-     * 释放通知栏;
-     */
+
     private void releaseServiceUiAndStop() {
         if (isPlaying() || mHandler.hasMessages(TRACK_PLAY_ENDED)) {
             return;
@@ -393,9 +383,7 @@ public class MusicPlayerService extends Service {
         }
     }
 
-    /**
-     * 重新加载当前进度
-     */
+
     public void reloadPlayQueue() {
         mPlayQueue.clear();
         mHistoryPos.clear();
@@ -410,9 +398,7 @@ public class MusicPlayerService extends Service {
         notifyChange(PLAY_QUEUE_CHANGE);
     }
 
-    /**
-     * 初始化电话监听服务
-     */
+
     private void initTelephony() {
         TelephonyManager telephonyManager = (TelephonyManager) this
                 .getSystemService(Context.TELEPHONY_SERVICE);// 获取电话通讯服务
@@ -420,18 +406,14 @@ public class MusicPlayerService extends Service {
                 PhoneStateListener.LISTEN_CALL_STATE);// 创建一个监听对象，监听电话状态改变事件
     }
 
-    /**
-     * 初始化音乐播放服务
-     */
+
     private void initMediaPlayer() {
         mPlayer = new MusicPlayerEngine(this);
         mPlayer.setHandler(mHandler);
         reloadPlayQueue();
     }
 
-    /**
-     * 初始化广播
-     */
+
     private void initReceiver() {
         //实例化过滤器，设置广播
         intentFilter = new IntentFilter(ACTION_SERVICE);
@@ -451,14 +433,7 @@ public class MusicPlayerService extends Service {
         registerReceiver(mStandardWidget, intentFilter);
     }
 
-    /**
-     * 启动Service服务，执行onStartCommand
-     *
-     * @param intent
-     * @param flags
-     * @param startId
-     * @return
-     */
+
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         LogUtil.d(TAG, "Got new intent " + intent + ", startId = " + startId);
@@ -477,12 +452,7 @@ public class MusicPlayerService extends Service {
         return START_NOT_STICKY;
     }
 
-    /**
-     * 绑定Service
-     *
-     * @param intent
-     * @return
-     */
+
     @Nullable
     @Override
     public IBinder onBind(Intent intent) {
@@ -493,9 +463,7 @@ public class MusicPlayerService extends Service {
         mPlayingPos = mNextPlayPos;
     }
 
-    /**
-     * 下一首
-     */
+
     public void next(Boolean isAuto) {
         synchronized (this) {
             if (!NetworkUtils.isNetworkAvailable(this)) {
@@ -510,9 +478,7 @@ public class MusicPlayerService extends Service {
         }
     }
 
-    /**
-     * 上一首
-     */
+
     public void prev() {
         synchronized (this) {
             if (!NetworkUtils.isNetworkAvailable(this)) {
@@ -527,9 +493,7 @@ public class MusicPlayerService extends Service {
         }
     }
 
-    /**
-     * 播放当前歌曲
-     */
+
     private void playCurrentAndNext() {
         synchronized (this) {
             if (mPlayingPos >= mPlayQueue.size() || mPlayingPos < 0) {
@@ -590,9 +554,7 @@ public class MusicPlayerService extends Service {
         }
     }
 
-    /**
-     * 异常播放，自动切换下一首
-     */
+
     private void checkPlayErrorTimes() {
         if (playErrorTimes > MAX_ERROR_TIMES) {
             pause();
@@ -603,11 +565,7 @@ public class MusicPlayerService extends Service {
         }
     }
 
-    /**
-     * 停止播放
-     *
-     * @param remove_status_icon
-     */
+
     public void stop(boolean remove_status_icon) {
         if (mPlayer != null && mPlayer.isInitialized()) {
             mPlayer.stop();
@@ -622,11 +580,7 @@ public class MusicPlayerService extends Service {
         }
     }
 
-    /**
-     * 获取下一首位置
-     *
-     * @return
-     */
+
     private int getNextPosition(Boolean isAuto) {
         int playModeId = PlayQueueManager.INSTANCE.getPlayModeId();
         if (mPlayQueue == null || mPlayQueue.isEmpty()) {
@@ -653,11 +607,7 @@ public class MusicPlayerService extends Service {
         return mPlayingPos;
     }
 
-    /**
-     * 获取上一首位置
-     *
-     * @return
-     */
+
     private int getPreviousPosition() {
         int playModeId = PlayQueueManager.INSTANCE.getPlayModeId();
         if (mPlayQueue == null || mPlayQueue.isEmpty()) {
@@ -683,11 +633,7 @@ public class MusicPlayerService extends Service {
         return mPlayingPos;
     }
 
-    /**
-     * 根据位置播放音乐
-     *
-     * @param position
-     */
+
     public void playMusic(int position) {
         if (position >= mPlayQueue.size() || position == -1) {
             mPlayingPos = PlayQueueManager.INSTANCE.getNextPosition(true, mPlayQueue.size(), position);
@@ -699,9 +645,7 @@ public class MusicPlayerService extends Service {
         playCurrentAndNext();
     }
 
-    /**
-     * 音乐播放
-     */
+
     public void play() {
         if (mPlayer.isInitialized()) {
             mPlayer.start();
@@ -722,11 +666,7 @@ public class MusicPlayerService extends Service {
         }
     }
 
-    /**
-     * 【在线音乐】加入播放队列并播放音乐
-     *
-     * @param music
-     */
+
     public void play(Music music) {
         if (music == null) return;
         if (mPlayingPos == -1 || mPlayQueue.size() == 0) {
@@ -744,11 +684,7 @@ public class MusicPlayerService extends Service {
         playCurrentAndNext();
     }
 
-    /**
-     * 下一首播放
-     *
-     * @param music 设置的歌曲
-     */
+
     public void nextPlay(Music music) {
         if (mPlayQueue.size() == 0) {
             play(music);
@@ -759,16 +695,7 @@ public class MusicPlayerService extends Service {
         }
     }
 
-    /**
-     * 切换歌单播放
-     * 1、歌单不一样切换，不一样不切换
-     * 2、相同歌单只切换歌曲
-     * 3、相同歌曲不重新播放
-     *
-     * @param musicList 歌单
-     * @param id        歌曲位置id
-     * @param pid       歌单id
-     */
+
     public void play(List<Music> musicList, int id, String pid) {
         LogUtil.d(TAG, "musicList = " + musicList.size() + " id = " + id + " pid = " + pid + " mPlaylistId =" + mPlaylistId);
         if (musicList.size() <= id) return;
@@ -782,9 +709,7 @@ public class MusicPlayerService extends Service {
     }
 
 
-    /**
-     * 播放暂停
-     */
+
     public void playPause() {
         if (isPlaying()) {
             pause();
@@ -797,9 +722,7 @@ public class MusicPlayerService extends Service {
         }
     }
 
-    /**
-     * 暂停播放
-     */
+
     public void pause() {
         if (DEBUG) LogUtil.d(TAG, "Pausing playback");
         synchronized (this) {
@@ -827,18 +750,12 @@ public class MusicPlayerService extends Service {
         }
     }
 
-    /**
-     * 是否正在播放音乐
-     *
-     * @return 是否正在播放音乐
-     */
+
     public boolean isPlaying() {
         return isMusicPlaying;
     }
 
-    /**
-     * 跳到输入的进度
-     */
+
     public void seekTo(long pos, boolean isInit) {
         LogUtil.e(TAG, "seekTo " + pos);
         if (mPlayer != null && mPlayer.isInitialized() && mPlayingMusic != null) {
@@ -863,11 +780,7 @@ public class MusicPlayerService extends Service {
         return true;
     }
 
-    /**
-     * 保存播放队列
-     *
-     * @param full 是否存储
-     */
+
     private void savePlayQueue(boolean full) {
         if (full) {
             PlayQueueLoader.INSTANCE.updateQueue(mPlayQueue);
@@ -890,9 +803,7 @@ public class MusicPlayerService extends Service {
         savePlayQueue(false);
     }
 
-    /**
-     * 获取正在播放的歌曲[本地|网络]
-     */
+
     public void removeFromQueue(int position) {
         try {
             LogUtil.e(TAG, position + "---" + mPlayingPos + "---" + mPlayQueue.size());
@@ -915,9 +826,7 @@ public class MusicPlayerService extends Service {
         }
     }
 
-    /**
-     * 获取正在播放的歌曲[本地|网络]
-     */
+
     public void clearQueue() {
         mPlayingMusic = null;
         isMusicPlaying = false;
@@ -931,9 +840,7 @@ public class MusicPlayerService extends Service {
         notifyChange(PLAY_QUEUE_CLEAR);
     }
 
-    /**
-     * 获取正在播放进度
-     */
+
     public long getCurrentPosition() {
         if (mPlayer != null && mPlayer.isInitialized()) {
             return mPlayer.position();
@@ -942,9 +849,7 @@ public class MusicPlayerService extends Service {
         }
     }
 
-    /**
-     * 获取总时长
-     */
+
     public long getDuration() {
         if (mPlayer != null && mPlayer.isInitialized() && mPlayer.isPrepared()) {
             return mPlayer.duration();
@@ -952,11 +857,7 @@ public class MusicPlayerService extends Service {
         return 0;
     }
 
-    /**
-     * 是否准备播放
-     *
-     * @return
-     */
+
     public boolean isPrepared() {
         if (mPlayer != null) {
             return mPlayer.isPrepared();
@@ -964,11 +865,7 @@ public class MusicPlayerService extends Service {
         return false;
     }
 
-    /**
-     * 发送更新广播
-     *
-     * @param what 发送更新广播
-     */
+
     private void notifyChange(final String what) {
         if (DEBUG) LogUtil.d(TAG, "notifyChange: what = " + what);
         switch (what) {
@@ -993,9 +890,7 @@ public class MusicPlayerService extends Service {
         }
     }
 
-    /**
-     * 更新桌面小控件
-     */
+
     private void updateWidget(String action) {
         Intent intent = new Intent(action);
         intent.putExtra(ACTION_IS_WIDGET, true);
@@ -1006,11 +901,7 @@ public class MusicPlayerService extends Service {
         sendBroadcast(intent);
     }
 
-    /**
-     * 获取标题
-     *
-     * @return
-     */
+
     public String getTitle() {
         if (mPlayingMusic != null) {
             return mPlayingMusic.getTitle();
@@ -1018,11 +909,7 @@ public class MusicPlayerService extends Service {
         return null;
     }
 
-    /**
-     * 获取歌手专辑
-     *
-     * @return
-     */
+
     public String getArtistName() {
         if (mPlayingMusic != null) {
             return mPlayingMusic.getArtist();
@@ -1031,11 +918,7 @@ public class MusicPlayerService extends Service {
         return null;
     }
 
-    /**
-     * 获取专辑名
-     *
-     * @return
-     */
+
     private String getAlbumName() {
         if (mPlayingMusic != null) {
             return mPlayingMusic.getArtist();
@@ -1043,11 +926,7 @@ public class MusicPlayerService extends Service {
         return null;
     }
 
-    /**
-     * 获取当前音乐
-     *
-     * @return
-     */
+
     public Music getPlayingMusic() {
         if (mPlayingMusic != null) {
             return mPlayingMusic;
@@ -1056,11 +935,7 @@ public class MusicPlayerService extends Service {
     }
 
 
-    /**
-     * 设置播放队列
-     *
-     * @param playQueue 播放队列
-     */
+
     public void setPlayQueue(List<Music> playQueue) {
         mPlayQueue.clear();
         mHistoryPos.clear();
@@ -1070,11 +945,7 @@ public class MusicPlayerService extends Service {
     }
 
 
-    /**
-     * 获取播放队列
-     *
-     * @return 获取播放队列
-     */
+
     public List<Music> getPlayQueue() {
         if (mPlayQueue.size() > 0) {
             return mPlayQueue;
@@ -1083,20 +954,14 @@ public class MusicPlayerService extends Service {
     }
 
 
-    /**
-     * 获取当前音乐在播放队列中的位置
-     *
-     * @return 当前音乐在播放队列中的位置
-     */
+
     public int getPlayPosition() {
         if (mPlayingPos >= 0) {
             return mPlayingPos;
         } else return 0;
     }
 
-    /**
-     * 初始化通知栏
-     */
+
     private void initNotify() {
         mNotificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
         final String albumName = getAlbumName();
@@ -1162,11 +1027,7 @@ public class MusicPlayerService extends Service {
     }
 
 
-    /**
-     * 创建Notification ChannelID
-     *
-     * @return 频道id
-     */
+
     private String initChannelId() {
         // 通知渠道的id
         String id = "music_lake_01";
@@ -1202,11 +1063,7 @@ public class MusicPlayerService extends Service {
     }
 
 
-    /**
-     * 显示桌面歌词
-     *
-     * @param show
-     */
+
     public void showDesktopLyric(boolean show) {
         if (show) {
             // 开启定时器，每隔0.5秒刷新一次
@@ -1228,9 +1085,7 @@ public class MusicPlayerService extends Service {
         }
     }
 
-    /**
-     * 电话监听
-     */
+
     private class ServicePhoneStateListener extends PhoneStateListener {
         @Override
         public void onCallStateChanged(int state, String incomingNumber) {
@@ -1244,11 +1099,7 @@ public class MusicPlayerService extends Service {
         }
     }
 
-    /**
-     * 更新状态栏通知
-     *
-     * @param isChange 是否改变歌曲信息
-     */
+
     private void updateNotification(boolean isChange) {
         if (isChange) {
             if (mPlayingMusic != null) {
@@ -1277,18 +1128,14 @@ public class MusicPlayerService extends Service {
         }
     }
 
-    /**
-     * 取消通知
-     */
+
     private void cancelNotification() {
         stopForeground(true);
         mNotificationManager.cancel(NOTIFICATION_ID);
         isRunningForeground = false;
     }
 
-    /**
-     * Service broadcastReceiver 监听service中广播
-     */
+
     private class ServiceReceiver extends BroadcastReceiver {
 
 //        public ServiceReceiver() {
@@ -1312,11 +1159,7 @@ public class MusicPlayerService extends Service {
     }
 
 
-    /**
-     * Intent处理
-     *
-     * @param intent
-     */
+
     private void handleCommandIntent(Intent intent) {
         final String action = intent.getAction();
         final String command = SERVICE_CMD.equals(action) ? intent.getStringExtra(CMD_NAME) : null;
@@ -1357,9 +1200,7 @@ public class MusicPlayerService extends Service {
         }
     }
 
-    /**
-     * 开启歌词
-     */
+
     private void startFloatLyric() {
         if (SystemUtils.isOpenFloatWindow()) {
             showLyric = !showLyric;
@@ -1369,9 +1210,7 @@ public class MusicPlayerService extends Service {
         }
     }
 
-    /**
-     * 耳机插入广播接收器
-     */
+
     public class HeadsetPlugInReceiver extends BroadcastReceiver {
         public HeadsetPlugInReceiver() {
             if (Build.VERSION.SDK_INT >= 21) {
@@ -1391,9 +1230,7 @@ public class MusicPlayerService extends Service {
         }
     }
 
-    /**
-     * 耳机拔出广播接收器
-     */
+
     private class HeadsetReceiver extends BroadcastReceiver {
 
         final BluetoothAdapter bluetoothAdapter;

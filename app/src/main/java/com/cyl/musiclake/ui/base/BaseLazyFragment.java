@@ -31,11 +31,7 @@ import butterknife.Unbinder;
 
 import static com.cyl.musiclake.utils.AnimationUtils.animateView;
 
-/**
- * 作者：YongLong on 2016/8/8 16:58
- * 邮箱：643872807@qq.com
- * 版本：2.5
- */
+
 public abstract class BaseLazyFragment<T extends BaseContract.BasePresenter> extends RxFragment implements BaseContract.BaseView {
     private boolean isLazyLoaded;//懒加载过
     private boolean isPrepared;
@@ -133,9 +129,7 @@ public abstract class BaseLazyFragment<T extends BaseContract.BasePresenter> ext
     }
 
 
-    /**
-     * 初始化FragmentComponent
-     */
+
     private void initFragmentComponent() {
         mFragmentComponent = DaggerFragmentComponent.builder()
                 .applicationComponent(MusicApp.getInstance().getApplicationComponent())
@@ -143,18 +137,14 @@ public abstract class BaseLazyFragment<T extends BaseContract.BasePresenter> ext
                 .build();
     }
 
-    /**
-     * 贴上view
-     */
+
     private void attachView() {
         if (mPresenter != null) {
             mPresenter.attachView(this);
         }
     }
 
-    /**
-     * 分离view
-     */
+
     private void detachView() {
         if (mPresenter != null) {
             mPresenter.detachView();
@@ -229,9 +219,7 @@ public abstract class BaseLazyFragment<T extends BaseContract.BasePresenter> ext
         }
     }
 
-    /**
-     * 调用懒加载
-     */
+
 
     private void lazyLoad() {
         // 用户可见Fragment && 没有加载过数据 && 视图已经准备完毕

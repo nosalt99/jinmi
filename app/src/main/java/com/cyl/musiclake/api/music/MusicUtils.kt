@@ -10,14 +10,10 @@ import com.cyl.musiclake.bean.Artist
 import com.cyl.musiclake.bean.Music
 import com.cyl.musiclake.common.Constants
 
-/**
- * Created by master on 2018/4/7.
- */
+
 
 object MusicUtils {
-    /**
-     * 在线歌单歌曲歌曲实体类转化成本地歌曲实体
-     */
+
     fun getMusic(musicInfo: MusicInfo): Music {
         val music = Music()
         if (musicInfo.songId != null) {
@@ -54,10 +50,7 @@ object MusicUtils {
         return music
     }
 
-    /**
-     * 在线歌单歌曲歌曲实体类转化成本地歌曲实体(即可)
-     * (网易云歌曲)
-     */
+
     fun getMusicList(musicInfo: MutableList<MusicInfo>?, type: String): MutableList<Music> {
         val musicList = mutableListOf<Music>()
         musicInfo?.forEach {
@@ -160,14 +153,8 @@ object MusicUtils {
     val PIC_SIZE_NORMAL = 1
     val PIC_SIZE_BIG = 2
 
-    /**
-     * 根据不同的歌曲类型生成不同的图片
-     * @param size
-     */
-    /**
-     * 根据不同的歌曲类型生成不同的图片
-     * @param size
-     */
+
+
     fun getAlbumPic(url: String?, type: String?, size: Int): String? {
         println(url)
         return when (type) {
@@ -214,9 +201,7 @@ object MusicUtils {
         }
     }
 
-    /**
-     * 本地歌曲实体转化成在线歌单歌曲实体
-     */
+
     fun getMusicInfo(music: Music): MusicInfo {
         val artistIds = music.artistId?.let { it.split(",").dropLastWhile { it.isEmpty() }.toTypedArray() }
         val artists = music.artist?.let { it.split(",").dropLastWhile { it.isEmpty() }.toTypedArray() }
@@ -232,9 +217,7 @@ object MusicUtils {
         return MusicInfo(music.mid, music.mid, music.title, artistsBeans, album, music.type, cp = music.isCp, dl = music.isDl, quality = QualityBean(hq = music.hq, sq = music.sq, high = music.high))
     }
 
-    /**
-     * 获取歌手名
-     */
+
     fun getArtistInfo(music: Music): Artist? {
         val artistIds = music.artistId?.let { it.split(",").dropLastWhile { it.isEmpty() }.toTypedArray() }
         val artistNames = music.artist?.let { it.split(",").dropLastWhile { it.isEmpty() }.toTypedArray() }

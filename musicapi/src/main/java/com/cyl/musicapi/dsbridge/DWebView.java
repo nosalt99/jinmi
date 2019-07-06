@@ -45,9 +45,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 
-/**
- * Created by du on 16/12/29.
- */
+
 
 public class DWebView extends WebView {
     private static final String BRIDGE_NAME = "_dsbridge";
@@ -204,9 +202,7 @@ public class DWebView extends WebView {
     Map<Integer, OnReturnValue> handlerMap = new HashMap<>();
 
     public interface JavascriptCloseWindowListener {
-        /**
-         * @return If true, close the current activity, otherwise, do nothing.
-         */
+
         boolean onClose();
     }
 
@@ -231,12 +227,7 @@ public class DWebView extends WebView {
         init();
     }
 
-    /**
-     * Set debug mode. if in debug mode, some errors will be prompted by a dialog
-     * and the exception caused by the native handlers will not be captured.
-     *
-     * @param enabled
-     */
+
     public static void setWebContentsDebuggingEnabled(boolean enabled) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             WebView.setWebContentsDebuggingEnabled(enabled);
@@ -394,12 +385,7 @@ public class DWebView extends WebView {
         }
     }
 
-    /**
-     * This method can be called in any thread, and if it is not called in the main thread,
-     * it will be automatically distributed to the main thread.
-     *
-     * @param script
-     */
+
     public void evaluateJavascript(final String script) {
         runOnMainThread(new Runnable() {
             @Override
@@ -409,12 +395,7 @@ public class DWebView extends WebView {
         });
     }
 
-    /**
-     * This method can be called in any thread, and if it is not called in the main thread,
-     * it will be automatically distributed to the main thread.
-     *
-     * @param url
-     */
+
     @Override
     public void loadUrl(final String url) {
         runOnMainThread(new Runnable() {
@@ -430,13 +411,7 @@ public class DWebView extends WebView {
         });
     }
 
-    /**
-     * This method can be called in any thread, and if it is not called in the main thread,
-     * it will be automatically distributed to the main thread.
-     *
-     * @param url
-     * @param additionalHttpHeaders
-     */
+
     @Override
     public void loadUrl(final String url, final Map<String, String> additionalHttpHeaders) {
         runOnMainThread(new Runnable() {
@@ -463,9 +438,7 @@ public class DWebView extends WebView {
         });
     }
 
-    /**
-     * set a listener for javascript closing the current activity.
-     */
+
     public void setJavascriptCloseWindowListener(JavascriptCloseWindowListener listener) {
         javascriptCloseWindowListener = listener;
     }
@@ -534,23 +507,12 @@ public class DWebView extends WebView {
     }
 
 
-    /**
-     * Test whether the handler exist in javascript
-     *
-     * @param handlerName
-     * @param existCallback
-     */
+
     public void hasJavascriptMethod(String handlerName, OnReturnValue<Boolean> existCallback) {
         callHandler("_hasJavascriptMethod", new Object[]{handlerName}, existCallback);
     }
 
-    /**
-     * Add a java object which implemented the javascript interfaces to dsBridge with namespace.
-     * Remove the object using {@link #removeJavascriptObject(String) removeJavascriptObject(String)}
-     *
-     * @param object
-     * @param namespace if empty, the object have no namespace.
-     */
+
     public void addJavascriptObject(Object object, String namespace) {
         if (namespace == null) {
             namespace = "";
@@ -560,11 +522,7 @@ public class DWebView extends WebView {
         }
     }
 
-    /**
-     * remove the javascript object with supplied namespace.
-     *
-     * @param namespace
-     */
+
     public void removeJavascriptObject(String namespace) {
         if (namespace == null) {
             namespace = "";

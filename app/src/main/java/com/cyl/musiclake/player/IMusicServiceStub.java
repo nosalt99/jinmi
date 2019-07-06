@@ -8,11 +8,7 @@ import com.cyl.musiclake.bean.Music;
 import java.lang.ref.WeakReference;
 import java.util.List;
 
-/**
- * Author   : D22434
- * version  : 2018/2/7
- * function :
- */
+
 
 public class IMusicServiceStub extends IMusicService.Stub {
     private final WeakReference<MusicPlayerService> mService;
