@@ -295,14 +295,15 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 //        if (mDrawerLayout.isDrawerOpen(GravityCompat.START)) {
 //            mDrawerLayout.closeDrawers();
 //        } else
-        if (isNavigatingMain()) {
-            Intent home = new Intent(Intent.ACTION_MAIN);
-            home.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-            home.addCategory(Intent.CATEGORY_HOME);
-            startActivity(home);
-        } else {
-            super.onBackPressed();
-        }
+//        if (isNavigatingMain()) {
+//            Intent home = new Intent(Intent.ACTION_MAIN);
+//            home.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+//            home.addCategory(Intent.CATEGORY_HOME);
+//            startActivity(home);
+//        } else {
+//            super.onBackPressed();
+//        }
+        super.onBackPressed();
     }
 
 

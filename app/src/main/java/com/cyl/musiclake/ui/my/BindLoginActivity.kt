@@ -72,7 +72,6 @@ class BindLoginActivity : BaseActivity<LoginPresenter>(), LoginContract.View {
             passwordWrapper.isErrorEnabled = false
             //TODO:登录
             progressBar.visibility = View.VISIBLE
-            isLogining = true
 
             val params = HashMap<String, String>()
             params[Constants.USER_EMAIL] = username
@@ -112,6 +111,7 @@ class BindLoginActivity : BaseActivity<LoginPresenter>(), LoginContract.View {
         SPUtils.putAnyCommit(SPUtils.SP_KEY_NETEASE_UID, loginInfo?.profile?.userId.toString() + "")
         SPUtils.putAnyCommit(SPUtils.SP_KEY_USER_NAME, username)
         SPUtils.putAnyCommit(SPUtils.SP_KEY_PASSWORD, password)
+        isLogining = true
         ToastUtils.show("登录成功")
         finish()
     }

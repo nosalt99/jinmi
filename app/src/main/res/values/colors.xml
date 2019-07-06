@@ -2,18 +2,18 @@
 <resources>
 
     <color name="backgroundColor">#E8E8E0</color>
-    <color name="setting_blue">#4A90E2</color>
-    <color name="logo_blue">#4285f5</color>
+    <color name="setting_blue">#407e99</color>
+    <color name="logo_blue">#407e99</color>
 
     <color name="main_background">#EEEEEE</color>
 
-    <color name="main_blue_light">#3F56B5</color>
-    <color name="main_blue_dark">#30459E</color>
+    <color name="main_blue_light">#407e99</color>
+    <color name="main_blue_dark">#205062</color>
     <color name="main_white">#FFFFFF</color>
     <color name="main_black">#000000</color>
     <color name="main_black_grey">#6D6D6D</color>
 
-    <color name="pressed_bg">#8033B5E5</color>
+    <color name="pressed_bg">#205062</color>
     <color name="transparent">#00000000</color>
 
     <color name="huise">#f2f2f2</color>
@@ -34,8 +34,8 @@
     <color name="bg_color_blue">#43D5FF</color>
     <color name="bg_color_blue_light">#84B5CA</color>
     <!--应用基础色-->
-    <color name="colorPrimary">#4285f5</color>
-    <color name="colorPrimaryDark">#4285f5</color>
+    <color name="colorPrimary">#407e99</color>
+    <color name="colorPrimaryDark">#205062</color>
     <color name="colorAccent">#ffb701</color>
     <color name="white">#ffffff</color>
     <color name="gray">#9e9e9e</color>
@@ -149,4 +149,5 @@
     <color name="channelNormalTextColor">#6D6D6D</color>
     <color name="channelFixedTextColor">#CCCCCC</color>
     <color name="subTitleTextColor">#A0A3AF</color>
+    <color name="light_gray">#dbdbdb</color>
 </resources>

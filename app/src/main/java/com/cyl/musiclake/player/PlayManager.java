@@ -201,7 +201,7 @@ public class PlayManager {
         } catch (RemoteException e) {
             e.printStackTrace();
         }
-        return "湖科音乐";
+        return "静谧";
     }
 
     public static String getSongArtist() {
@@ -211,7 +211,7 @@ public class PlayManager {
         } catch (RemoteException e) {
             e.printStackTrace();
         }
-        return "湖科音乐";
+        return "静谧";
     }
 
     public static boolean isPlaying() {

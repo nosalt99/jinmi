@@ -25,6 +25,8 @@
 -useuniqueclassmembernames
 -ignorewarnings
 
+-keep class com.cyl.musiclake.**
+
 #bugly
 -dontwarn com.tencent.bugly.**
 -keep public class com.tencent.bugly.**{*;}
